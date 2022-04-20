@@ -1,0 +1,13 @@
+Target dependency graph (5 targets)
+Flutter in Pods, no dependencies
+search_choices in Pods, depends on:
+Flutter in Pods (explicit)
+shared_preferences_ios in Pods, depends on:
+Flutter in Pods (explicit)
+url_launcher_ios in Pods, depends on:
+Flutter in Pods (explicit)
+Pods-Runner in Pods, depends on:
+Flutter in Pods (explicit)
+search_choices in Pods (explicit)
+shared_preferences_ios in Pods (explicit)
+url_launcher_ios in Pods (explicit)
