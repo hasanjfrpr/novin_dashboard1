@@ -21,6 +21,10 @@ class FactorForooshModel {
   Result? _result;
   List<FactorForooshList>? _factorForooshList;
 
+  void set factorList(List<FactorForooshList> factorList){
+    _factorForooshList = factorList;
+  }
+
   Result? get result => _result;
   List<FactorForooshList>? get factorForooshList => _factorForooshList;
 
@@ -34,6 +38,8 @@ class FactorForooshModel {
     }
     return map;
   }
+
+
 
 }
 

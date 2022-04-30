@@ -14,22 +14,10 @@ class BedBesController extends GetxController{
 
 
 
-  @override
-  void onInit() {
-    
-  SystemChrome.setPreferredOrientations([
-    // DeviceOrientation.landscapeLeft,
-    // DeviceOrientation.landscapeRight,
-    // DeviceOrientation.portraitUp,
-    // DeviceOrientation.portraitDown,
-
-  ]);
-    super.onInit();
-  }
 
 
 
-  void getRizBedBes(String lfac) async{
+  void getRizBedBes(String lfac , String name) async{
     await RequestManager.postReq(url: "tservermethods1/GetPersonAccount", body: {
       "params": {
         "bookid": Utils.bookId,
@@ -44,9 +32,8 @@ class BedBesController extends GetxController{
 
       var result = RizBedBesModel.fromJson(value);
       rizBedBesModel.value = result;
-      print(result);
       Get.back();
-      Get.to(RizBedBesScreen());
+      Get.to(RizBedBesScreen(name: name,));
     });
   }
 

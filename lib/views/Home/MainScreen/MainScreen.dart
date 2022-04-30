@@ -7,10 +7,13 @@ import 'package:novin_dashboard1/controllers/splashController/SplashController.d
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/PersonListModel.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
+import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/Daramad/FilterDaramadScreen.dart';
+import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/Hazine/FilterHazineScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/ashKhasList/AshKhasList.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/asnadList/FilterAsnadScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestankar/FilterBedBesScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/factorForoosh/FilterFactorForoosh.dart';
+import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/FilterTarazScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatelessWidget {
@@ -156,7 +159,7 @@ class MainScreen extends StatelessWidget {
         Get.to(FilterFactorForooshScreen());
         break;
       case 1:
-
+        Get.to(FilterTarazScreen());
         break;
       case 2 :
         Get.to(FilterAsnadScreen());
@@ -174,8 +177,10 @@ class MainScreen extends StatelessWidget {
       case 6:
         break;
       case 7:
+        Get.to(FilterHazineScreen());
         break;
       case 8:
+        Get.to(FilterDaramadScreen());
         break;
 
     }

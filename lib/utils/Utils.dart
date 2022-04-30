@@ -35,8 +35,6 @@ String convertDtoJDate(String gregorianDate){
   String year  = ss[0];
   String month = ss[1];
   String day = ss[2];
-  print(year +"/"+ month +"/"+ day);
-  print(year);
   Jalali jalali = Gregorian(int.parse(year) , int.parse(month) , int.parse(day)).toJalali();
 
   String persianDate = "${jalali.year}/${jalali.month}/${jalali.day}";
