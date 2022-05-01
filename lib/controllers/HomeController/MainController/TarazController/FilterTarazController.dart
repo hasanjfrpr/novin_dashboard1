@@ -22,6 +22,7 @@ class FilterTarazController extends GetxController{
 
 
   Rx<TarazKolModel> tarazKolModel = TarazKolModel().obs;
+  RxList<TarazAzmayeshiKolList> listTaraz = [TarazAzmayeshiKolList()].obs;
 
 
   RxDouble s_bed = 0.0.obs;
@@ -50,25 +51,37 @@ class FilterTarazController extends GetxController{
     ).then((value) {
       var tarazKol = TarazKolModel.fromJson(value);
       tarazKolModel.value = tarazKol;
+      listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
       print(tarazKol);
 
-      if(isChecked.value){
+      if(isChecked.value==true){
 
-        print(tarazKolModel.value.tarazAzmayeshiKolList!);
+        print(listTaraz.value.length);
         Get.back();
         Get.to(TarazScreen());
 
       }else{
 
-        for(var i=0;i<tarazKolModel.value.tarazAzmayeshiKolList!.length ; i++){
+        for(var i=0;i<listTaraz.value.length ; i++){
 
-          if(tarazKolModel.value.tarazAzmayeshiKolList![i].bed=="0" && tarazKolModel.value.tarazAzmayeshiKolList![i].bes=="0" && tarazKolModel.value.tarazAzmayeshiKolList![i].sbed=="0" && tarazKolModel.value.tarazAzmayeshiKolList![i].sbes=="0"){
-            tarazKolModel.value.tarazAzmayeshiKolList!.remove(tarazKolModel.value.tarazAzmayeshiKolList![i]);
+          if(listTaraz.value[i].bed=="0" &&
+              listTaraz.value[i].bes=="0" &&
+              listTaraz.value[i].sbed=="0" &&
+              listTaraz.value[i].sbes=="0"){
+            listTaraz.value.remove(listTaraz.value[i]);
+
+          }
+          if(listTaraz.value[i].bed!.toLowerCase()=="null" &&
+              listTaraz.value[i].bes!.toLowerCase()=="null" &&
+              listTaraz.value[i].sbed!.toLowerCase()=="null" &&
+              listTaraz.value[i].sbes!.toLowerCase()=="null"){
+            listTaraz.value.remove(listTaraz.value[i]);
+
           }
 
 
         }
-        print(tarazKolModel.value.tarazAzmayeshiKolList!);
+        print(listTaraz.value.length);
         Get.back();
         Get.to(TarazScreen());
 

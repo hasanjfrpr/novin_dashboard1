@@ -44,7 +44,7 @@ String convertDtoJDate(String gregorianDate){
 
 String setFormatNumber(String number){
 var formatter = NumberFormat('#,###,000');
-  return number.toLowerCase()=="null" ? number : formatter.format(int.parse(number));
+  return number.toLowerCase()=="null" ? "0" : number.toLowerCase()=="0" ? "0" :formatter.format(int.parse(number));
 }
 Widget emptyScreen(double wi , double he){
   return Center(child: Container(
@@ -62,17 +62,16 @@ Widget emptyScreen(double wi , double he){
 }
 
 void showLoading(double wi , double he,{String title ="درحال بررسی درخواست" }){
-  Get.defaultDialog(barrierDismissible: true,title: "",backgroundColor: Colors.white70,content: Container(
-    child: Row(
 
+  Get.dialog( AlertDialog(backgroundColor: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(wi*0.05)),content: Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-
-        SizedBox(width: wi*0.04,),
+        Text(title+"..."),
+        SizedBox(height: he*0.01,),
         CircularProgressIndicator(color: Color(AppColor.primaryColor),),
-        SizedBox(width: wi*0.06,),
-        Text(title+"...")
+
       ],
-    ),
-  )
-  );
+    ),), barrierDismissible: true ,useSafeArea: true);
+
+
 }
