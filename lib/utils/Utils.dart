@@ -43,8 +43,8 @@ String convertDtoJDate(String gregorianDate){
 }
 
 String setFormatNumber(String number){
-var formatter = NumberFormat('#,###,000');
-  return number.toLowerCase()=="null" ? "0" : number.toLowerCase()=="0" ? "0" :formatter.format(int.parse(number));
+var formatter =number.contains(".") ?  NumberFormat("#,##0.000") :  NumberFormat("##,###,000");
+  return number.toLowerCase()=="null" ? "0" : number.toLowerCase()=="0" ? "0" :formatter.format(double.parse(number));
 }
 Widget emptyScreen(double wi , double he){
   return Center(child: Container(

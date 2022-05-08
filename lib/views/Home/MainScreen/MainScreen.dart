@@ -13,6 +13,7 @@ import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/ashKhasList/AshK
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/asnadList/FilterAsnadScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestankar/FilterBedBesScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/factorForoosh/FilterFactorForoosh.dart';
+import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/mojoodiKala/MojodiFilterScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/FilterTarazScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -175,6 +176,7 @@ class MainScreen extends StatelessWidget {
         showLoading(Get.width, Get.height ,title: "درحال دریافت لیست اشخاص");
         break;
       case 6:
+        Get.to(FilterMojoodiScreen());
         break;
       case 7:
         Get.to(FilterHazineScreen());
