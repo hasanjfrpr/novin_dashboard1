@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
     Get.lazyPut(() => SplashController());
     SplashController controller = Get.put(SplashController(),tag: "SplashController" , permanent: true);
     controller.onInit();
-    controller.getCompanyBook();
+    // controller.getCompanyBook();
     controller.goNexScreen();
     double wi = Get.width;
     double he = Get.height;

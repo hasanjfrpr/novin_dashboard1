@@ -48,6 +48,8 @@ companyItem.value.clear();
  }
 
 
+  }).then((value){
+   Get.off(Login());
   });
 
   }
@@ -79,7 +81,8 @@ companyItem.value.clear();
 if(LocalData.getIp()== "") {
  Dialogs.showServerSettingDialog();
 }else{
- Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
+ // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
+ getCompanyBook();
 }
 
 

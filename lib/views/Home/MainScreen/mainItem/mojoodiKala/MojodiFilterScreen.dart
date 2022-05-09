@@ -32,7 +32,7 @@ class FilterMojoodiScreen extends StatelessWidget {
           children: [
             MaterialButton(
               onPressed: () {
-
+                if(AnbarSelector.value==1) anbar=="";
                 controller.getMojoodikala(convertJtoGDate(controller.year.value, controller.month.value, controller.day.value),
                     convertJtoGDate(controller.endYear.value , controller.endMonth.value,controller.endDay.value), anbar);
                 showLoading(wi, he);

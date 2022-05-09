@@ -14,6 +14,7 @@ import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/asnadList/Filter
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestankar/FilterBedBesScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/factorForoosh/FilterFactorForoosh.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/mojoodiKala/MojodiFilterScreen.dart';
+import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/soodVzian/FilterSoodVzianScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/FilterTarazScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -166,6 +167,7 @@ class MainScreen extends StatelessWidget {
         Get.to(FilterAsnadScreen());
         break;
       case 3:
+        Get.to(FilterSoodVzianScreen());
         break;
       case 4:
        controller.getPersonList(0);
