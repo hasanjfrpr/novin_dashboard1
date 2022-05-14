@@ -202,7 +202,8 @@ class FilterSoodVzianScreen extends StatelessWidget {
     }
   }
   void _showConfirmation(double wi , double he , FilterSoodVzianControler controller){
-    Get.dialog(AlertDialog(
+    Get.dialog(
+        AlertDialog(
       content: Container(
          child: Column(
            mainAxisSize: MainAxisSize.min,
@@ -242,6 +243,6 @@ class FilterSoodVzianScreen extends StatelessWidget {
            ],
          ),
       ),
-    ));
+    ),barrierDismissible: false,);
   }
 }

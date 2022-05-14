@@ -127,6 +127,7 @@ void searchPattern(String value){
 
   print(fakeList);
   suggestFactorForooshModel.value.factorForooshList!.addAll(fakeList);
+  update();
 }
 
 }

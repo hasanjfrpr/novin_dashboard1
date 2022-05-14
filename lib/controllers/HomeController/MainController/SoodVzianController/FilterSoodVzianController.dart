@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
-import 'package:novin_dashboard1/model/MainModel/mainItemModel/SodVZianModel/SoodVzianModel.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:novin_dashboard1/model/MainModel/mainItemModel/SoodVzianModel/SoodVzianModel.dart';
 
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/soodVzian/SoodVzianScreen.dart';
@@ -31,12 +35,25 @@ Rx<SoodVzianModel> soodVzianModel = SoodVzianModel().obs;
         'authorization':auth()
       }
     ).then((value){
-     var result = SoodVzianModel.fromJson(value);
-     soodVzianModel.value  = result;
-     print(result);
+      var result = SoodVzianModel.fromJson(value);
+      soodVzianModel.value = result;
+      print(soodVzianModel.value.soodZianListO);
      Get.back();
      Get.to(SoodVzianScreen());
     });
+  //   await http.post(Uri.parse("http://192.168.0.17:13647/daycomputer/nvn5_android/tservermethods1/GetSoodZian") ,body:jsonEncode({
+  //     "params": {
+  //       "bookid": Utils.bookId,
+  //       "startdate": startDate,
+  //       "enddate": endDate
+  //     }
+  //   }),headers: {
+  //        'Content-type': 'application/json',
+  //      'authorization':auth()
+  //      }
+  //     ).then((value) {
+  //     print(value);
+  //   });
   }
 
 
