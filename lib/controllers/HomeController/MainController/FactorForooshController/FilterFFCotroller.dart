@@ -25,6 +25,8 @@ RxBool showLoadingV= false.obs;
 RxBool showLoading= false.obs;
 Rx<FactorForooshModel> factorForooshModel = FactorForooshModel().obs;
 Rx<FactorForooshModel> suggestFactorForooshModel  = FactorForooshModel().obs;
+RxList<FactorForooshList>? sslldd = [FactorForooshList()].obs;
+List<FactorForooshList> factorFcontainerList = [];
 
 PersonListModel _personModel = PersonListModel();
 VisitorListFModel _visitorModel = VisitorListFModel();
@@ -109,25 +111,65 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
     var result = FactorForooshModel.fromJson(value);
     factorForooshModel.value = result;
     suggestFactorForooshModel.value = factorForooshModel.value;
+    sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
+    factorFcontainerList.addAll(result.factorForooshList!);
     Get.back();
     Get.to(FactorForooshScreen());
   });
 }
 
-void searchPattern(String value){
+ searchPattern(String value) async{
    List<FactorForooshList> fakeList = <FactorForooshList>[];
 
-  if(value.isEmpty){
-    fakeList.addAll(factorForooshModel.value.factorForooshList!);
-  }else{
-    fakeList= factorForooshModel.value.factorForooshList!.where((element) {
-      return element.fldtiflfac!.contains(value);
-    }).toList();
-  }
+   // List<int> firstList  = [1,2,3,4];
+   // List<int> secondList = [0,10,20];
+   //  List<int> thirdList = [];
+   //
+   //  thirdList.addAll(firstList);
+   // print("size of list is 1: "+firstList.length.toString());
+   //  thirdList.clear();
+   //  print("size of list is 2: "+firstList.length.toString());
 
-  print(fakeList);
-  suggestFactorForooshModel.value.factorForooshList!.addAll(fakeList);
-  update();
+
+   print("this value is :"+value);
+
+  if(value==""){
+    fakeList.clear();
+    print("i'm here man .........");
+
+    print( "factorForooshModel's lenght :"+ factorForooshModel.value.factorForooshList!.length.toString());
+    print( "suggest's lenght :"+ suggestFactorForooshModel.value.factorForooshList!.length.toString());
+    print( "factorFcontainer's lenght :"+ factorFcontainerList.length.toString());
+    //fakeList.addAll(suggestFactorForooshModel.value.factorForooshList!);
+
+    for(var i=0 ; i < factorFcontainerList.length ; i++){
+      fakeList.add(factorFcontainerList[i]);
+    }
+
+
+
+  }else if(value.isNotEmpty || value!=""){
+fakeList.clear();
+    //   fakeList= factorFcontainerList.where((element) {
+    //   return element.flddsfdoc!.toLowerCase().contains(value.toLowerCase());
+    // }).toList();
+print( "factorFcontainer's lenght :"+ factorFcontainerList.length.toString());
+factorFcontainerList.forEach((element) {
+  if(element.flddsfdoc!.toLowerCase().contains(value.toLowerCase())){
+    fakeList.add(element);
+  }
+});
+    print(fakeList.length);
+
+
+  }
+  sslldd!.value.clear();
+   sslldd!.value.addAll(fakeList);
+   sslldd!.refresh();
+   update();
+
+print(fakeList.length);
+
 }
 
 }

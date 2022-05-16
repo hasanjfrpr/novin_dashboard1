@@ -21,6 +21,8 @@ class FactorForooshModel {
   Result? _result;
   List<FactorForooshList>? _factorForooshList;
 
+  List<FactorForooshList> get factorList => _factorForooshList!;
+
   void set factorList(List<FactorForooshList> factorList){
     _factorForooshList = factorList;
   }

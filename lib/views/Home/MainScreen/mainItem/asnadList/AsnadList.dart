@@ -23,26 +23,24 @@ class AsnadListScreen extends StatelessWidget {
         backgroundColor: Color(AppColor.primaryColor),
       ),
 
-      body:fController.asnadModel.value.documentList!.isEmpty ? emptyScreen(wi, he):  Container(
+      body:fController.documentList.isEmpty ? emptyScreen(wi, he):  Container(
         width: wi,
         height: he,
         child: Column(
           children: [
-            Expanded(child: _searchBox(wi, he)),
-            Obx(() {
-              return Expanded(
+            Expanded(child: _searchBox(wi, he,fController)),
+             Expanded(
                   flex: 11,
                   child: Container(
-                      child: ListView.builder(
-                        itemCount: fController.asnadModel.value.documentList
-                            ?.length,
-                        itemBuilder: (context, index) {
-                          return _itemSanad(wi, he, index, fController);
-                        },
+                      child: Obx(
+                        (){return ListView.builder(
+                          itemCount: fController.documentList.value.length,
+                          itemBuilder: (context, index) {
+                            return _itemSanad(wi, he, index, fController);
+                          },
+                        );}
                       )
-                  ));
-            }
-            ),
+                  )),
           ],
         ),
 
@@ -50,7 +48,7 @@ class AsnadListScreen extends StatelessWidget {
     );
   }
 
-  Widget _searchBox(double wi, double he) {
+  Widget _searchBox(double wi, double he ,FilterAsnadController fController) {
     return Container(
       width: wi,
       height: he * 0.05,
@@ -66,7 +64,7 @@ class AsnadListScreen extends StatelessWidget {
                   color: Color(AppColor.primaryColor), width: wi * 0.0065),
               borderRadius: BorderRadius.all(Radius.circular(wi * 0.04))),
         ),
-        onChanged:(value){} ,
+        onChanged:(value){fController.searchAsnad(value);} ,
       ),
     );
   }
@@ -84,18 +82,18 @@ class AsnadListScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _itemRow(AppString.shomareSanad, fController.asnadModel.value.documentList![index].fldCodDoc.toString()),
+          _itemRow(AppString.shomareSanad, fController.documentList.value[index].fldCodDoc.toString()),
           SizedBox(height: he*0.006,),
-          _itemRow(AppString.date,convertDtoJDate(fController.asnadModel.value.documentList![index].flddodadoc.toString())),
+          _itemRow(AppString.date,convertDtoJDate(fController.documentList.value[index].flddodadoc.toString())),
           SizedBox(height: he*0.006,),
-          _itemRow(AppString.price,setFormatNumber(fController.asnadModel.value.documentList![index].fldamoudoc.toString())),
+          _itemRow(AppString.price,setFormatNumber(fController.documentList.value[index].fldamoudoc.toString())),
           SizedBox(height: he*0.006,),
-          _itemRow(AppString.description,fController.asnadModel.value.documentList![index].flddsfdoc.toString()),
+          _itemRow(AppString.description,fController.documentList.value[index].flddsfdoc.toString()),
           Divider(),
           InkWell(
             onTap: (){
               AsnadController controller = Get.put(AsnadController());
-              controller.getRizAsnad(fController.asnadModel.value.documentList![index].fldCodDoc.toString());
+              controller.getRizAsnad(fController.documentList.value[index].fldCodDoc.toString());
               showLoading(wi,he);
             },
             child: Container(

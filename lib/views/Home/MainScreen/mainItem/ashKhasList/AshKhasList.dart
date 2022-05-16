@@ -15,6 +15,7 @@ class AshKhasListScreen extends StatelessWidget {
     double wi = Get.width;
     double he = Get.height;
     MainController controller = Get.find<MainController>();
+    AshkhasCotrolller personController = Get.put(AshkhasCotrolller());
 
     return Scaffold(
       appBar: AppBar(
@@ -28,16 +29,16 @@ class AshKhasListScreen extends StatelessWidget {
         height: he,
         child: Column(
           children: [
-            Expanded(child: _searchBox(wi, he, controller)),
+            Expanded(child: _searchBox(wi, he, controller , personController)),
             Expanded(
                 flex: 11,
                 child: Container(
                   child: Obx(() {
                     return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: controller.personListModel.value.personList?.length,
+                        itemCount: personController.personListAhskhas.value.length,
                         itemBuilder: (context, int index) {
-                          return _items(wi, he, index, controller);
+                          return _items(wi, he, index, controller , personController);
                         });
 
                   }
@@ -48,7 +49,7 @@ class AshKhasListScreen extends StatelessWidget {
       ),
     );
   }
-  Widget _searchBox(double wi, double he, MainController controller) {
+  Widget _searchBox(double wi, double he, MainController controller,AshkhasCotrolller personController) {
     return Container(
       width: wi,
       height: he * 0.05,
@@ -56,7 +57,7 @@ class AshKhasListScreen extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           prefixIcon: Icon(CupertinoIcons.search),
-          hintText: AppString.searchFactorF,
+          hintText: "جستجو براساس کد حساب",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(wi * 0.04))),
           focusedBorder: OutlineInputBorder(
@@ -64,12 +65,13 @@ class AshKhasListScreen extends StatelessWidget {
                   color: Color(AppColor.primaryColor), width: wi * 0.0065),
               borderRadius: BorderRadius.all(Radius.circular(wi * 0.04))),
         ),
-        onChanged:(value){} ,
+        onChanged:(value){personController.searachAhskhas(value);} ,
       ),
     );
   }
 
-  Widget _items(double wi, double he, int index , MainController controller) {
+  Widget _items(double wi, double he, int index , MainController controller , AshkhasCotrolller personController) {
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 375),
       width: wi,
@@ -87,19 +89,17 @@ class AshKhasListScreen extends StatelessWidget {
       child: Column(
         children: [
           ExpansionTile(
-            title: Text(controller.personListModel.value
-                .personList?[index].fldTifLfac!.toLowerCase()=="null" ? "فاقد نام" : "${controller.personListModel.value
-                .personList?[index].fldTifLfac}"),
+            title: Text(personController.personListAhskhas.value[index].fldTifLfac?.toLowerCase()=="null" ? "فاقد نام" : "${personController.personListAhskhas.value[index].fldTifLfac}"),
             iconColor: Color(AppColor.primaryColor),
             children: [
-              _itemRow(AppString.personName, controller.personListModel.value.personList![index].fldNmmfPer.toString()),
-              InkWell(onTap: (){ if(controller.personListModel.value.personList![index].fldphn1per.toString().toLowerCase() != "null") UrlLauncher.launch("tel://${controller.personListModel.value.personList![index].fldphn1per}");},child: _itemRow(AppString.phoneNumber1, controller.personListModel.value.personList![index].fldphn1per.toString() ,isPhoneNumber:true)),
-              InkWell(onTap: (){if(controller.personListModel.value.personList![index].fldphn2per.toString().toLowerCase() != "null") UrlLauncher.launch("tel://${controller.personListModel.value.personList![index].fldphn2per}");},child: _itemRow(AppString.phoneNumber2, controller.personListModel.value.personList![index].fldphn2per.toString(),isPhoneNumber:true)),
-              _itemRow(AppString.address, controller.personListModel.value.personList![index].fldadfper.toString()),
+              _itemRow(AppString.personName, personController.personListAhskhas.value[index].fldNmmfPer.toString()),
+              InkWell(onTap: (){ if(personController.personListAhskhas.value[index].fldphn1per.toString().toLowerCase() != "null") UrlLauncher.launch("tel://${personController.personListAhskhas.value[index].fldphn1per}");},child: _itemRow(AppString.phoneNumber1, personController.personListAhskhas.value[index].fldphn1per.toString() ,isPhoneNumber:true)),
+              InkWell(onTap: (){if(personController.personListAhskhas.value[index].fldphn2per.toString().toLowerCase() != "null") UrlLauncher.launch("tel://${personController.personListAhskhas.value[index].fldphn2per}");},child: _itemRow(AppString.phoneNumber2, personController.personListAhskhas.value[index].fldphn2per.toString(),isPhoneNumber:true)),
+              _itemRow(AppString.address, personController.personListAhskhas.value[index].fldadfper.toString()),
 
             ],
           ),
-          _itemRow(AppString.codehesab,controller.personListModel.value.personList![index].cfs.toString() ),
+          _itemRow(AppString.codehesab,personController.personListAhskhas.value[index].cfs.toString() ),
 
 
 

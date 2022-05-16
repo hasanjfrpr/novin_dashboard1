@@ -1,6 +1,5 @@
 
 
-
 import 'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
@@ -21,6 +20,7 @@ class FilterAsnadController extends GetxController{
 
   Rx<AsnadModel> asnadModelEmroz = AsnadModel().obs;
   Rx<AsnadModel> asnadModel = AsnadModel().obs;
+  RxList<DocumentList> documentList  = [DocumentList()].obs;
   RxBool showCircle = true.obs;
 
   void getAsnadEmroz(String startDate , String endDate) async{
@@ -36,6 +36,7 @@ class FilterAsnadController extends GetxController{
       'authorization':auth()
     }).then((value){
       var result = AsnadModel.fromJson(value);
+      asnadModelEmroz.value = result;
       showCircle.value = false;
       print(result);
     });
@@ -58,11 +59,33 @@ class FilterAsnadController extends GetxController{
     }).then((value){
       var result = AsnadModel.fromJson(value);
       asnadModel.value = result;
+      documentList.value.addAll(result.documentList!);
 
       Get.back();
       Get.to(AsnadListScreen());
     });
 
+
+  }
+  void searchAsnad(String value){
+    List<DocumentList> fakeList = <DocumentList>[];
+
+    if(value ==""){
+      fakeList.clear();
+      fakeList.addAll(asnadModel.value.documentList!);
+    }else if(value !=""){
+      fakeList.clear();
+      asnadModel.value.documentList!.forEach((element) {
+        if(element.fldCodDoc.toString().contains(value.toLowerCase())){
+          fakeList.add(element);
+        }
+      });
+    }
+
+    documentList.value.clear();
+    documentList.value.addAll(fakeList);
+    documentList.refresh();
+    update();
 
   }
 
