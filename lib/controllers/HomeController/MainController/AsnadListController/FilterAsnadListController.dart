@@ -21,6 +21,7 @@ class FilterAsnadController extends GetxController{
   Rx<AsnadModel> asnadModelEmroz = AsnadModel().obs;
   Rx<AsnadModel> asnadModel = AsnadModel().obs;
   RxList<DocumentList> documentList  = [DocumentList()].obs;
+  List<DocumentList> helpDocumentList  =<DocumentList>[];
   RxBool showCircle = true.obs;
 
   void getAsnadEmroz(String startDate , String endDate) async{
@@ -59,8 +60,8 @@ class FilterAsnadController extends GetxController{
     }).then((value){
       var result = AsnadModel.fromJson(value);
       asnadModel.value = result;
-      documentList.value.addAll(result.documentList!);
-
+      documentList.value=result.documentList!;
+      helpDocumentList.addAll(result.documentList!);
       Get.back();
       Get.to(AsnadListScreen());
     });
@@ -72,10 +73,10 @@ class FilterAsnadController extends GetxController{
 
     if(value ==""){
       fakeList.clear();
-      fakeList.addAll(asnadModel.value.documentList!);
+      fakeList.addAll(helpDocumentList);
     }else if(value !=""){
       fakeList.clear();
-      asnadModel.value.documentList!.forEach((element) {
+      helpDocumentList.forEach((element) {
         if(element.fldCodDoc.toString().contains(value.toLowerCase())){
           fakeList.add(element);
         }

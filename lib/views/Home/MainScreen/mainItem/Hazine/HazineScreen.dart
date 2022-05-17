@@ -40,10 +40,10 @@ class HazineScreen extends StatelessWidget {
             rows: [
               DataRow(cells: [
 
-                DataCell(Text(hazineController.s_bed.value.toString())),
-                DataCell(Text(hazineController.s_bes.value.toString())),
-                DataCell(Text(hazineController.bed.value.toString())),
-                DataCell(Text(hazineController.bes.value.toString())),
+                DataCell(Text(setFormatNumber(hazineController.s_bed.value.toString()))),
+                DataCell(Text(setFormatNumber(hazineController.s_bes.value.toString()))),
+                DataCell(Text(setFormatNumber(hazineController.bed.value.toString()))),
+                DataCell(Text(setFormatNumber(hazineController.bes.value.toString()))),
               ])
             ],
           ),

@@ -25,7 +25,7 @@ class MojoodikalaScreen extends StatelessWidget {
 
   }
   Widget _portraitView(double wi , double he , FilterMojoodiController controller){
-    var ListMojoodiKala = controller.mojoodikalaModel.value.mojoodiKalaList;
+
     return GestureDetector(
       onTap: (){ FocusManager.instance.primaryFocus!.unfocus(); },
       child: Column(
@@ -56,20 +56,25 @@ class MojoodikalaScreen extends StatelessWidget {
                         width: 5*0.3*wi,
                         height: he,
                         color: Colors.grey,
-                        child: ListView.builder(itemBuilder: (context , index){
-                          return Row(children: [
-                            Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.6 ,height: he*0.08,child: Text(ListMojoodiKala![index].fldtiflfac.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12),
-                            Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(ListMojoodiKala[index].qtymoged.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(setFormatNumber(ListMojoodiKala[index].avmoged.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(setFormatNumber(ListMojoodiKala[index].prcmoged.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                        child: Obx((){
+                          return ListView.builder(itemBuilder: (context , index){
+                            return Container(
+                              color: index.isEven ? Colors.blue.shade100 : Colors.white70,
+                              child: Row(children: [
+                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.6 ,height: he*0.08,child: Text(controller.mojoodiList.value![index].fldtiflfac.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                                Divider(color: Colors.black12),
+                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(controller.mojoodiList.value[index].qtymoged.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                                Divider(color: Colors.black12,),
+                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(setFormatNumber(controller.mojoodiList.value[index].avmoged.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                                Divider(color: Colors.black12,),
+                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(setFormatNumber(controller.mojoodiList.value[index].prcmoged.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
 
 
-                          ],);
+                              ],),
+                            );
 
-                        }, itemCount: ListMojoodiKala!.length,),
+                          }, itemCount: controller.mojoodiList.value.length,);}
+                        ),
                       ),
                     ),
 
@@ -97,7 +102,7 @@ class MojoodikalaScreen extends StatelessWidget {
 
         decoration: InputDecoration(
           prefixIcon: Icon(CupertinoIcons.search),
-          hintText: AppString.searchFactorF,
+          hintText: "جستجو بر اساس عنوان",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(wi * 0.04))),
           focusedBorder: OutlineInputBorder(
@@ -105,7 +110,7 @@ class MojoodikalaScreen extends StatelessWidget {
                   color: Color(AppColor.primaryColor), width: wi * 0.0065),
               borderRadius: BorderRadius.all(Radius.circular(wi * 0.04))),
         ),
-        onChanged:(value){} ,
+        onChanged:(value){  Get.find<FilterMojoodiController>().searchMojoodi(value);} ,
       ),
     );
   }

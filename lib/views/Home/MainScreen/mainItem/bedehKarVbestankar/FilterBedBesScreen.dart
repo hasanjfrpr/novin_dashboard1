@@ -98,7 +98,7 @@ class FilterBedBesScreen extends StatelessWidget {
                 }
 
                 print(personList);
-                Get.to(BedehkarVbestanKarScreen(personList: personList!)  );
+                Get.to(BedehkarVbestanKarScreen()  );
 
               },
               height: he * 0.05,

@@ -9,19 +9,19 @@ import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestank
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class BedehkarVbestanKarScreen extends StatelessWidget {
-  List<PersonList>? personList;
+  // List<PersonList>? personList;
 
-  BedehkarVbestanKarScreen({Key? key, required this.personList})
+  BedehkarVbestanKarScreen({Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double wi = Get.width;
     double he = Get.height;
-    RxInt filterRadio = 0.obs;
-    RxList<PersonList> personLists = <PersonList>[].obs;
-    personLists.value = personList!;
+
+
     BedBesController controller = Get.put(BedBesController());
+
 
     return Scaffold(
       appBar: AppBar(
@@ -33,12 +33,12 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
           FocusManager.instance.primaryFocus!.unfocus();
         },
         child: OrientationBuilder(builder: (context, orientation) {
-          return orientation==Orientation.portrait ? portrait(wi, he, filterRadio, personLists, controller) : portrait(he, wi, filterRadio, personLists, controller);
+          return orientation==Orientation.portrait ? portrait(wi, he,  controller.personLists, controller) : portrait(he, wi, controller.personLists, controller);
         })
       ),
     );
   }
-  Widget portrait(double wi , double he , RxInt filterRadio ,RxList<PersonList> personLists,BedBesController controller  ){
+  Widget portrait(double wi , double he ,RxList<PersonList> personList,BedBesController controller  ){
     return Container(
       width: wi,
       height: he,
@@ -50,62 +50,14 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: _searchBox(wi, he),
+                    child: _searchBox(wi, he ,controller),
                     flex: 5,
                   ),
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        Get.bottomSheet(Obx(() {
-                          return Container(
-                            width: wi,
-                            height: he * 0.3,
-                            child: Column(
-                              children: [
-                                RadioListTile<int>(
-                                    title: Text("بیشترین بستانکار"),
-                                    value: 0,
-                                    groupValue: filterRadio.value,
-                                    onChanged: (value) {
-                                      filterRadio.value = value!;
-                                    }),
-                                RadioListTile<int>(
-                                    title: Text("بیشترین بدهکار"),
-                                    value: 1,
-                                    groupValue: filterRadio.value,
-                                    onChanged: (value) {
-                                      filterRadio.value = value!;
-                                    }),
-                                MaterialButton(
-                                  onPressed: () {
-                                    personLists.value.sort((a,b)=>int.parse(a.prc!.toLowerCase()=="null" ? "0" : a.prc!).compareTo(int.parse(a.prc!.toLowerCase()=="null" ? "0" : a.prc!))
 
-                                    );
-                                    Get.back();
-                                    Get.off(BedehkarVbestanKarScreen(personList: personLists.value,));
-
-                                  },
-                                  child: Text(
-                                    "مرتب سازی",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  color: Color(AppColor.primaryColor),
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(wi * 0.05),
-                              color: Colors.white,
-                            ),
-                          );
-                        }),
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: wi * 0.008,
-                                    color: Color(AppColor.primaryColor)),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(wi * 0.05))));
+                        controller.showSort(wi,he);
                       },
                       child: Container(
                         height: he,
@@ -161,17 +113,18 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
             flex: 3,
           ),
           Expanded(
-            child: Obx((){ return Container(
+            child: Container(
               color: Colors.white,
-              child: personLists.value.isEmpty
+              child: personList.value.isEmpty
                   ? emptyScreen(wi, he)
-                  : ListView.builder(
-                itemCount: personLists.value.length,
+                  : Obx(
+    (){return ListView.builder(
+                itemCount: personList.value.length,
                 itemBuilder: (context, index) {
-                  return _item(wi, he, personList!, index , controller);
+                    return _item(wi, he, personList, index , controller);
                 },
-              ),
-            );}
+              );}
+                  ),
             ),
             flex: 30,
           ),
@@ -180,14 +133,14 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
     );
   }
 
-  Widget _searchBox(double wi, double he) {
+  Widget _searchBox(double wi, double he , BedBesController controller) {
     return Container(
       width: wi,
       height: he * 0.05,
       child: TextField(
         decoration: InputDecoration(
           prefixIcon: Icon(CupertinoIcons.search),
-          hintText: AppString.searchFactorF,
+          hintText: "جستجو براساس نام شخص",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0))),
           focusedBorder: OutlineInputBorder(
@@ -195,7 +148,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
                   color: Color(AppColor.primaryColor), width: wi * 0.0065),
               borderRadius: BorderRadius.all(Radius.circular(0))),
         ),
-        onChanged: (value) {},
+        onChanged: (value) {controller.searchPerson(value);},
       ),
     );
   }
@@ -365,9 +318,5 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
     return s;
   }
 
-  void _sort(int value) {
-    if (value == 0) {
-      personList!.sort();
-    } else {}
-  }
+
 }

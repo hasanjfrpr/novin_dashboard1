@@ -22,6 +22,8 @@ class FilterMojoodiController extends GetxController{
   RxBool showLoadingV= false.obs;
   Rx<AnbarModel> anbarModel  = AnbarModel().obs;
   Rx<MojoodiKalaModel> mojoodikalaModel = MojoodiKalaModel().obs;
+  RxList<MojoodiKalaList> mojoodiList = [MojoodiKalaList()].obs;
+  List<MojoodiKalaList> helpMojoodiList = <MojoodiKalaList>[];
   RxList<DropdownMenuItem> anbarModelDropDown = [DropdownMenuItem(child: Text("") , value: "",)].obs;
   
   
@@ -67,10 +69,33 @@ class FilterMojoodiController extends GetxController{
     } ).then((value){
      var result = MojoodiKalaModel.fromJson(value);
      mojoodikalaModel.value = result;
+     mojoodiList.value.addAll(result.mojoodiKalaList!);
+     helpMojoodiList.addAll(result.mojoodiKalaList!);
      print(result);
      Get.back();
      Get.to(MojoodikalaScreen());
     });
+
+  }
+  void searchMojoodi(String value){
+    List<MojoodiKalaList> fakeList = <MojoodiKalaList>[];
+
+    if(value ==""){
+      fakeList.clear();
+      fakeList.addAll(helpMojoodiList);
+    }else if(value !=""){
+      fakeList.clear();
+      helpMojoodiList.forEach((element) {
+        if(element.fldtiflfac.toString().contains(value.toLowerCase())){
+          fakeList.add(element);
+        }
+      });
+    }
+
+    mojoodiList.value.clear();
+    mojoodiList.value.addAll(fakeList);
+    mojoodiList.refresh();
+    update();
 
   }
 }

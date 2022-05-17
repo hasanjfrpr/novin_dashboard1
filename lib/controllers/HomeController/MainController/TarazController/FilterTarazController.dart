@@ -31,6 +31,19 @@ class FilterTarazController extends GetxController{
   RxDouble bes = 0.0.obs;
 
 
+  void _addtotalBedBes(TarazKolModel tarazMoeinModel){
+    for(var i =0;i<tarazMoeinModel.tarazAzmayeshiKolList!.length ; i++){
+      s_bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolList![i].sbed.toString().replaceAll("-", ""));
+      s_bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolList![i].sbes.toString().replaceAll("-", ""));
+      bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolList![i].bed.toString().replaceAll("-", ""));
+      bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolList![i].bes.toString().replaceAll("-", ""));
+      print(s_bes.value);
+      print(tarazMoeinModel.tarazAzmayeshiKolList![i].sbed.toString().replaceAll("-", ""));
+    }
+
+
+
+  }
 
 
 
@@ -51,12 +64,14 @@ class FilterTarazController extends GetxController{
     ).then((value) {
       var tarazKol = TarazKolModel.fromJson(value);
       tarazKolModel.value = tarazKol;
+      listTaraz.value.clear();
       listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
       print(tarazKol);
 
       if(isChecked.value==true){
 
         print(listTaraz.value.length);
+        _addtotalBedBes(tarazKolModel.value);
         Get.back();
         Get.to(TarazScreen());
 
@@ -82,6 +97,7 @@ class FilterTarazController extends GetxController{
 
         }
         print(listTaraz.value.length);
+        _addtotalBedBes(tarazKolModel.value);
         Get.back();
         Get.to(TarazScreen());
 

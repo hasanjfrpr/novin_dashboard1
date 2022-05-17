@@ -61,26 +61,34 @@ class RizBedBesScreen extends StatelessWidget {
               ),
             ),
           ],
-        ) : SingleChildScrollView(
-          child: Container(
-            width: Get.width,
-            child: DataTable(
+        ) :
+        Row(children: [
+          Expanded(child:SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                width: he,
+                height: wi,
+                child: DataTable(
 
-                headingRowColor:
-                MaterialStateColor.resolveWith((states) => Colors.blue),
-                border: TableBorder(verticalInside: BorderSide(color: Colors.black26)),
-                headingRowHeight: he*0.05,
-                columns:  [
-                  DataColumn(label: Expanded(child: Text("تاریخ سند") ) ),
-                  DataColumn(label: Expanded(child: Container(width: wi,alignment: Alignment.center,child: Text("شرح" , textAlign: TextAlign.center,)  ) , flex: 3,) ),
-                  DataColumn(label: Expanded(child: Text("بدهکار"))),
-                  DataColumn(label: Expanded(child: Text("بستانکار"))),
-                  DataColumn(label: Expanded(child: Text("مانده"))),
-                ],
-                rows: getDataRow(controller)
+                    headingRowColor:
+                    MaterialStateColor.resolveWith((states) => Colors.blue),
+                    border: TableBorder(verticalInside: BorderSide(color: Colors.black26)),
+                    headingRowHeight: he*0.05,
+                    columns:  [
+                      DataColumn(label: Expanded(child: Text("تاریخ سند") ) ),
+                      DataColumn(label: Expanded(child: Container(width: wi,alignment: Alignment.center,child: Text("شرح" , textAlign: TextAlign.center,)  ) , flex: 3,) ),
+                      DataColumn(label: Expanded(child: Text("بدهکار"))),
+                      DataColumn(label: Expanded(child: Text("بستانکار"))),
+                      DataColumn(label: Expanded(child: Text("مانده"))),
+                    ],
+                    rows: getDataRow(controller)
+                ),
+              ),
             ),
-          ),
-        );
+          ),)
+        ],);
       })
     );
   }
