@@ -8,7 +8,21 @@ import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/T
 class TarazMoienController extends GetxController{
   Rx<TarazKolLv3Model> tarazKolLv3 = TarazKolLv3Model().obs;
 
+  RxDouble s_bed = 0.0.obs;
+  RxDouble s_bes = 0.0.obs;
+  RxDouble bed = 0.0.obs;
+  RxDouble bes = 0.0.obs;
 
+  void _addtotalBedBes(TarazKolLv3Model tarazMoeinModel){
+    for(var i =0;i<tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList!.length ; i++){
+      s_bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList![i].sbed.toString().replaceAll("-", ""));
+      s_bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList![i].sbes.toString().replaceAll("-", ""));
+      bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList![i].bed.toString().replaceAll("-", ""));
+      bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList![i].bes.toString().replaceAll("-", ""));
+      print(s_bes.value);
+      print(tarazMoeinModel.tarazAzmayeshiKolMoeinTafsiliList![i].sbed.toString().replaceAll("-", ""));
+    }
+  }
 
   void getTarazKolLv3(String startDate , String endDate , String codjac , String head , String tif) async{
     await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_Moein_TafsiliList", body:
@@ -26,6 +40,7 @@ class TarazMoienController extends GetxController{
     }).then((value){
 
       tarazKolLv3.value = TarazKolLv3Model.fromJson(value);
+      _addtotalBedBes(tarazKolLv3.value);
       Get.back();
       Get.to(TarazKolLv3Screen(tif:tif));
     } );

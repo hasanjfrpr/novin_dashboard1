@@ -11,8 +11,21 @@ class TarazController extends  GetxController{
 
   Rx<TarazMoeinModel> tarazMoienModel = TarazMoeinModel().obs;
 
+  RxDouble s_bed = 0.0.obs;
+  RxDouble s_bes = 0.0.obs;
+  RxDouble bed = 0.0.obs;
+  RxDouble bes = 0.0.obs;
 
-
+  void _addtotalBedBes(TarazMoeinModel tarazMoeinModel){
+    for(var i =0;i<tarazMoeinModel.tarazAzmayeshiKolMoeinList!.length ; i++){
+      s_bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinList![i].sbed.toString().replaceAll("-", ""));
+      s_bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinList![i].sbes.toString().replaceAll("-", ""));
+      bed.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinList![i].bed.toString().replaceAll("-", ""));
+      bes.value += double.parse(tarazMoeinModel.tarazAzmayeshiKolMoeinList![i].bes.toString().replaceAll("-", ""));
+      print(s_bes.value);
+      print(tarazMoeinModel.tarazAzmayeshiKolMoeinList![i].sbed.toString().replaceAll("-", ""));
+    }
+  }
 
   void getTaraz(String startDate , String endDate , String codTac , String head , String tif) async{
     await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body:
@@ -33,6 +46,7 @@ class TarazController extends  GetxController{
       var result = TarazMoeinModel.fromJson(value);
       print(result);
       tarazMoienModel.value = result;
+      _addtotalBedBes(result);
       Get.back();
       Get.to(TarazMoienScreen(tif: tif,));
     });

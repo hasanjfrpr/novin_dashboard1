@@ -22,7 +22,7 @@ class FilterTarazController extends GetxController{
 
 
   Rx<TarazKolModel> tarazKolModel = TarazKolModel().obs;
-  RxList<TarazAzmayeshiKolList> listTaraz = [TarazAzmayeshiKolList()].obs;
+  RxList<TarazAzmayeshiKolList> listTaraz = <TarazAzmayeshiKolList>[].obs;
 
 
   RxDouble s_bed = 0.0.obs;
