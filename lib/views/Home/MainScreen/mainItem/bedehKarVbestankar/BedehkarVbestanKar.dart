@@ -92,7 +92,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
                     children: [
                       Text("مجموع بدهکار"),
                       Text(
-                        setFormatNumber(_totalBed(personList!)),
+                        setFormatNumber(_totalBed(personList)),
                         style: TextStyle(color: Colors.redAccent),
                       ),
                     ],
@@ -102,7 +102,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
                     children: [
                       Text("مجموع بستانکار"),
                       Text(
-                        setFormatNumber(_totalBes(personList!)),
+                        setFormatNumber(_totalBes(personList)),
                         style: TextStyle(color: Colors.green),
                       ),
                     ],

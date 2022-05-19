@@ -61,7 +61,7 @@ class MojoodikalaScreen extends StatelessWidget {
                             return Container(
                               color: index.isEven ? Colors.blue.shade100 : Colors.white70,
                               child: Row(children: [
-                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.6 ,height: he*0.08,child: Text(controller.mojoodiList.value![index].fldtiflfac.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                                Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.6 ,height: he*0.08,child: Text(controller.mojoodiList.value[index].fldtiflfac.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
                                 Divider(color: Colors.black12),
                                 Container(padding:EdgeInsets.all(wi*0.04),width: wi*0.3 ,height: he*0.08,child: Text(controller.mojoodiList.value[index].qtymoged.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
                                 Divider(color: Colors.black12,),

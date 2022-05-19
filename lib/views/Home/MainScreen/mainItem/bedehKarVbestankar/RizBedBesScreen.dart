@@ -61,34 +61,34 @@ class RizBedBesScreen extends StatelessWidget {
               ),
             ),
           ],
-        ) :
-        Row(children: [
-          Expanded(child:SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Container(
-                width: he,
-                height: wi,
-                child: DataTable(
-
-                    headingRowColor:
-                    MaterialStateColor.resolveWith((states) => Colors.blue),
-                    border: TableBorder(verticalInside: BorderSide(color: Colors.black26)),
-                    headingRowHeight: he*0.05,
-                    columns:  [
-                      DataColumn(label: Expanded(child: Text("تاریخ سند") ) ),
-                      DataColumn(label: Expanded(child: Container(width: wi,alignment: Alignment.center,child: Text("شرح" , textAlign: TextAlign.center,)  ) , flex: 3,) ),
-                      DataColumn(label: Expanded(child: Text("بدهکار"))),
-                      DataColumn(label: Expanded(child: Text("بستانکار"))),
-                      DataColumn(label: Expanded(child: Text("مانده"))),
-                    ],
-                    rows: getDataRow(controller)
-                ),
-              ),
-            ),
-          ),)
-        ],);
+        ) : _landView(wi , he , controller);
+        // Row(children: [
+        //   Expanded(child:SingleChildScrollView(
+        //     scrollDirection: Axis.horizontal,
+        //     child: SingleChildScrollView(
+        //       scrollDirection: Axis.vertical,
+        //       child: Container(
+        //         width: he,
+        //         height: wi,
+        //         child: DataTable(
+        //
+        //             headingRowColor:
+        //             MaterialStateColor.resolveWith((states) => Colors.blue),
+        //             border: TableBorder(verticalInside: BorderSide(color: Colors.black26)),
+        //             headingRowHeight: he*0.05,
+        //             columns:  [
+        //               DataColumn(label: Expanded(child: Text("تاریخ سند") ) ),
+        //               DataColumn(label: Expanded(child: Container(width: wi,alignment: Alignment.center,child: Text("شرح" , textAlign: TextAlign.center,)  ) , flex: 3,) ),
+        //               DataColumn(label: Expanded(child: Text("بدهکار"))),
+        //               DataColumn(label: Expanded(child: Text("بستانکار"))),
+        //               DataColumn(label: Expanded(child: Text("مانده"))),
+        //             ],
+        //             rows: getDataRow(controller)
+        //         ),
+        //       ),
+        //     ),
+        //   ),)
+        // ],);
       })
     );
   }
@@ -105,6 +105,60 @@ class RizBedBesScreen extends StatelessWidget {
       ]));
     }
     return datalist;
+  }
+
+  Widget _landView(double wi , double he  ,BedBesController controller ){
+    var listTaraz = controller.rizBedBesModel.value.hesabAshkhasList!;
+    return Container(
+      width: Get.width,
+      height: Get.height,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: Container(
+              width: Get.width,
+              height: Get.height*.15,
+              color: Colors.blue,
+              child: Row(children: [
+                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("تاریخ سند",style: TextStyle(color: Colors.white),),) , flex: 2,),
+                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("شرح",style: TextStyle(color: Colors.white),),) , flex: 3,),
+                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار",style: TextStyle(color: Colors.white),),) , flex: 2,),
+                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار",style: TextStyle(color: Colors.white),),) , flex: 2,),
+                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("مانده",style: TextStyle(color: Colors.white),),) , flex: 2,),
+
+
+
+
+              ],),
+
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              width: Get.width,
+              height: Get.height*0.85,
+              child: ListView.builder(itemBuilder: (context , index){
+                return  Container(
+                    height: Get.height*0.1,
+                    color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
+                    child: Row(children: [
+                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(convertDtoJDate(listTaraz[index].flddodadoc.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
+                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz[index].flddsfacc.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
+                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bed.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bes.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
+                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].sumprc.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+
+                    ],),
+                  );
+
+              }, itemCount: listTaraz.length,),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
 }

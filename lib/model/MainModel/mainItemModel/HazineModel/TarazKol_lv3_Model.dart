@@ -1,5 +1,3 @@
-/// Result : {"Success":"True","LogStr":""}
-/// TarazAzmayeshiKol_Moein_TafsiliList : [{"FLD_NO_LVL":"1","FLD_SCR_HEAD":"1","FLD_PARENT_ID":"Null","FLD_COD_LFAC":"1","CFS":"11/10/0010/0001/0001","TIF":"صندوق","FLD_IS_LAST":"1","S_BED":"1066400000","S_BES":"1066400000","BED":"0","BES":"0"},{"FLD_NO_LVL":"1","FLD_SCR_HEAD":"1","FLD_PARENT_ID":"0","FLD_COD_LFAC":"2372","CFS":"11/10/0010/0001/0002","TIF":"تست","FLD_IS_LAST":"1","S_BED":"0","S_BES":"0","BED":"0","BES":"0"}]
 
 class TarazKolLv3Model {
   TarazKolLv3Model({

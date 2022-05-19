@@ -19,7 +19,7 @@ class FilterTarazController extends GetxController{
   RxInt endYear = Get.find<HomeController>().jalili.value.year.obs;
 
   RxBool isChecked = true.obs;
-
+  bool clickShod = false;
 
   Rx<TarazKolModel> tarazKolModel = TarazKolModel().obs;
   RxList<TarazAzmayeshiKolList> listTaraz = <TarazAzmayeshiKolList>[].obs;
@@ -46,6 +46,57 @@ class FilterTarazController extends GetxController{
   }
 
 
+  sortable(String field){
+    if(field == "sbed"){
+      if(clickShod == false){
+        listTaraz.value.sort((a,b)=>int.parse(a.sbed!.toLowerCase()=="null" ? "0" : a.sbed!).compareTo(int.parse(b.sbed!.toLowerCase()=="null" ? "0" : b.sbed!)));
+        listTaraz.refresh();
+        update();
+        clickShod = true;
+      }else{
+        listTaraz.value.sort((a,b)=>int.parse(b.sbed!.toLowerCase()=="null" ? "0" : b.sbed!).compareTo(int.parse(a.sbed!.toLowerCase()=="null" ? "0" : a.sbed!)));
+        listTaraz.refresh();
+        update();
+        clickShod = false;
+      }
+    }else if(field == "sbes"){
+      if(clickShod == false){
+        listTaraz.value.sort((a,b)=>int.parse(a.sbes!.toLowerCase()=="null" ? "0" : a.sbes!).compareTo(int.parse(b.sbes!.toLowerCase()=="null" ? "0" : b.sbes!)));
+        listTaraz.refresh();
+        update();
+        clickShod = true;
+      }else{
+        listTaraz.value.sort((a,b)=>int.parse(b.sbes!.toLowerCase()=="null" ? "0" : b.sbes!).compareTo(int.parse(a.sbes!.toLowerCase()=="null" ? "0" : a.sbes!)));
+        listTaraz.refresh();
+        update();
+        clickShod = false;
+      }
+    }else if(field == "bed"){
+      if(clickShod == false){
+        listTaraz.value.sort((a,b)=>int.parse(a.bed!.toLowerCase()=="null" ? "0" : a.bed!).compareTo(int.parse(b.bed!.toLowerCase()=="null" ? "0" : b.bed!)));
+        listTaraz.refresh();
+        update();
+        clickShod = true;
+      }else{
+        listTaraz.value.sort((a,b)=>int.parse(b.bed!.toLowerCase()=="null" ? "0" : b.bed!).compareTo(int.parse(a.bed!.toLowerCase()=="null" ? "0" : a.bed!)));
+        listTaraz.refresh();
+        update();
+        clickShod = false;
+      }
+    }else{
+      if(clickShod == false){
+        listTaraz.value.sort((a,b)=>int.parse(a.bes!.toLowerCase()=="null" ? "0" : a.bes!).compareTo(int.parse(b.bes!.toLowerCase()=="null" ? "0" : b.bes!)));
+        listTaraz.refresh();
+        update();
+        clickShod = true;
+      }else{
+        listTaraz.value.sort((a,b)=>int.parse(b.bes!.toLowerCase()=="null" ? "0" : b.bes!).compareTo(int.parse(a.bes!.toLowerCase()=="null" ? "0" : a.bes!)));
+        listTaraz.refresh();
+        update();
+        clickShod = false;
+      }
+    }
+  }
 
 
   void getTaraz(String startDate , String endDate) async{
@@ -106,5 +157,7 @@ class FilterTarazController extends GetxController{
     });
 
   }
+
+
 
 }

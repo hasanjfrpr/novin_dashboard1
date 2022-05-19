@@ -30,7 +30,7 @@ class TarazMoienScreen extends StatelessWidget {
 
   }
   Widget _portraitView(double wi , double he , TarazController controller , FilterTarazController controllers , TarazMoienController moienController){
-    var listTaraz = controller.tarazMoienModel.value.tarazAzmayeshiKolMoeinList;
+    var listTaraz = controller.tarazMoienList;
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SingleChildScrollView(
@@ -43,10 +43,10 @@ class TarazMoienScreen extends StatelessWidget {
                 Expanded(
                   child: Row(children: [
                     Container(width: wi*0.6 ,height: he*0.05,child: Text("حساب" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
-                    Container(width: wi*0.3 ,height: he*0.05,child: Text("بدهکار(گردش)" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
-                    Container(width: wi*0.3 ,height: he*0.05,child: Text("بستانکار(گردش)" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
-                    Container(width: wi*0.3 ,height: he*0.05,child: Text("بدهکار" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
-                    Container(width: wi*0.3 ,height: he*0.05,child: Text("بستانکار" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
+                    InkWell(onTap: (){controller.sortable("sbed");},child: Container(width: wi*0.3 ,height: he*0.05,child: Text("بدهکار(گردش)" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),)),
+                    InkWell(onTap: (){controller.sortable("sbes");},child: Container(width: wi*0.3 ,height: he*0.05,child: Text("بستانکار(گردش)" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),)),
+                    InkWell(onTap: (){controller.sortable("bed");},child: Container(width: wi*0.3 ,height: he*0.05,child: Text("بدهکار" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),)),
+                    InkWell(onTap: (){controller.sortable("bes");},child: Container(width: wi*0.3 ,height: he*0.05,child: Text("بستانکار" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),)),
 
 
                   ],),
@@ -57,31 +57,33 @@ class TarazMoienScreen extends StatelessWidget {
                     width: 6*0.3*wi,
                     height: he,
                     color: Colors.grey,
-                    child: ListView.builder(itemBuilder: (context , index){
-                      return InkWell(
-                        onTap: (){
-                          moienController.getTarazKolLv3(convertJtoGDate(
-                              controllers.year.value, controllers.month.value,
-                              controllers.day.value),
-                              convertJtoGDate(
-                                  controllers.endYear.value, controllers.endMonth.value,
-                                  controllers.endDay.value), listTaraz![index].fldcodjac.toString(), listTaraz[index].fldscrhead.toString(),listTaraz[index].tif!);
-                          showLoading(wi, he);
-                        },
-                        child: Row(children: [
-                          Container(width: wi*0.6 ,height: he*0.05,child: Text(listTaraz![index].tif.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                          Divider(color: Colors.black12,),
-                          Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz[index].sbed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                          Divider(color: Colors.black12,),
-                          Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz[index].sbes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                          Divider(color: Colors.black12,),
-                          Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz[index].bed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                          Divider(color: Colors.black12,),
-                          Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz[index].bes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                    child: Obx((){
+                      return ListView.builder(itemBuilder: (context , index){
+                        return InkWell(
+                          onTap: (){
+                            moienController.getTarazKolLv3(convertJtoGDate(
+                                controllers.year.value, controllers.month.value,
+                                controllers.day.value),
+                                convertJtoGDate(
+                                    controllers.endYear.value, controllers.endMonth.value,
+                                    controllers.endDay.value), listTaraz.value[index].fldcodjac.toString(), listTaraz.value[index].fldscrhead.toString(),listTaraz.value[index].tif!);
+                            showLoading(wi, he);
+                          },
+                          child: Row(children: [
+                            Container(width: wi*0.6 ,height: he*0.05,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                            Divider(color: Colors.black12,),
+                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                            Divider(color: Colors.black12,),
+                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                            Divider(color: Colors.black12,),
+                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                            Divider(color: Colors.black12,),
+                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
 
-                        ],),
-                      );
-                    }, itemCount: listTaraz!.length,),
+                          ],),
+                        );
+                      }, itemCount: listTaraz.value.length,);}
+                    ),
                   ),
                 ),
 
@@ -117,7 +119,7 @@ class TarazMoienScreen extends StatelessWidget {
   }
 
   Widget _landView(double wi , double he , TarazController controller , FilterTarazController controllers , TarazMoienController moienController){
-    var listTaraz = controller.tarazMoienModel.value.tarazAzmayeshiKolMoeinList;
+    var listTaraz = controller.tarazMoienList;
 
     return Container(
       width: Get.width,
@@ -132,10 +134,10 @@ class TarazMoienScreen extends StatelessWidget {
               color: Colors.blue,
               child: Row(children: [
                 Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("حساب",style: TextStyle(color: Colors.white),),) , flex: 3,),
-                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار(گردش)",style: TextStyle(color: Colors.white),),) , flex: 2,),
-                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار(گردش)",style: TextStyle(color: Colors.white),),) , flex: 2,),
-                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار",style: TextStyle(color: Colors.white),),) , flex: 2,),
-                Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار",style: TextStyle(color: Colors.white),),) , flex: 2,),
+                Expanded(child: InkWell(onTap: (){controller.sortable("sbed");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار(گردش)",style: TextStyle(color: Colors.white),),)) , flex: 2,),
+                Expanded(child: InkWell(onTap: (){controller.sortable("sbes");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار(گردش)",style: TextStyle(color: Colors.white),),)) , flex: 2,),
+                Expanded(child: InkWell(onTap: (){controller.sortable("bed");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار",style: TextStyle(color: Colors.white),),)) , flex: 2,),
+                Expanded(child: InkWell(onTap: (){controller.sortable("bes");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار",style: TextStyle(color: Colors.white),),)) , flex: 2,),
 
 
 
@@ -149,31 +151,33 @@ class TarazMoienScreen extends StatelessWidget {
             child: Container(
               width: Get.width,
               height: Get.height*0.85,
-              child: ListView.builder(itemBuilder: (context , index){
-                return InkWell(
-                  onTap: (){
-                    moienController.getTarazKolLv3(convertJtoGDate(
-                        controllers.year.value, controllers.month.value,
-                        controllers.day.value),
-                        convertJtoGDate(
-                            controllers.endYear.value, controllers.endMonth.value,
-                            controllers.endDay.value), listTaraz![index].fldcodjac.toString(), listTaraz[index].fldscrhead.toString(),listTaraz[index].tif!);
-                    showLoading(wi, he);
-                  },
-                  child: Container(
-                    height: Get.height*0.1,
-                    color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
-                    child: Row(children: [
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz![index].tif.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].sbed.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].sbes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bed.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+              child: Obx((){
+                return ListView.builder(itemBuilder: (context , index){
+                  return InkWell(
+                    onTap: (){
+                      moienController.getTarazKolLv3(convertJtoGDate(
+                          controllers.year.value, controllers.month.value,
+                          controllers.day.value),
+                          convertJtoGDate(
+                              controllers.endYear.value, controllers.endMonth.value,
+                              controllers.endDay.value), listTaraz.value[index].fldcodjac.toString(), listTaraz.value[index].fldscrhead.toString(),listTaraz.value[index].tif!);
+                      showLoading(wi, he);
+                    },
+                    child: Container(
+                      height: Get.height*0.1,
+                      color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
+                      child: Row(children: [
+                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
+                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
+                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
+                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
 
-                    ],),
-                  ),
-                );
-              }, itemCount: listTaraz!.length,),
+                      ],),
+                    ),
+                  );
+                }, itemCount: listTaraz.value.length,);}
+              ),
             ),
           )
         ],

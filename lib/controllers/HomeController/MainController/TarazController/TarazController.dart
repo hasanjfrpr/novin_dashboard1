@@ -10,7 +10,8 @@ import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/T
 class TarazController extends  GetxController{
 
   Rx<TarazMoeinModel> tarazMoienModel = TarazMoeinModel().obs;
-
+  RxList<TarazAzmayeshiKolMoeinList> tarazMoienList = [TarazAzmayeshiKolMoeinList()].obs;
+bool clickShod = false;
   RxDouble s_bed = 0.0.obs;
   RxDouble s_bes = 0.0.obs;
   RxDouble bed = 0.0.obs;
@@ -46,6 +47,7 @@ class TarazController extends  GetxController{
       var result = TarazMoeinModel.fromJson(value);
       print(result);
       tarazMoienModel.value = result;
+      tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
       _addtotalBedBes(result);
       Get.back();
       Get.to(TarazMoienScreen(tif: tif,));
@@ -53,6 +55,57 @@ class TarazController extends  GetxController{
 
 
 
+  }
+  sortable(String field){
+    if(field == "sbed"){
+      if(clickShod == false){
+        tarazMoienList.value.sort((a,b)=>int.parse(a.sbed!.toLowerCase()=="null" ? "0" : a.sbed!).compareTo(int.parse(b.sbed!.toLowerCase()=="null" ? "0" : b.sbed!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = true;
+      }else{
+        tarazMoienList.value.sort((a,b)=>int.parse(b.sbed!.toLowerCase()=="null" ? "0" : b.sbed!).compareTo(int.parse(a.sbed!.toLowerCase()=="null" ? "0" : a.sbed!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = false;
+      }
+    }else if(field == "sbes"){
+      if(clickShod == false){
+        tarazMoienList.value.sort((a,b)=>int.parse(a.sbes!.toLowerCase()=="null" ? "0" : a.sbes!).compareTo(int.parse(b.sbes!.toLowerCase()=="null" ? "0" : b.sbes!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = true;
+      }else{
+        tarazMoienList.value.sort((a,b)=>int.parse(b.sbes!.toLowerCase()=="null" ? "0" : b.sbes!).compareTo(int.parse(a.sbes!.toLowerCase()=="null" ? "0" : a.sbes!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = false;
+      }
+    }else if(field == "bed"){
+      if(clickShod == false){
+        tarazMoienList.value.sort((a,b)=>int.parse(a.bed!.toLowerCase()=="null" ? "0" : a.bed!).compareTo(int.parse(b.bed!.toLowerCase()=="null" ? "0" : b.bed!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = true;
+      }else{
+        tarazMoienList.value.sort((a,b)=>int.parse(b.bed!.toLowerCase()=="null" ? "0" : b.bed!).compareTo(int.parse(a.bed!.toLowerCase()=="null" ? "0" : a.bed!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = false;
+      }
+    }else{
+      if(clickShod == false){
+        tarazMoienList.value.sort((a,b)=>int.parse(a.bes!.toLowerCase()=="null" ? "0" : a.bes!).compareTo(int.parse(b.bes!.toLowerCase()=="null" ? "0" : b.bes!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = true;
+      }else{
+        tarazMoienList.value.sort((a,b)=>int.parse(b.bes!.toLowerCase()=="null" ? "0" : b.bes!).compareTo(int.parse(a.bes!.toLowerCase()=="null" ? "0" : a.bes!)));
+        tarazMoienList.refresh();
+        update();
+        clickShod = false;
+      }
+    }
   }
 
   @override
