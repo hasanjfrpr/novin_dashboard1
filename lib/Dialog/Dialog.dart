@@ -9,6 +9,9 @@ class Dialogs {
   static late var focusNode2 = FocusNode();
   static late var focusNode3 = FocusNode();
   static TextEditingController controllerIpTF = TextEditingController();
+  static TextEditingController contollerSocket1 = TextEditingController();
+  static TextEditingController contollerSocket2 = TextEditingController();
+  static TextEditingController contollerSocket3 = TextEditingController();
 
   static void showServerSettingDialog() {
     double wi = Get.width;
@@ -58,6 +61,7 @@ class Dialogs {
                           Expanded(
                             child: TextField(
                               focusNode: focusNode3,
+                              controller: contollerSocket3,
                               onChanged: (value) {},
                               textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
@@ -76,6 +80,7 @@ class Dialogs {
                                 }
                               },
                               focusNode: focusNode2,
+                              controller: contollerSocket2,
                               textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
                                   filled: true,
@@ -93,6 +98,7 @@ class Dialogs {
                                 }
                               },
                               focusNode: focusNode1,
+                              controller: contollerSocket1,
                               autofocus: true,
                               textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
@@ -130,20 +136,20 @@ class Dialogs {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(wi * 0.03)),
-                                  hintText: "port",
-                                  hintTextDirection: TextDirection.ltr),
-                              keyboardType: TextInputType.number,
-                              textDirection: TextDirection.ltr,
-                            ),
-                            flex: 2,
-                          ),
+                          // Expanded(
+                          //   child: TextField(
+                          //     decoration: InputDecoration(
+                          //         filled: true,
+                          //         border: OutlineInputBorder(
+                          //             borderRadius:
+                          //                 BorderRadius.circular(wi * 0.03)),
+                          //         hintText: "port",
+                          //         hintTextDirection: TextDirection.ltr),
+                          //     keyboardType: TextInputType.number,
+                          //     textDirection: TextDirection.ltr,
+                          //   ),
+                          //   flex: 2,
+                          // ),
                           Expanded(
                             child: TextField(
                               autofocus: true,
@@ -169,10 +175,16 @@ class Dialogs {
                 children: [
                   TextButton(
                       onPressed: () async {
+                        if(controllerIpTF.text.isNotEmpty || contollerSocket1.text.isNotEmpty){
                         await LocalData.setIp(controllerIpTF.text);
+                        await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
+                        print("serial is : "+contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
                         await LocalData.setConnectMethode(
                             selected.value == 1 ? "socket" : "ip");
-                        Get.offAll(SplashScreen());
+                        Get.offAll(SplashScreen());}
+                        else{
+
+                        }
                       },
                       child: Text(AppString.ok)),
                   TextButton(

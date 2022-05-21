@@ -7,6 +7,7 @@ import 'package:get/get.dart' ;
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestManager {
@@ -49,25 +50,45 @@ class RequestManager {
   }
 
   static Future<dynamic> getReq({required String? url, required Map<String, dynamic>? body , Map<String , String > header = header}) async {
-    try{
-      var res = await http.get(Uri.parse(Base_Url+url!),
-          headers: header).timeout(Duration(seconds: 3));
-      if (res.statusCode == 200) {
-        var result = jsonDecode(res.body) ;
-        return result;
-      } else {
-        Get.snackbar("connection","connection faild");
+
+    if(LocalData.getConnectionMethode()=="socket"){
+      SocketManager.request({
+        "params": {},
+        "username": "",
+        "password": "",
+        "methodName": "GetBookList",
+        "methodType": "get",
+        "id": "5407"
+      }, (value) {
+        // ignore: void_checks
+        print(value);
+
+      });
+
+    }else{
+      try{
+        var res = await http.get(Uri.parse(Base_Url+url!),
+            headers: header).timeout(Duration(seconds: 3));
+        if (res.statusCode == 200) {
+          var result = jsonDecode(res.body) ;
+          return result;
+        } else {
+          Get.snackbar("connection","connection faild");
+        }
+      }on SocketException {
+        Get.snackbar("error", "Internet  eeeeee");
+      } on HttpException {
+        Get.snackbar("error", "not find  eeeeee");
+      } on FormatException {
+        Get.snackbar("error", "format  eeeeee");
+      }on TimeoutException{
+        Get.snackbar("timeOut", "can't get response");
       }
-    }on SocketException {
-      Get.snackbar("error", "Internet  eeeeee");
-    } on HttpException {
-      Get.snackbar("error", "not find  eeeeee");
-    } on FormatException {
-      Get.snackbar("error", "format  eeeeee");
-    }on TimeoutException{
-      Get.snackbar("timeOut", "can't get response");
     }
-  }
+    }
+
+
+
 
 
 

@@ -142,9 +142,6 @@ class TarazKolLv3Screen extends StatelessWidget {
                  Expanded(child: InkWell(onTap: (){controller.sortable("bed");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بدهکار",style: TextStyle(color: Colors.white),),)) , flex: 2,),
                  Expanded(child: InkWell(onTap: (){controller.sortable("bes");},child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text("بستانکار",style: TextStyle(color: Colors.white),),)) , flex: 2,),
 
-
-
-
               ],),
 
             ),

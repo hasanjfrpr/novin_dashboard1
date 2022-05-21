@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/Dialog/Dialog.dart';
 import 'package:novin_dashboard1/model/Login/BookCompanyModel/CompanyBookModel.dart';
 import 'package:novin_dashboard1/model/MainModel/sliderModel/SliderModel.dart';
@@ -37,20 +38,24 @@ class SplashController extends GetxController{
 
 
   void getCompanyBook() async{
-  await RequestManager.getReq(url: "tservermethods1/GetBookList ", body: {}).then((value) {
 
- var result= CompanyBookModel.fromJson(value);
- companyModel.value = result;
-
-companyItem.value.clear();
- for(var i=0; i<result.companyList!.length ; i++){
-  companyItem.value.add(DropdownMenuItem<String>(child: Text("${result.companyList![i].fldnmfcomp}"),value: "${result.companyList![i].fldnmfcomp}",));
- }
+ await RequestManager.getReq(url: "", body: {}).then((value) =>print(value));
 
 
-  }).then((value){
-   Get.off(Login());
-  });
+//   await RequestManager.getReq(url: "tservermethods1/GetBookList ", body: {}).then((value) {
+//
+//  var result= CompanyBookModel.fromJson(value);
+//  companyModel.value = result;
+//
+// companyItem.value.clear();
+//  for(var i=0; i<result.companyList!.length ; i++){
+//   companyItem.value.add(DropdownMenuItem<String>(child: Text("${result.companyList![i].fldnmfcomp}"),value: "${result.companyList![i].fldnmfcomp}",));
+//  }
+//
+//
+//   }).then((value){
+//    Get.off(Login());
+//   });
 
   }
 
@@ -78,7 +83,7 @@ companyItem.value.clear();
    await LocalData.getSharedInstance();
 
 
-if(LocalData.getIp()== "") {
+if(LocalData.getIp()== "" && LocalData.getSerial()=="") {
  Dialogs.showServerSettingDialog();
 }else{
  // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));

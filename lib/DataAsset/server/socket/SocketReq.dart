@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:socket_io_client/socket_io_client.dart' as Io;
 
 class SocketManager {
@@ -15,21 +16,22 @@ class SocketManager {
 
 
 
-  static Future<Map<String,dynamic>?>  request(Map<String, dynamic> json ,ValueChanged<Map<String , dynamic>> s) async{
+  static Future<dynamic>  request(dynamic json ,ValueChanged<dynamic> s) async{
 
+    print("print kon serial ra  : "+LocalData.getSerial().toString());
 
 
     if(socket.connected){
       if(isRegister){
 
         socket.emit("message" , json);
-        socket.on("message" , (data){
+        socket.once("message" , (data){
           s(data);
         });
 
       }else{
-        socket.emit("register" , "31575000");
-        socket.on("register", (data){
+        socket.emit("register" ,LocalData.getSerial());
+        socket.once("register", (data){
           if(data["status"]){
             isRegister = true;
             request(json  , s);
@@ -43,8 +45,8 @@ class SocketManager {
     }else{
       socket.connect();
       socket.onConnect((data){
-        socket.emit("register" , "31575000");
-        socket.on("register", (data){
+        socket.emit("register" ,LocalData.getSerial());
+        socket.once("register", (data){
           if(data["status"]){
             isRegister = true;
             request(json,s);

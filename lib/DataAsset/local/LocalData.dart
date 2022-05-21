@@ -17,6 +17,10 @@ static String? getIp()=>_sharedPreferences!.getString("ip") ?? "";
 static Future setIp(String ip) async{
   await _sharedPreferences!.setString("ip", ip);
 }
+static Future setSerialSocket(String serial) async{
+  await _sharedPreferences!.setString("serial", serial);
+}
+static String? getSerial()=> _sharedPreferences!.getString("serial") ?? "";
 
 static Future setConnectMethode(String connectionMethodeName) async{
   await _sharedPreferences!.setString("connectionMethode", connectionMethodeName);
