@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 
 import 'package:http/http.dart' as http;
@@ -23,37 +25,44 @@ Rx<SoodVzianModel> soodVzianModel = SoodVzianModel().obs;
 
   void getSoodVzian(String startDate , String endDate ) async{
 
-    await RequestManager.postReq(url: "tservermethods1/GetSoodZian", body:{
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate
-      }
-    },header:
+    if(LocalData.getConnectionMethode() == "socket"){
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate":startDate,
+          "enddate": endDate
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetSoodZian",
+        "methodType": "post",
+      }, (value) {
+        var result = SoodVzianModel.fromJson(value);
+        soodVzianModel.value = result;
+        Get.back();
+        Get.to(SoodVzianScreen());
+      });
+    }else{
+      await RequestManager.postReq(url: "tservermethods1/GetSoodZian", body:{
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        }
+      },header:
       {
         'Content-type': 'application/json',
         'authorization':auth()
       }
-    ).then((value){
-      var result = SoodVzianModel.fromJson(value);
-      soodVzianModel.value = result;
-      print(soodVzianModel.value.soodZianListO);
-     Get.back();
-     Get.to(SoodVzianScreen());
-    });
-  //   await http.post(Uri.parse("http://192.168.0.17:13647/daycomputer/nvn5_android/tservermethods1/GetSoodZian") ,body:jsonEncode({
-  //     "params": {
-  //       "bookid": Utils.bookId,
-  //       "startdate": startDate,
-  //       "enddate": endDate
-  //     }
-  //   }),headers: {
-  //        'Content-type': 'application/json',
-  //      'authorization':auth()
-  //      }
-  //     ).then((value) {
-  //     print(value);
-  //   });
+      ).then((value){
+        var result = SoodVzianModel.fromJson(value);
+        soodVzianModel.value = result;
+        print(soodVzianModel.value.soodZianListO);
+        Get.back();
+        Get.to(SoodVzianScreen());
+      });
+    }
+
   }
 
 

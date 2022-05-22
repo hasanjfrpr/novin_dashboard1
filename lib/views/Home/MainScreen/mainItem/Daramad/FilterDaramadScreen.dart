@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:novin_dashboard1/controllers/HomeController/MainController/DaramadController/FilterDaramadController.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/HazineController/FilterHazineController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
@@ -14,11 +15,11 @@ class FilterDaramadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double wi = Get.width;
     double he = Get.height;
-    FilterHazineControler controller = Get.put(FilterHazineControler());
+    FilterDaramadControler controller = Get.put(FilterDaramadControler());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
-        title: Text("فیلتر " + AppString.hazineh),
+        title: Text("فیلتر " + AppString.daramad),
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.symmetric(vertical: he * 0.05),
@@ -28,7 +29,7 @@ class FilterDaramadScreen extends StatelessWidget {
           children: [
             MaterialButton(
               onPressed: () {
-                controller.getHazine(convertJtoGDate(
+                controller.getDaramad(convertJtoGDate(
                     controller.year.value, controller.month.value,
                     controller.day.value),
                     convertJtoGDate(
@@ -205,7 +206,7 @@ class FilterDaramadScreen extends StatelessWidget {
   }
 
   void showCalender(BuildContext context,
-      FilterHazineControler controller, int num) async {
+      FilterDaramadControler controller, int num) async {
     /////////////////////////Example 1////////////////////////////
     Jalali? picked = await showPersianDatePicker(
       context: context,

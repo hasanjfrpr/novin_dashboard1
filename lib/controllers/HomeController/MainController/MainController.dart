@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 
 
 import 'package:http/http.dart' as http;
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/BedBesController/FilterBedBesController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/PersonListModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/MainItemModel.dart';
@@ -46,21 +48,45 @@ class MainController extends GetxController{
   }
 
   void getPersonList(int adad) async{
-    await RequestManager.postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
-      'Content-type': 'application/json',
-      'authorization':auth()
-    }).then((value) {
-      var result = PersonListModel.fromJson(value);
-      personListModel.value = result;
-      print(result);
-      if(result.personList!.length > 1 && adad==1){
-        for(var i=0 ;i<result.personList!.length ; i++){
-          personList.value.add( new DropdownMenuItem<String>(child: Text(result.personList![i].fldTifLfac.toString()) , value:result.personList![i].fldTifLfac.toString() ,));
+    if(LocalData.getConnectionMethode() == "socket"){
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetpersonList",
+        "methodType": "post",
+      }, (value) {
+        var result = PersonListModel.fromJson(value);
+        personListModel.value = result;
+        print(result);
+        if(result.personList!.length > 1 && adad==1){
+          for(var i=0 ;i<result.personList!.length ; i++){
+            personList.value.add( new DropdownMenuItem<String>(child: Text(result.personList![i].fldTifLfac.toString()) , value:result.personList![i].fldTifLfac.toString() ,));
+          }
         }
-      }
-      Get.back();
-     adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
-    });
+        Get.back();
+        adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
+      });
+    }else{
+      await RequestManager.postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+        'Content-type': 'application/json',
+        'authorization':auth()
+      }).then((value) {
+        var result = PersonListModel.fromJson(value);
+        personListModel.value = result;
+        print(result);
+        if(result.personList!.length > 1 && adad==1){
+          for(var i=0 ;i<result.personList!.length ; i++){
+            personList.value.add( new DropdownMenuItem<String>(child: Text(result.personList![i].fldTifLfac.toString()) , value:result.personList![i].fldTifLfac.toString() ,));
+          }
+        }
+        Get.back();
+        adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
+      });
+    }
+
   }
 
   void onIn(){

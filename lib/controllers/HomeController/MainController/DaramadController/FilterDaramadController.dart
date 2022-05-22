@@ -1,7 +1,9 @@
 
 
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazKolModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazMoeinModel.dart';
@@ -34,49 +36,103 @@ class FilterDaramadControler extends GetxController{
 
   void getDaramad(String startDate , String endDate) async{
 
-    await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
-    {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate
-      }
-    },
-        header: {
-          'Content-type': 'application/json',
-          'authorization':auth()
+    if(LocalData.getConnectionMethode() == "socket"){
+
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetTarazAzmayeshiKollist",
+        "methodType": "post",
+      }, (value) {
+        var tarazKol = TarazKolModel.fromJson(value);
+        for(var ps in tarazKol.tarazAzmayeshiKolList!){
+          if(ps.cfs=="0050"){
+            _getDaramads(ps.fldcodtac!, ps.fldscrhead! , startDate , endDate);
+          }
         }
-    ).then((value) {
-      var tarazKol = TarazKolModel.fromJson(value);
-      for(var ps in tarazKol.tarazAzmayeshiKolList!){
-        if(ps.cfs=="0050"){
-          _getDaramads(ps.fldcodtac!, ps.fldscrhead! , startDate , endDate);
+      });
+
+    }else{
+
+      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
+      {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
         }
-      }
-    });
+      },
+          header: {
+            'Content-type': 'application/json',
+            'authorization':auth()
+          }
+      ).then((value) {
+        var tarazKol = TarazKolModel.fromJson(value);
+        for(var ps in tarazKol.tarazAzmayeshiKolList!){
+          if(ps.cfs=="0050"){
+            _getDaramads(ps.fldcodtac!, ps.fldscrhead! , startDate , endDate);
+          }
+        }
+      });
+    }
+
+
 
   }
 
   void _getDaramads(String codeTak , String head , String startDate , String endDate) async{
-    await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body: {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate,
-        "codtac": codeTak,
-        "scrhead":head
-      }
-    }, header: {
-      'Content-type': 'application/json',
-      'authorization':auth()
-    }).then((value){
-      var result = TarazMoeinModel.fromJson(value);
+
+    if(LocalData.getConnectionMethode() == "socket"){
+
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "codtac": codeTak,
+          "scrhead": head
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetTarazAzmayeshiKol_MoeinList",
+        "methodType": "post",
+      }, (value) {var result = TarazMoeinModel.fromJson(value);
       print("this is taraz : $result" );
       tarazMoeinModel.value = result;
       _addtotalBedBes(result);
       Get.back();
-      Get.to(DaramadScreen());
-    });
+      Get.to(DaramadScreen()); });
+
+    }else{
+
+      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body: {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "codtac": codeTak,
+          "scrhead":head
+        }
+      }, header: {
+        'Content-type': 'application/json',
+        'authorization':auth()
+      }).then((value){
+        var result = TarazMoeinModel.fromJson(value);
+        print("this is taraz : $result" );
+        tarazMoeinModel.value = result;
+        _addtotalBedBes(result);
+        Get.back();
+        Get.to(DaramadScreen());
+      });
+
+
+    }
+
 
 
   }

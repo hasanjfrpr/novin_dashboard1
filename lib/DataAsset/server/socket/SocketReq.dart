@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:socket_io_client/socket_io_client.dart' as Io;
@@ -16,16 +17,17 @@ class SocketManager {
 
 
 
-  static Future<dynamic>  request(dynamic json ,ValueChanged<dynamic> s) async{
-
-    print("print kon serial ra  : "+LocalData.getSerial().toString());
+  static Future<dynamic>  request(Map<String,dynamic> json ,ValueChanged<dynamic> s) async{
 
 
     if(socket.connected){
       if(isRegister){
-
+        Random random = Random();
+         int generateId = 1000+random.nextInt(8999);
+         json['id'] = "$generateId";
         socket.emit("message" , json);
         socket.once("message" , (data){
+          if(data['id']==generateId.toString())
           s(data);
         });
 

@@ -4,7 +4,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/FactorForooshModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/PersonListModel.dart';
@@ -37,6 +39,27 @@ RxList<DropdownMenuItem> visitorList = [DropdownMenuItem(child: Text("") , value
 
 
 void getPersonList() async{
+
+if(LocalData.getConnectionMethode() == "socket"){
+  await SocketManager.request({
+    "params": {
+      "bookid": Utils.bookId
+    },
+    "username": Utils.userName,
+    "password": Utils.passWord,
+    "methodName": "GetpersonList",
+    "methodType": "post",
+  }, (value) {
+    var result = PersonListModel.fromJson(value);
+    _personModel = result;
+    personsList.value.clear();
+    for(var i = 0 ; i<result.personList!.length ; i++){
+      personsList.add(DropdownMenuItem<String>(child: Text(result.personList![i].fldTifLfac!) , value: result.personList![i].fldTifLfac!,));
+    }
+    showLoadingP.value = true;
+  });
+}
+
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
@@ -55,80 +78,145 @@ void getPersonList() async{
   });
 }
 void getVisitorList() async{
-  String basicAuth =
-      'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
-  await RequestManager.postReq(url: "tservermethods1/GetvisitorList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
-    'Content-type': 'application/json',
-    'authorization':basicAuth
-  }).then((value) {
-    var result = VisitorListFModel.fromJson(value);
-    _visitorModel = result;
-    visitorList.value.clear();
-    for(var i = 0 ; i<result.visitorList!.length ; i++){
-      visitorList.add(DropdownMenuItem<String>(child: Text(result.visitorList![i].fldTifLfac!) , value: result.visitorList![i].fldTifLfac!,));
-    }
+  if(LocalData.getConnectionMethode() =="socket"){
+    await SocketManager.request({
+      "params": {
+        "bookid":Utils.bookId
+      },
+      "username": Utils.userName,
+      "password": Utils.passWord,
+      "methodName": "GetvisitorList",
+      "methodType": "post",
+    }, (value) {
+      var result = VisitorListFModel.fromJson(value);
+      _visitorModel = result;
+      visitorList.value.clear();
+      for(var i = 0 ; i<result.visitorList!.length ; i++){
+        visitorList.add(DropdownMenuItem<String>(child: Text(result.visitorList![i].fldTifLfac!) , value: result.visitorList![i].fldTifLfac!,));
+      }
 
-    showLoadingV.value = true;
-  });
+      showLoadingV.value = true;
+    });
+  }else{
+
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
+
+    await RequestManager.postReq(url: "tservermethods1/GetvisitorList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+      'Content-type': 'application/json',
+      'authorization':basicAuth
+    }).then((value) {
+      var result = VisitorListFModel.fromJson(value);
+      _visitorModel = result;
+      visitorList.value.clear();
+      for(var i = 0 ; i<result.visitorList!.length ; i++){
+        visitorList.add(DropdownMenuItem<String>(child: Text(result.visitorList![i].fldTifLfac!) , value: result.visitorList![i].fldTifLfac!,));
+      }
+
+      showLoadingV.value = true;
+    });
+  }
+
 }
 
 void getFactorForooshList(String startDate , String endDate , String bookId , String visitor , String person) async{
-  String finalVisitor="null";
-  String finalPerson = "null";
 
- if(person != "null"){
-   for(var i=0 ; i<_personModel.personList!.length ; i++){
-     if(_personModel.personList![i].fldTifLfac == person){
-       finalPerson = _personModel.personList![i].fLDCodLFAC.toString();
+
+ if(LocalData.getConnectionMethode()=="socket"){
+   String finalVisitor="null";
+   String finalPerson = "null";
+
+   if(person != "null"){
+     for(var i=0 ; i<_personModel.personList!.length ; i++){
+       if(_personModel.personList![i].fldTifLfac == person){
+         finalPerson = _personModel.personList![i].fLDCodLFAC.toString();
+       }
      }
    }
- }
 
- if(visitor !="null"){
-   for(var i=0 ; i<_visitorModel.visitorList!.length ; i++){
-     if(_visitorModel.visitorList![i].fldTifLfac == visitor){
-       finalVisitor = _visitorModel.visitorList![i].fLDCodSelc.toString();
+   if(visitor !="null"){
+     for(var i=0 ; i<_visitorModel.visitorList!.length ; i++){
+       if(_visitorModel.visitorList![i].fldTifLfac == visitor){
+         finalVisitor = _visitorModel.visitorList![i].fLDCodSelc.toString();
+       }
      }
    }
+
+   await SocketManager.request({
+     "params": {
+       "bookid":Utils.bookId,
+       "startdate": startDate,
+       "enddate": endDate,
+       "visitorid": finalVisitor,
+       "personid": finalPerson
+     },
+     "username": Utils.userName,
+     "password": Utils.passWord,
+     "methodName": "GetFactorForooshList",
+     "methodType": "post",
+
+   }, (value) {
+     var result = FactorForooshModel.fromJson(value);
+     factorForooshModel.value = result;
+     suggestFactorForooshModel.value = factorForooshModel.value;
+     sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
+     factorFcontainerList.addAll(result.factorForooshList!);
+     Get.back();
+     Get.to(FactorForooshScreen());
+   });
+
+ }else{
+   String finalVisitor="null";
+   String finalPerson = "null";
+
+   if(person != "null"){
+     for(var i=0 ; i<_personModel.personList!.length ; i++){
+       if(_personModel.personList![i].fldTifLfac == person){
+         finalPerson = _personModel.personList![i].fLDCodLFAC.toString();
+       }
+     }
+   }
+
+   if(visitor !="null"){
+     for(var i=0 ; i<_visitorModel.visitorList!.length ; i++){
+       if(_visitorModel.visitorList![i].fldTifLfac == visitor){
+         finalVisitor = _visitorModel.visitorList![i].fLDCodSelc.toString();
+       }
+     }
+   }
+
+   String basicAuth =
+       'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
+
+
+   await RequestManager.postReq(url: "tservermethods1/GetFactorForooshList", body: {
+     "params": {
+       "bookid": bookId,
+       "startdate": startDate,
+       "enddate": endDate,
+       "visitorid": finalVisitor,
+       "personid": finalPerson
+     }
+   }, header:{
+     'Content-type': 'application/json',
+     'authorization':basicAuth
+   }).then((value){
+     var result = FactorForooshModel.fromJson(value);
+     factorForooshModel.value = result;
+     suggestFactorForooshModel.value = factorForooshModel.value;
+     sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
+     factorFcontainerList.addAll(result.factorForooshList!);
+     Get.back();
+     Get.to(FactorForooshScreen());
+   });
  }
-  String basicAuth =
-      'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
-
-  await RequestManager.postReq(url: "tservermethods1/GetFactorForooshList", body: {
-    "params": {
-      "bookid": bookId,
-      "startdate": startDate,
-      "enddate": endDate,
-      "visitorid": finalVisitor,
-      "personid": finalPerson
-    }
-  }, header:{
-    'Content-type': 'application/json',
-    'authorization':basicAuth
-  }).then((value){
-    var result = FactorForooshModel.fromJson(value);
-    factorForooshModel.value = result;
-    suggestFactorForooshModel.value = factorForooshModel.value;
-    sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
-    factorFcontainerList.addAll(result.factorForooshList!);
-    Get.back();
-    Get.to(FactorForooshScreen());
-  });
 }
 
  searchPattern(String value) async{
    List<FactorForooshList> fakeList = <FactorForooshList>[];
 
-   // List<int> firstList  = [1,2,3,4];
-   // List<int> secondList = [0,10,20];
-   //  List<int> thirdList = [];
-   //
-   //  thirdList.addAll(firstList);
-   // print("size of list is 1: "+firstList.length.toString());
-   //  thirdList.clear();
-   //  print("size of list is 2: "+firstList.length.toString());
 
 
    print("this value is :"+value);

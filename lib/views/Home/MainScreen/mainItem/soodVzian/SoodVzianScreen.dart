@@ -63,7 +63,8 @@ class SoodVzianScreen extends StatelessWidget {
                 return  InkWell(
                   onTap: (){
                     soodVzianController.getSoodVzianDetail(convertJtoGDate(filterController.year.value,filterController.month.value, filterController.day.value),
-                        convertJtoGDate(filterController.endYear.value,filterController.endMonth.value, filterController.endDay.value) , soodZianList.soodZianList![index].hesabFDesc.toString());
+                        convertJtoGDate(filterController.endYear.value,filterController.endMonth.value, filterController.endDay.value) , soodZianList.soodZianList![index].hesabFDesc.toString(),soodZianList.soodZianList![index].fldcod.toString(),
+                        soodZianList.soodZianList![index].fldScrHead.toString() , soodZianList.soodZianList![index].sort.toString() );
                     showLoading(wi, he);
                   },
                   child: Container(
@@ -111,7 +112,8 @@ class SoodVzianScreen extends StatelessWidget {
                 return  InkWell(
                   onTap: (){
                     soodVzianController.getSoodVzianDetail(convertJtoGDate(filterController.year.value,filterController.month.value, filterController.day.value),
-                        convertJtoGDate(filterController.endYear.value,filterController.endMonth.value, filterController.endDay.value) , soodZianList.soodZianList![index].hesabFDesc.toString());
+                        convertJtoGDate(filterController.endYear.value,filterController.endMonth.value, filterController.endDay.value) , soodZianList.soodZianList![index].hesabFDesc.toString(),soodZianList.soodZianList![index].fldcod.toString(),
+                        soodZianList.soodZianList![index].fldScrHead.toString() , soodZianList.soodZianList![index].sort.toString() );
                     showLoading(wi, he);
                   },
                   child: Container(

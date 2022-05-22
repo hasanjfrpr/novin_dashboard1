@@ -51,21 +51,6 @@ class RequestManager {
 
   static Future<dynamic> getReq({required String? url, required Map<String, dynamic>? body , Map<String , String > header = header}) async {
 
-    if(LocalData.getConnectionMethode()=="socket"){
-      SocketManager.request({
-        "params": {},
-        "username": "",
-        "password": "",
-        "methodName": "GetBookList",
-        "methodType": "get",
-        "id": "5407"
-      }, (value) {
-        // ignore: void_checks
-        print(value);
-
-      });
-
-    }else{
       try{
         var res = await http.get(Uri.parse(Base_Url+url!),
             headers: header).timeout(Duration(seconds: 3));
@@ -85,7 +70,7 @@ class RequestManager {
         Get.snackbar("timeOut", "can't get response");
       }
     }
-    }
+
 
 
 

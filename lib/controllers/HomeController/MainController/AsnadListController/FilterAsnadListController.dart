@@ -1,11 +1,14 @@
 
 
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/AsnadModel/AsnadModel.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/asnadList/AsnadList.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class FilterAsnadController extends GetxController{
 
@@ -25,22 +28,43 @@ class FilterAsnadController extends GetxController{
   RxBool showCircle = true.obs;
 
   void getAsnadEmroz(String startDate , String endDate) async{
+    if(LocalData.getConnectionMethode()=="socket"){
 
-    await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
-      "params": {
-        "bookid":Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate
-      }
-    }, header: {
-      'Content-type': 'application/json',
-      'authorization':auth()
-    }).then((value){
-      var result = AsnadModel.fromJson(value);
-      asnadModelEmroz.value = result;
-      showCircle.value = false;
-      print(result);
-    });
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetDocumentList",
+        "methodType": "post",
+      }, (value) {
+        var result = AsnadModel.fromJson(value);
+        asnadModelEmroz.value = result;
+        showCircle.value = false;
+      });
+
+    }else{
+
+      await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
+        "params": {
+          "bookid":Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        }
+      }, header: {
+        'Content-type': 'application/json',
+        'authorization':auth()
+      }).then((value){
+        var result = AsnadModel.fromJson(value);
+        asnadModelEmroz.value = result;
+        showCircle.value = false;
+
+      });
+
+    }
 
 
   }
@@ -48,23 +72,49 @@ class FilterAsnadController extends GetxController{
 
   void getAsnad(String startDate , String endDate) async{
 
-    await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
-      "params": {
-        "bookid":Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate
-      }
-    }, header: {
-    'Content-type': 'application/json',
-    'authorization':auth()
-    }).then((value){
-      var result = AsnadModel.fromJson(value);
-      asnadModel.value = result;
-      documentList.value=result.documentList!;
-      helpDocumentList.addAll(result.documentList!);
-      Get.back();
-      Get.to(AsnadListScreen());
-    });
+
+    if(LocalData.getConnectionMethode()=="socket"){
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetDocumentList",
+        "methodType": "post",
+      }, (value) {
+        var result = AsnadModel.fromJson(value);
+        asnadModel.value = result;
+        documentList.value=result.documentList!;
+        helpDocumentList.addAll(result.documentList!);
+        Get.back();
+        Get.to(AsnadListScreen());
+      });
+    }else{
+
+      await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
+        "params": {
+          "bookid":Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        }
+      }, header: {
+        'Content-type': 'application/json',
+        'authorization':auth()
+      }).then((value){
+        var result = AsnadModel.fromJson(value);
+        asnadModel.value = result;
+        documentList.value=result.documentList!;
+        helpDocumentList.addAll(result.documentList!);
+        Get.back();
+        Get.to(AsnadListScreen());
+      });
+    }
+
+
+
 
 
   }

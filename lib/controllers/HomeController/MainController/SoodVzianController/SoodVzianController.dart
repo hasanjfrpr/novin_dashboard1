@@ -2,7 +2,9 @@
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/SoodVzianModel/SoodVzianDetailModel.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/soodVzian/SoodVzianDetailScreen.dart';
@@ -16,29 +18,58 @@ class SoodVzianController extends GetxController{
   RxList<String> title_s_d = [""].obs;
 
 
-  void getSoodVzianDetail(String startDate , String endDate , String title) async{
+  void getSoodVzianDetail(String startDate , String endDate , String title , String cod , String head , String sort) async{
 
-    await RequestManager.postReq(url: "tservermethods1/GetSoodZianDetails", body: {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": "2021/03/21",
-        "enddate": "2021/11/21",
-        "fld_cod": "90",
-        "scrhead": "45",
-        "sort": "1"
-      }
-    },header: {
-      'Content-type': 'application/json',
-      'authorization':auth()
-    }).then((value) {
-      var result = SoodVzianDetailModel.fromJson(value);
-      soodVzianDetailModel.value = result;
-      soodVzianDetailModel_fake.clear();
-      soodVzianDetailModel_fake.value.addAll(result.soodZianDetailsList!);
-      getfilterSoozZianListDetail(soodVzianDetailModel_fake.value);
-      Get.back();
-      Get.to(SoodVzianDetailScreen(title: title,));
-    });
+    if(LocalData.getConnectionMethode() == "socket"){
+
+      await SocketManager.request({
+        "params": {
+          "bookid":Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "fld_cod": cod,
+          "scrhead": head,
+          "sort": sort
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetSoodZianDetails",
+        "methodType": "post",
+      }, (value) {
+        var result = SoodVzianDetailModel.fromJson(value);
+        soodVzianDetailModel.value = result;
+        soodVzianDetailModel_fake.clear();
+        soodVzianDetailModel_fake.value.addAll(result.soodZianDetailsList!);
+        getfilterSoozZianListDetail(soodVzianDetailModel_fake.value);
+        Get.back();
+        Get.to(SoodVzianDetailScreen(title: title,));
+      });
+
+    }else{
+      await RequestManager.postReq(url: "tservermethods1/GetSoodZianDetails", body: {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "fld_cod": cod,
+          "scrhead": head,
+          "sort": sort
+        }
+      },header: {
+        'Content-type': 'application/json',
+        'authorization':auth()
+      }).then((value) {
+        var result = SoodVzianDetailModel.fromJson(value);
+        soodVzianDetailModel.value = result;
+        soodVzianDetailModel_fake.clear();
+        soodVzianDetailModel_fake.value.addAll(result.soodZianDetailsList!);
+        getfilterSoozZianListDetail(soodVzianDetailModel_fake.value);
+        Get.back();
+        Get.to(SoodVzianDetailScreen(title: title,));
+      });
+    }
+
+
   }
 
 

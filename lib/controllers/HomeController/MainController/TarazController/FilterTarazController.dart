@@ -1,7 +1,9 @@
 
 
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazKolModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazMoeinModel.dart';
@@ -100,61 +102,118 @@ class FilterTarazController extends GetxController{
 
 
   void getTaraz(String startDate , String endDate) async{
-    await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
-    {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate
-      }
-    },
-        header: {
-          'Content-type': 'application/json',
-          'authorization':auth()
-        }
-    ).then((value) {
-      var tarazKol = TarazKolModel.fromJson(value);
-      tarazKolModel.value = tarazKol;
-      listTaraz.value.clear();
-      listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
-      print(tarazKol);
 
-      if(isChecked.value==true){
+    if(LocalData.getConnectionMethode()=="socket"){
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        },
+        "username":Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetTarazAzmayeshiKollist",
+        "methodType": "post",
+      }, (value) {
+        var tarazKol = TarazKolModel.fromJson(value);
+        tarazKolModel.value = tarazKol;
+        listTaraz.value.clear();
+        listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
+        print(tarazKol);
 
-        print(listTaraz.value.length);
-        _addtotalBedBes(tarazKolModel.value);
-        Get.back();
-        Get.to(TarazScreen());
+        if(isChecked.value==true){
 
-      }else{
+          print(listTaraz.value.length);
+          _addtotalBedBes(tarazKolModel.value);
+          Get.back();
+          Get.to(TarazScreen());
 
-        for(var i=0;i<listTaraz.value.length ; i++){
+        }else{
 
-          if(listTaraz.value[i].bed=="0" &&
-              listTaraz.value[i].bes=="0" &&
-              listTaraz.value[i].sbed=="0" &&
-              listTaraz.value[i].sbes=="0"){
-            listTaraz.value.remove(listTaraz.value[i]);
+          for(var i=0;i<listTaraz.value.length ; i++){
+
+            if(listTaraz.value[i].bed=="0" &&
+                listTaraz.value[i].bes=="0" &&
+                listTaraz.value[i].sbed=="0" &&
+                listTaraz.value[i].sbes=="0"){
+              listTaraz.value.remove(listTaraz.value[i]);
+
+            }
+            if(listTaraz.value[i].bed!.toLowerCase()=="null" &&
+                listTaraz.value[i].bes!.toLowerCase()=="null" &&
+                listTaraz.value[i].sbed!.toLowerCase()=="null" &&
+                listTaraz.value[i].sbes!.toLowerCase()=="null"){
+              listTaraz.value.remove(listTaraz.value[i]);
+
+            }
+
 
           }
-          if(listTaraz.value[i].bed!.toLowerCase()=="null" &&
-              listTaraz.value[i].bes!.toLowerCase()=="null" &&
-              listTaraz.value[i].sbed!.toLowerCase()=="null" &&
-              listTaraz.value[i].sbes!.toLowerCase()=="null"){
-            listTaraz.value.remove(listTaraz.value[i]);
-
-          }
-
+          print(listTaraz.value.length);
+          _addtotalBedBes(tarazKolModel.value);
+          Get.back();
+          Get.to(TarazScreen());
 
         }
-        print(listTaraz.value.length);
-        _addtotalBedBes(tarazKolModel.value);
-        Get.back();
-        Get.to(TarazScreen());
+      });
+    }else{
+      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
+      {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate
+        }
+      },
+          header: {
+            'Content-type': 'application/json',
+            'authorization':auth()
+          }
+      ).then((value) {
+        var tarazKol = TarazKolModel.fromJson(value);
+        tarazKolModel.value = tarazKol;
+        listTaraz.value.clear();
+        listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
+        print(tarazKol);
 
-      }
+        if(isChecked.value==true){
 
-    });
+          print(listTaraz.value.length);
+          _addtotalBedBes(tarazKolModel.value);
+          Get.back();
+          Get.to(TarazScreen());
+
+        }else{
+
+          for(var i=0;i<listTaraz.value.length ; i++){
+
+            if(listTaraz.value[i].bed=="0" &&
+                listTaraz.value[i].bes=="0" &&
+                listTaraz.value[i].sbed=="0" &&
+                listTaraz.value[i].sbes=="0"){
+              listTaraz.value.remove(listTaraz.value[i]);
+
+            }
+            if(listTaraz.value[i].bed!.toLowerCase()=="null" &&
+                listTaraz.value[i].bes!.toLowerCase()=="null" &&
+                listTaraz.value[i].sbed!.toLowerCase()=="null" &&
+                listTaraz.value[i].sbes!.toLowerCase()=="null"){
+              listTaraz.value.remove(listTaraz.value[i]);
+
+            }
+
+
+          }
+          print(listTaraz.value.length);
+          _addtotalBedBes(tarazKolModel.value);
+          Get.back();
+          Get.to(TarazScreen());
+
+        }
+
+      });
+    }
+
 
   }
 

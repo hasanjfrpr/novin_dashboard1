@@ -2,10 +2,13 @@
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazMoeinModel.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/tarazAzmayeshi/TarazMoienScreen.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class TarazController extends  GetxController{
 
@@ -29,29 +32,58 @@ bool clickShod = false;
   }
 
   void getTaraz(String startDate , String endDate , String codTac , String head , String tif) async{
-    await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body:
-    {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate,
-        "codtac": codTac,
-        "scrhead": head
-      }
-    },
-        header: {
-          'Content-type': 'application/json',
-          'authorization':auth()
+
+    if(LocalData.getConnectionMethode()=="socket"){
+
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "codtac": codTac,
+          "scrhead": head
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetTarazAzmayeshiKol_MoeinList",
+        "methodType": "post",
+      }, (value) {
+        var result = TarazMoeinModel.fromJson(value);
+        print(result);
+        tarazMoienModel.value = result;
+        tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
+        _addtotalBedBes(result);
+        Get.back();
+        Get.to(TarazMoienScreen(tif: tif,));
+      });
+
+    }else{
+
+      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body:
+      {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "codtac": codTac,
+          "scrhead": head
         }
-    ).then((value) {
-      var result = TarazMoeinModel.fromJson(value);
-      print(result);
-      tarazMoienModel.value = result;
-      tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
-      _addtotalBedBes(result);
-      Get.back();
-      Get.to(TarazMoienScreen(tif: tif,));
-    });
+      },
+          header: {
+            'Content-type': 'application/json',
+            'authorization':auth()
+          }
+      ).then((value) {
+        var result = TarazMoeinModel.fromJson(value);
+        print(result);
+        tarazMoienModel.value = result;
+        tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
+        _addtotalBedBes(result);
+        Get.back();
+        Get.to(TarazMoienScreen(tif: tif,));
+      });
+    }
+
 
 
 

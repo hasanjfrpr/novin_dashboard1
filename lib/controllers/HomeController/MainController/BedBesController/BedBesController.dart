@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/MainController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/BedBesModel/RizBedBesModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/PersonListModel.dart';
@@ -35,7 +37,24 @@ class BedBesController extends GetxController{
 
 
 
-  void getRizBedBes(String lfac , String name) async{
+  void getRizBedBes( String lfac , String name) async{
+  if(LocalData.getConnectionMethode() == "socket"){
+    await SocketManager.request({
+      "params": {
+        "bookid": Utils.bookId,
+        "startdate": "1990/01/01",
+        "enddate": "2500/4/29",
+        "lfac": "227"
+      },
+      "username": Utils.userName,
+      "password": Utils.passWord,
+      "methodName": "GetPersonAccount",
+      "methodType": "post",
+    }, (value) { var result = RizBedBesModel.fromJson(value);
+    rizBedBesModel.value = result;
+    Get.back();
+    Get.to(RizBedBesScreen(name: name,)); });
+  }else{
     await RequestManager.postReq(url: "tservermethods1/GetPersonAccount", body: {
       "params": {
         "bookid": Utils.bookId,
@@ -53,6 +72,8 @@ class BedBesController extends GetxController{
       Get.back();
       Get.to(RizBedBesScreen(name: name,));
     });
+  }
+
   }
 
   void searchPerson(String value){
