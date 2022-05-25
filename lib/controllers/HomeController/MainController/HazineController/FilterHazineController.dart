@@ -102,7 +102,7 @@ class FilterHazineControler extends GetxController{
         tarazMoeinModel.value = result;
         _addtotalBedBes(result);
         Get.back();
-        Get.to(DaramadScreen());
+        Get.to(HazineScreen());
       });
     }else{
 
@@ -123,7 +123,7 @@ class FilterHazineControler extends GetxController{
         tarazMoeinModel.value = result;
         _addtotalBedBes(result);
         Get.back();
-        Get.to(DaramadScreen());
+        Get.to(HazineScreen());
       });
     }
 

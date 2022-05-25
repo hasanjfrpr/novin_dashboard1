@@ -141,14 +141,14 @@ class RizBedBesScreen extends StatelessWidget {
               height: Get.height*0.85,
               child: ListView.builder(itemBuilder: (context , index){
                 return  Container(
-                    height: Get.height*0.1,
+                    //height: Get.height*0.1,
                     color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
                     child: Row(children: [
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(convertDtoJDate(listTaraz[index].flddodadoc.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz[index].flddsfacc.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bed.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bes.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
-                      Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].sumprc.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                      Expanded(child: Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: wi*0.03),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(convertDtoJDate(listTaraz[index].flddodadoc.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
+                      Expanded(child: Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: wi*0.03),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz[index].flddsfacc.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
+                      Expanded(child: Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: wi*0.03),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bed.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                      Expanded(child: Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: wi*0.03),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].bes.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
+                      Expanded(child: Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: wi*0.03),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz[index].sumprc.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
 
                     ],),
                   );

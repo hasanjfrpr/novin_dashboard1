@@ -24,6 +24,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
         title: Text(AppString.bedehkarVbestankar),
@@ -78,7 +79,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
                 ],
               ),
             ),
-            flex: 2,
+            flex:3,
           ),
           Expanded(
             child: Container(
@@ -126,7 +127,7 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
               );}
                   ),
             ),
-            flex: 30,
+            flex: 31,
           ),
         ],
       ),
@@ -136,11 +137,12 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
   Widget _searchBox(double wi, double he , BedBesController controller) {
     return Container(
       width: wi,
-      height: he * 0.05,
+      alignment: Alignment.center,
       child: TextField(
         decoration: InputDecoration(
           prefixIcon: Icon(CupertinoIcons.search),
           hintText: "جستجو براساس نام شخص",
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0))),
           focusedBorder: OutlineInputBorder(

@@ -36,7 +36,7 @@ class SoodVzianModel {
 
 class SoodZianListO {
   SoodZianListO({
-      List<Docswithproblemlist>? docswithproblemlist, 
+      List<Docswithproblemlist>? docswithproblemlist,
       List<ZeroQuantityList>? zeroQuantityList, 
       List<SoodZianList>? soodZianList,}){
     _docswithproblemlist = docswithproblemlist;

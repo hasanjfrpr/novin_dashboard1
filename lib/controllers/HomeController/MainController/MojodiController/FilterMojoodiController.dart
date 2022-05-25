@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/MojoodiModel/AnbarModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/MojoodiModel/MojoodiKalaModel.dart';
@@ -28,6 +30,29 @@ class FilterMojoodiController extends GetxController{
   
   
   void getanbar() async{
+    if(LocalData.getConnectionMethode() == "socket"){
+      
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetAnbarList",
+        "methodType": "post",
+      }, (value) {
+        var result = AnbarModel.fromJson(value);
+        anbarModel.value = result;
+        anbarModelDropDown.clear();
+        for(var i=0 ; i < result.anbarList!.length ; i++ ){
+          anbarModelDropDown.add(DropdownMenuItem<String>(child: Text(result.anbarList![i].fldNMFINV.toString()) , value: result.anbarList![i].fldNMFINV.toString(),));
+        }
+        showLoadingV.value = true;
+      });
+      
+    }else{
+      
+    }
     await RequestManager.postReq(url: "tservermethods1/GetAnbarList", body: {
       "params": {
         "bookid": "1"
@@ -49,32 +74,69 @@ class FilterMojoodiController extends GetxController{
 
 
   void getMojoodikala(String startDate , String endDate , String anbarId ) async{
-    if(anbarId != ""){
-      for(var ss in anbarModel.value.anbarList!){
-        if(ss.fldNMFINV == anbarId){
-          anbarId = ss.fldCodINV.toString();
+    
+    if(LocalData.getConnectionMethode() == "socket"){
+      if(anbarId != ""){
+        for(var ss in anbarModel.value.anbarList!){
+          if(ss.fldNMFINV == anbarId){
+            anbarId = ss.fldCodINV.toString();
+          }
         }
       }
-    }
-    await RequestManager.postReq(url: "tservermethods1/GetMojoodiKalaList", body:{
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": startDate,
-        "enddate": endDate,
-        "anbarid": anbarId
+      
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "anbarid": anbarId
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetMojoodiKalaList",
+        "methodType": "post",
       }
-    },header:{
-      'Content-type': 'application/json',
-      'authorization':auth()
-    } ).then((value){
-     var result = MojoodiKalaModel.fromJson(value);
-     mojoodikalaModel.value = result;
-     mojoodiList.value.addAll(result.mojoodiKalaList!);
-     helpMojoodiList.addAll(result.mojoodiKalaList!);
-     print(result);
-     Get.back();
-     Get.to(MojoodikalaScreen());
-    });
+      , (value) {
+        var result = MojoodiKalaModel.fromJson(value);
+        mojoodikalaModel.value = result;
+        mojoodiList.value.addAll(result.mojoodiKalaList!);
+        helpMojoodiList.addAll(result.mojoodiKalaList!);
+        print(result);
+        Get.back();
+        Get.to(MojoodikalaScreen());
+      });
+      
+    }else{
+
+      if(anbarId != ""){
+        for(var ss in anbarModel.value.anbarList!){
+          if(ss.fldNMFINV == anbarId){
+            anbarId = ss.fldCodINV.toString();
+          }
+        }
+      }
+      await RequestManager.postReq(url: "tservermethods1/GetMojoodiKalaList", body:{
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": startDate,
+          "enddate": endDate,
+          "anbarid": anbarId
+        }
+      },header:{
+        'Content-type': 'application/json',
+        'authorization':auth()
+      } ).then((value){
+        var result = MojoodiKalaModel.fromJson(value);
+        mojoodikalaModel.value = result;
+        mojoodiList.value.addAll(result.mojoodiKalaList!);
+        helpMojoodiList.addAll(result.mojoodiKalaList!);
+        print(result);
+        Get.back();
+        Get.to(MojoodikalaScreen());
+      });
+    }
+    
+    
 
   }
   void searchMojoodi(String value){

@@ -42,11 +42,12 @@ class FilterBedBesScreen extends StatelessWidget {
               onPressed: ()  {
                 PersonListModel filterList = Get.find<MainController>().personListModel.value;
                 List<PersonList>? personList=<PersonList>[];
-                personList.clear();
+
                  if(radioSelected.value == 0){
+                   personList.clear();
                   personList = filterList.personList;
                 }else if(radioSelected.value ==1){
-
+                   personList.clear();
                   for(var i=0 ; i<filterList.personList!.length; i++){
                     if(filterList.personList![i].fldTifLfac == personName){
                       personList.add(filterList.personList![i]);
@@ -54,6 +55,7 @@ class FilterBedBesScreen extends StatelessWidget {
                   }
 
                 }else{
+                   personList.clear();
                   if(bedCheck.value==true && besCheck.value==true && biHesabCheck.value==true){
                     personList = Get.find<MainController>().personListModel.value.personList;
                   }else if(bedCheck.value==true && besCheck.value==true && biHesabCheck.value==false){
@@ -96,8 +98,8 @@ class FilterBedBesScreen extends StatelessWidget {
                     }
                 }
                 }
-
-                print(personList);
+                 controller.personFilterList.value.clear();
+                 controller.personFilterList.value.addAll(personList!);
                 Get.to(BedehkarVbestanKarScreen()  );
 
               },
@@ -132,17 +134,18 @@ class FilterBedBesScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-          width: wi,
-          height: he,
-          child: Obx((){
-            return  Column(
-              children: [
-                RadioListTile<int>(value: 0, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} ,title: Text(AppString.all),),
-                RadioListTile<int>(value: 1, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} , title: Text(AppString.selectCertianPerson),),
-                RadioListTile<int>(value: 2, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} , title: Text(AppString.selectWithMondeHesab),),
-                Divider(),
-                radioSelected.value == 1 ? _searchSpinnerPerson(wi, he, controller) : radioSelected.value ==2 ? mondeHesab(wi, he, controller,bedCheck,besCheck,biHesabCheck): Text("")
+      body: SingleChildScrollView(
+        child: Container(
+            width: wi,
+            height: he,
+            child: Obx((){
+              return  Column(
+                children: [
+                  RadioListTile<int>(value: 0, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} ,title: Text(AppString.all),),
+                  RadioListTile<int>(value: 1, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} , title: Text(AppString.selectCertianPerson),),
+                  RadioListTile<int>(value: 2, groupValue: radioSelected.value, onChanged: (value){radioSelected.value = value!;} , title: Text(AppString.selectWithMondeHesab),),
+                  Divider(),
+                  radioSelected.value == 1 ? _searchSpinnerPerson(wi, he, controller) : radioSelected.value ==2 ? mondeHesab(wi, he, controller,bedCheck,besCheck,biHesabCheck): Text("")
 
 
 
@@ -151,12 +154,13 @@ class FilterBedBesScreen extends StatelessWidget {
 
 
 
-              ],
-            );
-          }
+                ],
+              );
+            }
 
+            ),
           ),
-        ),
+      ),
 
     );
   }

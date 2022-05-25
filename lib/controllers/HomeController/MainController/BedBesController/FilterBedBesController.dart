@@ -11,6 +11,8 @@ class FilterBedBesController extends GetxController{
   RxList<DropdownMenuItem> personList = [DropdownMenuItem<String>(child: Text("خالی") , value: "خالی",)].obs;
   RxBool showLoadin = true.obs;
 
+  RxList<PersonList> personFilterList = <PersonList>[].obs;
+
 
 
   void getPersonList() async{

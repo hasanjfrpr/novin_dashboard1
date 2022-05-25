@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
+import 'package:novin_dashboard1/views/Home/SettingScreen/SettinScreen.dart';
 import 'package:novin_dashboard1/views/splashScreen/SplashScreen.dart';
 
 class Dialogs {
@@ -13,7 +14,7 @@ class Dialogs {
   static TextEditingController contollerSocket2 = TextEditingController();
   static TextEditingController contollerSocket3 = TextEditingController();
 
-  static void showServerSettingDialog() {
+  static void showServerSettingDialog(int state) {
     double wi = Get.width;
     double he = Get.height;
     RxInt selected = 0.obs;
@@ -62,6 +63,7 @@ class Dialogs {
                             child: TextField(
                               focusNode: focusNode3,
                               controller: contollerSocket3,
+                              keyboardType:TextInputType.number ,
                               onChanged: (value) {},
                               textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
@@ -81,6 +83,7 @@ class Dialogs {
                               },
                               focusNode: focusNode2,
                               controller: contollerSocket2,
+                              keyboardType:TextInputType.number ,
                               textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
                                   filled: true,
@@ -98,6 +101,7 @@ class Dialogs {
                                 }
                               },
                               focusNode: focusNode1,
+                              keyboardType:TextInputType.number ,
                               controller: contollerSocket1,
                               autofocus: true,
                               textDirection: TextDirection.ltr,
@@ -178,10 +182,14 @@ class Dialogs {
                         if(controllerIpTF.text.isNotEmpty || contollerSocket1.text.isNotEmpty){
                         await LocalData.setIp(controllerIpTF.text);
                         await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
-                        print("serial is : "+contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
                         await LocalData.setConnectMethode(
                             selected.value == 1 ? "socket" : "ip");
-                        Get.offAll(SplashScreen());}
+                        if(state == 1 ){
+                          Get.back();
+                        }else {
+                          Get.offAll(SplashScreen());
+                        }
+                        }
                         else{
 
                         }
@@ -199,5 +207,5 @@ class Dialogs {
         ));
   }
 
-  static void showRestartingServerDialog() {}
+
 }

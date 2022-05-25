@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/HazineController/FilterHazineController.dart';
@@ -22,32 +23,8 @@ class HazineScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
         title: Text(AppString.hazineh),
-      ),
-      bottomNavigationBar: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Container(
-          padding: EdgeInsets.only(bottom: he*0.03),
-          width: he,
-          child: DataTable(
-            decoration: BoxDecoration(color: Colors.white70 , boxShadow: [BoxShadow(color: Colors.black12 , blurRadius: 2 , spreadRadius: 4)] , borderRadius: BorderRadius.circular(wi*0.05)),
-            columns: [
+          actions: [GestureDetector(onTap: (){_showTotalDialog(wi,he,hazineController);},child: Icon(CupertinoIcons.doc_text)),SizedBox(width: 16,)]
 
-              DataColumn(label: Text("مجموع بدهکار(گردش)")),
-              DataColumn(label: Text("مجموع بستانکار (گردش)")),
-              DataColumn(label: Text("مجموع بدهکار(مانده)")),
-              DataColumn(label: Text("مجموع بستانکار(مانده)")),
-            ],
-            rows: [
-              DataRow(cells: [
-
-                DataCell(Text(setFormatNumber(hazineController.s_bed.value.toString()))),
-                DataCell(Text(setFormatNumber(hazineController.s_bes.value.toString()))),
-                DataCell(Text(setFormatNumber(hazineController.bed.value.toString()))),
-                DataCell(Text(setFormatNumber(hazineController.bes.value.toString()))),
-              ])
-            ],
-          ),
-        ),
       ),
       body: OrientationBuilder(
         builder: (context , orientation){
@@ -110,5 +87,26 @@ class HazineScreen extends StatelessWidget {
     return ls;
   }
 
+
+  void _showTotalDialog(double wi , double he , FilterHazineControler fContoller){
+    Get.dialog(AlertDialog(shape: RoundedRectangleBorder(side:BorderSide(width: 2 , color: Color(AppColor.primaryColor)) ,borderRadius: BorderRadius.only(topRight:Radius.circular(wi*0.08),bottomLeft: Radius.circular(wi*0.08))),
+      content: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(wi*0.06) ,boxShadow: [BoxShadow(color: Colors.white54 , blurRadius: 2,spreadRadius: 2)]),
+        width: wi,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(leading: Text("مجموع بدهکار(گردش) :" , style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.s_bed.value.toString()) , style: TextStyle(color: Colors.green , fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
+            Divider(height: 4,),
+            ListTile(leading: Text("مجموع بستانکار(گردش) :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.s_bes.value.toString()), style: TextStyle(color: Colors.redAccent, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
+            Divider(height: 4,),
+            ListTile(leading: Text(" مجموع بدهکار :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.bed.value.toString()), style: TextStyle(color: Colors.green, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
+            Divider(height: 4,),
+            ListTile(leading: Text("مجموع بستانکار :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.bes.value.toString()), style: TextStyle(color: Colors.redAccent, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
+          ],
+        ),
+      ),
+    ));
+  }
 
 }

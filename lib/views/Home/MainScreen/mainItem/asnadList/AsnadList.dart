@@ -18,6 +18,7 @@ class AsnadListScreen extends StatelessWidget {
     double he  = Get.height;
     FilterAsnadController fController = Get.find<FilterAsnadController>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(AppString.AsnadList),
         backgroundColor: Color(AppColor.primaryColor),

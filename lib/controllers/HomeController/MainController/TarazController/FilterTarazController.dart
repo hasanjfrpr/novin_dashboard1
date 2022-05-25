@@ -119,7 +119,6 @@ class FilterTarazController extends GetxController{
         tarazKolModel.value = tarazKol;
         listTaraz.value.clear();
         listTaraz.value = tarazKolModel.value.tarazAzmayeshiKolList!;
-        print(tarazKol);
 
         if(isChecked.value==true){
 
@@ -130,7 +129,7 @@ class FilterTarazController extends GetxController{
 
         }else{
 
-          for(var i=0;i<listTaraz.value.length ; i++){
+          for(var i=0;i<listTaraz.value.length-1 ; i++){
 
             if(listTaraz.value[i].bed=="0" &&
                 listTaraz.value[i].bes=="0" &&

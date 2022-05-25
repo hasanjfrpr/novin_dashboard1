@@ -21,6 +21,7 @@ class FactorForooshScreen extends StatelessWidget {
         FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(AppString.factorFrosh),
           centerTitle: true,
@@ -49,13 +50,14 @@ class FactorForooshScreen extends StatelessWidget {
                 )),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(wi*0.05),
+                alignment: Alignment.center,
                 color: Color(AppColor.primaryColor),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(AppString.allSell , style: TextStyle(color: Color(AppColor.onPrimaryColor)),),
-                    Text(_totalSell() , style: TextStyle(color: Color(AppColor.onPrimaryColor)),),
+                    Container(alignment: Alignment.center,height: he,child: Text(AppString.allSell , style: TextStyle(color: Color(AppColor.onPrimaryColor)),)),
+                    Container(alignment: Alignment.center,height: he,child: Text(_totalSell() , style: TextStyle(color: Color(AppColor.onPrimaryColor)),)),
                   ],
                 ),
               ),

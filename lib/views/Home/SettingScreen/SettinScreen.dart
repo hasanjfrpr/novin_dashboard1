@@ -46,7 +46,7 @@ class SettingScreen extends StatelessWidget {
                             ),
                           ),
                           onTap: (){
-                            Dialogs.showServerSettingDialog();
+                            Dialogs.showServerSettingDialog(1);
                           },
                           trailing: Icon(Icons.arrow_drop_down_outlined)),
                       Divider(),
@@ -59,7 +59,7 @@ class SettingScreen extends StatelessWidget {
                             ),
                           ),
                           onTap: (){
-                            Dialogs.showRestartingServerDialog();
+                           controller.restart();
                           },
                           trailing: Icon(Icons.arrow_drop_down_outlined)),
                     ],

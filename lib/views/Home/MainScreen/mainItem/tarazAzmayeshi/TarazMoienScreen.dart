@@ -56,7 +56,6 @@ class TarazMoienScreen extends StatelessWidget {
                   child: Container(
                     width: 6*0.3*wi,
                     height: he,
-                    color: Colors.grey,
                     child: Obx((){
                       return ListView.builder(itemBuilder: (context , index){
                         return InkWell(
@@ -69,18 +68,21 @@ class TarazMoienScreen extends StatelessWidget {
                                     controllers.endDay.value), listTaraz.value[index].fldcodjac.toString(), listTaraz.value[index].fldscrhead.toString(),listTaraz.value[index].tif!);
                             showLoading(wi, he);
                           },
-                          child: Row(children: [
-                            Container(width: wi*0.6 ,height: he*0.05,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
-                            Divider(color: Colors.black12,),
-                            Container(width: wi*0.3 ,height: he*0.05,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.white,border: Border(left: BorderSide(color: Colors.black12))),),
+                          child: Container(
+                            color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
+                            child: Row(children: [
+                              Container(padding: EdgeInsets.symmetric(vertical: wi*0.04),width: wi*0.6 ,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.black12))),),
+                              Divider(color: Colors.black12,),
+                              Container(padding: EdgeInsets.symmetric(vertical: wi*0.04),width: wi*0.3 ,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.black12))),),
+                              Divider(color: Colors.black12,),
+                              Container(padding: EdgeInsets.symmetric(vertical: wi*0.04),width: wi*0.3 ,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.black12))),),
+                              Divider(color: Colors.black12,),
+                              Container(padding: EdgeInsets.symmetric(vertical: wi*0.04),width: wi*0.3 ,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.black12))),),
+                              Divider(color: Colors.black12,),
+                              Container(padding: EdgeInsets.symmetric(vertical: wi*0.04),width: wi*0.3 ,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),alignment: Alignment.center,decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.black12))),),
 
-                          ],),
+                            ],),
+                          ),
                         );
                       }, itemCount: listTaraz.value.length,);}
                     ),
@@ -101,17 +103,18 @@ class TarazMoienScreen extends StatelessWidget {
   void _showTotalDialog(double wi , double he , TarazController fContoller){
     Get.dialog(AlertDialog(shape: RoundedRectangleBorder(side:BorderSide(width: 2 , color: Color(AppColor.primaryColor)) ,borderRadius: BorderRadius.only(topRight:Radius.circular(wi*0.08),bottomLeft: Radius.circular(wi*0.08))),
       content: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(wi*0.06) ,boxShadow: [BoxShadow(color: Colors.white54 , blurRadius: 2,spreadRadius: 2)]),
         width: wi,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(leading: Text("مجموع بدهکار(گردش) :"),title:Text(setFormatNumber(fContoller.s_bed.toString()) , style: TextStyle(color: Colors.green),) ,),
+            ListTile(leading: Text("مجموع بدهکار(گردش) :" , style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.s_bed.value.toString()) , style: TextStyle(color: Colors.green , fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
             Divider(height: 4,),
-            ListTile(leading: Text("مجموع بدهکار(گردش) :"),title:Text(setFormatNumber(fContoller.s_bes.toString()), style: TextStyle(color: Colors.redAccent),) ,),
+            ListTile(leading: Text("مجموع بستانکار(گردش) :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.s_bes.value.toString()), style: TextStyle(color: Colors.redAccent, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
             Divider(height: 4,),
-            ListTile(leading: Text(" مجموع بدهکار :"),title:Text(setFormatNumber(fContoller.bed.toString()), style: TextStyle(color: Colors.green),) ,),
+            ListTile(leading: Text(" مجموع بدهکار :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.bed.value.toString()), style: TextStyle(color: Colors.green, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
             Divider(height: 4,),
-            ListTile(leading: Text("مجموع بستانکار :"),title:Text(setFormatNumber(fContoller.bes.toString()), style: TextStyle(color: Colors.redAccent),) ,),
+            ListTile(leading: Text("مجموع بستانکار :", style: TextStyle(fontSize: 0.03*wi),),title:Text(setFormatNumber(fContoller.bes.value.toString()), style: TextStyle(color: Colors.redAccent, fontSize: wi*0.03,fontWeight: FontWeight.bold),) ,),
           ],
         ),
       ),
@@ -164,14 +167,13 @@ class TarazMoienScreen extends StatelessWidget {
                       showLoading(wi, he);
                     },
                     child: Container(
-                      height: Get.height*0.1,
                       color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
                       child: Row(children: [
-                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
-                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
-                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
-                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
-                        Expanded(child: Container(decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                        Expanded(child: Container(padding: EdgeInsets.all(wi*0.02),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(listTaraz.value[index].tif.toString(), style: TextStyle(color:Colors.black),),) , flex: 3,),
+                        Expanded(child: Container(padding: EdgeInsets.all(wi*0.02),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbed.toString()), style: TextStyle(color:Colors.black),),) , flex: 2,),
+                        Expanded(child: Container(padding: EdgeInsets.all(wi*0.02),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].sbes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
+                        Expanded(child: Container(padding: EdgeInsets.all(wi*0.02),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bed.toString()), style: TextStyle(color:Colors.black)),) , flex: 2,),
+                        Expanded(child: Container(padding: EdgeInsets.all(wi*0.02),decoration:BoxDecoration(border: Border(left: BorderSide(width: 1,color: Colors.black))),alignment: Alignment.center,child: Text(setFormatNumber(listTaraz.value[index].bes.toString()) , style: TextStyle(color:Colors.black),),) , flex: 2,),
 
                       ],),
                     ),

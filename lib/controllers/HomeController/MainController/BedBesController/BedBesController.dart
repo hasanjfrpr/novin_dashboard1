@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
 import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
+import 'package:novin_dashboard1/controllers/HomeController/MainController/BedBesController/FilterBedBesController.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/MainController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/BedBesModel/RizBedBesModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/FilterFactorForooshModel/PersonListModel.dart';
@@ -24,7 +25,8 @@ class BedBesController extends GetxController{
 
 @override
   void onInit() {
-    personLists.value = Get.find<MainController>().personListModel.value.personList!;
+   // personLists.value = Get.find<MainController>().personListModel.value.personList!;
+  personLists.value = Get.find<FilterBedBesController>().personFilterList.value;
     helpListPerson.addAll(personLists.value);
     print(helpListPerson.length);
     print(personLists.value.length);

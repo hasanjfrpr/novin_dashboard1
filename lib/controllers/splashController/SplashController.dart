@@ -37,12 +37,7 @@ class SplashController extends GetxController {
 
   RxBool showSecondSpinner = false.obs;
 
-  @override
-  void onInit() {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-     LocalData.getSharedInstance();
-    super.onInit();
-  }
+
 
   void getCompanyBook() async {
 
@@ -116,14 +111,28 @@ class SplashController extends GetxController {
     }
   }
 
-  void goNexScreen() async {
+  @override
+  void onInit() {
 
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.onInit();
+  }
 
+  @override
+  void onReady() {
+    LocalData.getSharedInstance();
     if (LocalData.getIp() == "" && LocalData.getSerial() == "") {
-      Dialogs.showServerSettingDialog();
+      Dialogs.showServerSettingDialog(0);
     } else {
       // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
       getCompanyBook();
     }
+    super.onReady();
   }
-}
+
+  void goNexScreen()  {
+
+
+  }
+  }
+

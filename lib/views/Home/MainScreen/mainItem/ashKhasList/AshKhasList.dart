@@ -18,6 +18,7 @@ class AshKhasListScreen extends StatelessWidget {
     AshkhasCotrolller personController = Get.put(AshkhasCotrolller());
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(AppString.personsList),
         backgroundColor: Color(AppColor.primaryColor),

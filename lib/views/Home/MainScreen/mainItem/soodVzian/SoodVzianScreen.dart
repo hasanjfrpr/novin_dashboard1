@@ -90,7 +90,6 @@ class SoodVzianScreen extends StatelessWidget {
     double he = Get.width;
     double wi = Get.height;
 
-
     var soodZianList = filterController.soodVzianModel.value.soodZianListO!;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
