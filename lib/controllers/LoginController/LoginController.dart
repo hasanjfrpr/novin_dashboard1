@@ -41,7 +41,7 @@ class LoginController extends GetxController {
 
           loginModelObs.value = SignInModel.fromJson(value);
           Future.delayed(Duration(milliseconds: 850), () {
-            Get.off(HomeScreen());
+            Get.off(HomeScreen() ,duration: Duration(milliseconds: 2000));
           });
         } else {
           buttonStateLogin.value = ButtonState.fail;
@@ -66,7 +66,7 @@ class LoginController extends GetxController {
 
           loginModelObs.value = SignInModel.fromJson(value);
           Future.delayed(Duration(milliseconds: 850), () {
-            Get.off(HomeScreen());
+            Get.off(HomeScreen(),duration: Duration(milliseconds: 2000));
           });
         } else {
           buttonStateLogin.value = ButtonState.fail;

@@ -16,7 +16,6 @@ class HomeController extends GetxController{
   void onInit() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     _getTime();
-
     super.onInit();
   }
 

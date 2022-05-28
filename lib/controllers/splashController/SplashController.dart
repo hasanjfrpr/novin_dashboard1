@@ -81,9 +81,8 @@ class SplashController extends GetxController {
             value: "${result.companyList![i].fldnmfcomp}",
           ));
         }
-      }).then((value) {
-        Get.off(Login());
-      });
+
+      }).then((value) =>  Get.off(Login()));
     }
   }
 
@@ -120,17 +119,19 @@ class SplashController extends GetxController {
 
   @override
   void onReady() {
-    LocalData.getSharedInstance();
-    if (LocalData.getIp() == "" && LocalData.getSerial() == "") {
-      Dialogs.showServerSettingDialog(0);
-    } else {
-      // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
-      getCompanyBook();
-    }
+
     super.onReady();
   }
 
-  void goNexScreen()  {
+  void goNexScreen() async{
+    await LocalData.getSharedInstance().then((value)  {
+      if (LocalData.getIp() == "" && LocalData.getSerial() == "") {
+        Dialogs.showServerSettingDialog(0);
+      } else {
+        // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
+        getCompanyBook();
+      }
+    });
 
 
   }

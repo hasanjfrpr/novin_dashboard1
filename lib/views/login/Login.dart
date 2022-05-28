@@ -38,15 +38,15 @@ class Login extends StatelessWidget {
             Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: wi * .25,
-                  height: he * .1,
-                  margin: EdgeInsets.only(top: he * .06),
+                  width: wi * .3,
+                  height: wi*.3,
+                  margin: EdgeInsets.only(top: he * .06,bottom: he*0.02),
                   child: Hero(
                       tag: "logoHero",
                       child: Image.asset(
                         "assets/images/novin.png",
                         color: Color(AppColor.onPrimaryColor),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       )),
                 )),
             Align(
@@ -200,6 +200,8 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
                       color: Colors.green.shade400)
                 },
                     onPressed: () {
+                  FocusManager.instance.primaryFocus!.unfocus();
+
                   if(formkey.currentState!.validate()) {
                     controller.buttonStateLogin.value = ButtonState.loading;
                     controller.login(
