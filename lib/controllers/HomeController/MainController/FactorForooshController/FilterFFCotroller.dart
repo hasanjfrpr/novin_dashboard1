@@ -63,7 +63,7 @@ if(LocalData.getConnectionMethode() == "socket"){
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
-  await RequestManager.postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+  await RequestManager().postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
     'Content-type': 'application/json',
     'authorization':basicAuth
   }).then((value) {
@@ -103,7 +103,7 @@ void getVisitorList() async{
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
-    await RequestManager.postReq(url: "tservermethods1/GetvisitorList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+    await RequestManager().postReq(url: "tservermethods1/GetvisitorList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
       'Content-type': 'application/json',
       'authorization':basicAuth
     }).then((value) {
@@ -190,7 +190,7 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
        'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 
 
-   await RequestManager.postReq(url: "tservermethods1/GetFactorForooshList", body: {
+   await RequestManager().postReq(url: "tservermethods1/GetFactorForooshList", body: {
      "params": {
        "bookid": bookId,
        "startdate": startDate,

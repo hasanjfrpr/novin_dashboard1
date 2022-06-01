@@ -38,7 +38,7 @@ class AsnadController extends GetxController{
         Get.to(RizAsnadScreen());
       });
     }else{
-      await RequestManager.postReq(url: "tservermethods1/getDocumentDetailsList", body: {
+      await RequestManager().postReq(url: "tservermethods1/getDocumentDetailsList", body: {
         "params": {
           "bookid": Utils.bookId,
           "doccode": sanadCode

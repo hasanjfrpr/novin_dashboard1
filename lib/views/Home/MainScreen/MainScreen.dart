@@ -47,7 +47,7 @@ class MainScreen extends StatelessWidget {
                   centerTitle: true,
                   background: Obx(() {
                     return CarouselSlider.builder(
-                        itemCount:controller.imgList.length,
+                        itemCount:controller.imgList.value.length,
                         itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) {
                           return controller.imgList.value.length != 0

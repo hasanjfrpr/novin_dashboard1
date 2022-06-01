@@ -59,7 +59,7 @@ bool clickShod = false;
 
     }else{
 
-      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body:
+      await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body:
       {
         "params": {
           "bookid": Utils.bookId,

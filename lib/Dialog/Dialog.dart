@@ -1,7 +1,12 @@
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
+import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
+import 'package:novin_dashboard1/controllers/setting/SettingController.dart';
+import 'package:novin_dashboard1/controllers/splashController/SplashController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
+import 'package:novin_dashboard1/views/Home/HomeScreen.dart';
 import 'package:novin_dashboard1/views/Home/SettingScreen/SettinScreen.dart';
 import 'package:novin_dashboard1/views/splashScreen/SplashScreen.dart';
 
@@ -14,7 +19,7 @@ class Dialogs {
   static TextEditingController contollerSocket2 = TextEditingController();
   static TextEditingController contollerSocket3 = TextEditingController();
   static RxInt selected = 0.obs;
-  static void showServerSettingDialog(int state) {
+  static void showServerSettingDialog(int state ) {
     double wi = Get.width;
     double he = Get.height;
 
@@ -181,58 +186,67 @@ class Dialogs {
                 children: [
                   TextButton(
                       onPressed: () async {
-                        if(controllerIpTF.text.isNotEmpty || contollerSocket1.text.isNotEmpty){
-                        await LocalData.setIp(controllerIpTF.text);
-                        await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
-                        await LocalData.setConnectMethode(
-                            selected.value == 1 ? "socket" : "ip");
-                        if(state == 1 ){
-                          Get.back();
-                        }else {
-                          Get.offAll(SplashScreen());
-                        }
-                        }
-                        else{
-                          Get.snackbar("خطای دسترسی", "لطفا یک دسترسی را انتخاب کنید.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
-                          snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
-                          margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
-                        }
-                        // if(selected.value != 1 && selected.value != 2){
-                        //   Get.snackbar("خطای دسترسی", "لطفا یک دسترسی را انتخاب کنید.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
-                        //       snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 2,borderColor: Colors.white,
-                        //       margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
-                        // }else{
-                        //   if(selected.value ==1){
-                        //     if(contollerSocket1.text.isEmpty || contollerSocket2.text.isEmpty || contollerSocket3.text.isEmpty){
-                        //       Get.snackbar("خطا", "تمامی فیلد های سریال باید وارد شود.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
-                        //           snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
-                        //           margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
-                        //     }else{
-                        //       await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
-                        //       await LocalData.setConnectMethode("socket");
-                        //       if (state == 1) {
-                        //         Get.back();
-                        //       } else {
-                        //         Get.offAll(SplashScreen());
-                        //       }
-                        //     }
-                        //   }else if(selected.value ==2){
-                        //     if(controllerIpTF.text.isEmpty){
-                        //       Get.snackbar("خطای ", "ip وارد نشده است.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
-                        //           snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
-                        //           margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
-                        //     }else{
-                        //       await LocalData.setIp(controllerIpTF.text);
-                        //       await LocalData.setConnectMethode("ip");
-                        //
-                        //       if (state == 1) {
-                        //         Get.back();
-                        //       } else {
-                        //         Get.offAll(SplashScreen());
-                        //       }
-                        //     }
-                        //   }
+                        // if(controllerIpTF.text.isNotEmpty || contollerSocket1.text.isNotEmpty){
+                        // await LocalData.setIp(controllerIpTF.text);
+                        // await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
+                        // await LocalData.setConnectMethode(
+                        //     selected.value == 1 ? "socket" : "ip");
+                        // if(state == 1 ){
+                        //   Get.back();
+                        // }else {
+                        //   Get.offAll(SplashScreen());
                         // }
+                        // }
+                        // else{
+                        //   Get.snackbar("خطای دسترسی", "لطفا یک دسترسی را انتخاب کنید.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
+                        //   snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
+                        //   margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
+                        // }
+                        if(selected.value != 1 && selected.value != 2){
+                          Get.snackbar("خطای دسترسی", "لطفا یک دسترسی را انتخاب کنید.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
+                              snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 2,borderColor: Colors.white,
+                              margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
+                        }else{
+                          if(selected.value ==1){
+                            if(contollerSocket1.text.isEmpty || contollerSocket2.text.isEmpty || contollerSocket3.text.isEmpty){
+                              Get.snackbar("خطا", "تمامی فیلد های سریال باید وارد شود.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
+                                  snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
+                                  margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
+                            }else{
+                              await LocalData.setSerialSocket(contollerSocket1.text+contollerSocket2.text+contollerSocket3.text);
+                              await LocalData.setConnectMethode("socket");
+                              Get.find<SplashController>(tag: "SplashController").serverMethodName.value = "دسترسی راه دور";
+                               //Get.offAll(SplashScreen());
+                              SocketManager.isRegister = false;
+                              await Get.deleteAll(force: true);
+
+                              ///You can use normal context here within widget.
+                              Phoenix.rebirth(Get.context!);
+                              Get.reset();
+
+
+                            }
+                          }else if(selected.value ==2){
+                            if(controllerIpTF.text.isEmpty){
+                              Get.snackbar("خطای ", "ip وارد نشده است.",backgroundColor: Colors.redAccent,duration: Duration(seconds: 3),
+                                  snackPosition: SnackPosition.BOTTOM , colorText: Colors.white,borderRadius:15 , borderWidth: 1.5,borderColor: Colors.white,
+                                  margin: EdgeInsets.symmetric(horizontal: wi*0.08 , vertical: wi*0.04));
+                            }else{
+                              await LocalData.setIp(controllerIpTF.text);
+                              await LocalData.setConnectMethode("ip");
+                              Get.find<SplashController>(tag: "SplashController").serverMethodName.value = "دسترسی محلی";
+                               // Get.offAll(SplashScreen());
+
+                              SocketManager.isRegister = false;
+                              await Get.deleteAll(force: true);
+
+                              ///You can use normal context here within widget.
+                              Phoenix.rebirth(Get.context!);
+                              Get.reset();
+
+                            }
+                          }
+                        }
                       },
 
                       child: Text(AppString.ok)),
@@ -247,6 +261,7 @@ class Dialogs {
           ),
         ));
   }
+
 
 
 }

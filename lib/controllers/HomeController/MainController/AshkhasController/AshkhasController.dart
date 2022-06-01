@@ -27,7 +27,7 @@ class AshkhasCotrolller extends GetxController{
 
 
   void getPersonList() async{
-    await RequestManager.postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+    await RequestManager().postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
       'Content-type': 'application/json',
       'authorization':auth()
     }).then((value) {

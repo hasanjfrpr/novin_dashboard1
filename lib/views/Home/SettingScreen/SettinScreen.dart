@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/Dialog/Dialog.dart';
 import 'package:novin_dashboard1/controllers/setting/SettingController.dart';
+import 'package:novin_dashboard1/controllers/splashController/SplashController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatelessWidget {
    SettingScreen({Key? key}) : super(key: key);
-  final SettingController controller = SettingController();
+  final SettingController controller = Get.put(SettingController());
   RxBool visible = false.obs;
 
 
@@ -41,18 +43,21 @@ class SettingScreen extends StatelessWidget {
                   width: wi,
                   child: Column(
                     children: [
-                      ListTile(
-                          title: Text(
-                            AppString.serverSetting,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: wi * 0.035,
+                      Obx(
+                      (){ return ListTile(
+                          subtitle: Text(Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}"),
+                            title: Text(
+                              AppString.serverSetting,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: wi * 0.035,
+                              ),
                             ),
-                          ),
-                          onTap: (){
-                            Dialogs.showServerSettingDialog(1);
-                          },
-                          trailing: Icon(Icons.arrow_drop_down_outlined)),
+                            onTap: (){
+                              Dialogs.showServerSettingDialog(1);
+                            },
+                            trailing: Icon(Icons.arrow_drop_down_outlined));}
+                      ),
                       Divider(),
                       ListTile(
                           title: Text(
@@ -105,7 +110,7 @@ class SettingScreen extends StatelessWidget {
                     Text("گروه تولیدی و صادراتی هوشمند نوین از سال 1370 تاکنون یکی از اولین شرکت‌ها در امر تولید و عرضه نرم افزارهای مالی و حسابداری می‌باشد که منطبق با پیشرفته‌ترین تکنولوژی روز در این حوزه به فعالیت پرداخته است."+"\n"+
                         "این مجموعه با هدف بهره وری و بهینه‌سازی سیستم های مختلف، یکی از برترین تولید کنندگان نرم‌افزار در کشور می‌باشد."+"\n"+""
                         "هوشمند نوین تا به امروز افتخار همکاری با اصناف و مشاغل مختلفی را داشته و کاربران بسیاری در ایران و دیگر کشورهای جهان عضو این خانواده بزرگ هستند. ما این جا هستیم تا با خلق و بکارگیری فناوری های ساده و در عین حال بسیار ظریف، دقیق، برازنده و ارائه خدمات به صورت تمام‌وقت مشتریا‌ن‌مان را راضی نگه داریم."
-                      ,style: TextStyle(fontSize: wi*0.033),),
+                      ,style: TextStyle(fontFamily: 'IrSans',fontSize: wi*0.033),),
                    SizedBox(height: 25,),
                     SizedBox(height: 12,),
                     GestureDetector(onTap: ()async{

@@ -156,7 +156,7 @@ class FilterTarazController extends GetxController{
         }
       });
     }else{
-      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
+      await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
       {
         "params": {
           "bookid": Utils.bookId,

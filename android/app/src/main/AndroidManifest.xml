@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dayrayaneh.novin.novin_dashboard1">
-   <application
+    <application
         android:label="novin_dashboard1"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

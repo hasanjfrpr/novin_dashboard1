@@ -30,6 +30,8 @@ class TarazKolLv3Screen extends StatelessWidget {
 
   }
   Widget _portraitView(double wi , double he , TarazMoienController controller , FilterTarazController controllers , TarazKolLv3Controller lv3controller ){
+    he  = Get.height;
+    wi = Get.width;
     var listTaraz = controller.tarazKolLv3List;
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

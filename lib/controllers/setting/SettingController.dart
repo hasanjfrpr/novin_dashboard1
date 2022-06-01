@@ -14,7 +14,11 @@ class SettingController extends GetxController {
 
 
 
+@override
+  void onInit() {
 
+    super.onInit();
+  }
 
 
   void restart(){

@@ -32,6 +32,7 @@ class SocketManager {
         });
 
       }else{
+        print(" serial in socketManager is  : "+LocalData.getSerial().toString());
         socket.emit("register" ,LocalData.getSerial());
         socket.once("register", (data){
           if(data["status"]){

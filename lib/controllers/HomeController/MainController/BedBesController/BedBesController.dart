@@ -57,7 +57,7 @@ class BedBesController extends GetxController{
     Get.back();
     Get.to(RizBedBesScreen(name: name,)); });
   }else{
-    await RequestManager.postReq(url: "tservermethods1/GetPersonAccount", body: {
+    await RequestManager().postReq(url: "tservermethods1/GetPersonAccount", body: {
       "params": {
         "bookid": Utils.bookId,
         "startdate": "1990/01/01",

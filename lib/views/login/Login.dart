@@ -175,7 +175,7 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
         ),
         Container(
             margin: EdgeInsets.only(
-                left: Get.width * .12, right: Get.width * .06),
+                left: Get.width * .12, right: Get.width * .06 , bottom: Get.height*0.05),
             child: Obx(
                   () {
                 return ProgressButton.icon(iconedButtons: {
@@ -203,11 +203,12 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
                   FocusManager.instance.primaryFocus!.unfocus();
 
                   if(formkey.currentState!.validate()) {
+                    print(controller.userNameControllerTF.text +"   "+ controller.passwordControllerTF.text);
                     controller.buttonStateLogin.value = ButtonState.loading;
                     controller.login(
                         controller.getbookId(bookNameId.toString())
-                        , controller.userNameControllerTF.text,
-                        controller.passwordControllerTF.text);
+                        , faToEnConvert(controller.userNameControllerTF.text),
+                        faToEnConvert(controller.passwordControllerTF.text));
                   }
                     },
                     state:controller.buttonStateLogin.value

@@ -70,7 +70,7 @@ class MainController extends GetxController{
         adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
       });
     }else{
-      await RequestManager.postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
+      await RequestManager().postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
         'Content-type': 'application/json',
         'authorization':auth()
       }).then((value) {

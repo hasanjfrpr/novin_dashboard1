@@ -42,7 +42,7 @@ class FactorForooshController extends GetxController{
 
     }else{
 
-      await RequestManager.postReq(url: "tservermethods1/GetFactorForooshRizKalaList", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetFactorForooshRizKalaList", body: {
         "params": {
           "bookid": Utils.bookId,
           "factorforooshid": factorForooshId

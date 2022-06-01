@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/views/splashScreen/SplashScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(Phoenix(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(AppColor.primaryColor),
         colorScheme: ColorScheme.fromSwatch(brightness: Brightness.light , primarySwatch: Colors.blueGrey),
-        fontFamily: "Irsans"
+        fontFamily: 'IrSans'
 
       ),
       home: Scaffold(

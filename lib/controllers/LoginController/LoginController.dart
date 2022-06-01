@@ -23,6 +23,8 @@ class LoginController extends GetxController {
 
 
   void login(String bookId , String username , String password) async {
+
+
     if (LocalData.getConnectionMethode() == "socket") {
       await SocketManager.request({
         "params": {
@@ -51,7 +53,7 @@ class LoginController extends GetxController {
     } else {
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
-      await RequestManager.postReq(url: "tservermethods1/Login", body: {
+      await RequestManager().postReq(url: "tservermethods1/Login", body: {
         "params": {"bookid": '$bookId'}
       }, header: {
         'Content-type': 'application/json',

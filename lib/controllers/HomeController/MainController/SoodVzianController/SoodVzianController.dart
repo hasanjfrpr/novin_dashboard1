@@ -46,7 +46,7 @@ class SoodVzianController extends GetxController{
       });
 
     }else{
-      await RequestManager.postReq(url: "tservermethods1/GetSoodZianDetails", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetSoodZianDetails", body: {
         "params": {
           "bookid": Utils.bookId,
           "startdate": startDate,

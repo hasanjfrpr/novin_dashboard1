@@ -48,7 +48,7 @@ class FilterAsnadController extends GetxController{
 
     }else{
 
-      await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetDocumentList", body: {
         "params": {
           "bookid":Utils.bookId,
           "startdate": startDate,
@@ -94,7 +94,7 @@ class FilterAsnadController extends GetxController{
       });
     }else{
 
-      await RequestManager.postReq(url: "tservermethods1/GetDocumentList", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetDocumentList", body: {
         "params": {
           "bookid":Utils.bookId,
           "startdate": startDate,

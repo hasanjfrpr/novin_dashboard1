@@ -1,8 +1,10 @@
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
@@ -18,6 +20,19 @@ static String? passWord;
 String auth(){
   return 'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 }
+  String faToEnConvert(String a) {
+  return a
+      .replaceAll("۱", "1")
+      .replaceAll("۲", "2")
+      .replaceAll("۳", "3")
+      .replaceAll("۴", "4")
+      .replaceAll("۵", "5")
+      .replaceAll("۶", "6")
+      .replaceAll("۷", "7")
+      .replaceAll("۸", "8")
+      .replaceAll("۹", "9")
+      .replaceAll("۰", "0");
+}
 
 
 String convertJtoGDate(int year , int month , int day){
@@ -28,6 +43,17 @@ String convertJtoGDate(int year , int month , int day){
 
   return "$Gyear/$Gmonth/$Gday";
 }
+
+
+void restartApp(BuildContext context) {
+  // if (Platform.isAndroid) {
+  //   Restart.restartApp();
+  // } else {
+    Phoenix.rebirth(context);
+
+}
+
+
 
 String convertDtoJDate(String gregorianDate){
 

@@ -56,7 +56,7 @@ class FilterHazineControler extends GetxController{
         }
       });
     }else{
-      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
+      await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKollist", body:
       {
         "params": {
           "bookid": Utils.bookId,
@@ -106,7 +106,7 @@ class FilterHazineControler extends GetxController{
       });
     }else{
 
-      await RequestManager.postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKol_MoeinList", body: {
         "params": {
           "bookid": Utils.bookId,
           "startdate": startDate,

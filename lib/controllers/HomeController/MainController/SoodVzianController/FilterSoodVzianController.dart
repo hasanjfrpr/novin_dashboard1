@@ -43,7 +43,7 @@ Rx<SoodVzianModel> soodVzianModel = SoodVzianModel().obs;
         Get.to(SoodVzianScreen());
       });
     }else{
-      await RequestManager.postReq(url: "tservermethods1/GetSoodZian", body:{
+      await RequestManager().postReq(url: "tservermethods1/GetSoodZian", body:{
         "params": {
           "bookid": Utils.bookId,
           "startdate": startDate,

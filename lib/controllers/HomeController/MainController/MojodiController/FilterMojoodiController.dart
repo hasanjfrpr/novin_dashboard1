@@ -53,7 +53,7 @@ class FilterMojoodiController extends GetxController{
     }else{
       
     }
-    await RequestManager.postReq(url: "tservermethods1/GetAnbarList", body: {
+    await RequestManager().postReq(url: "tservermethods1/GetAnbarList", body: {
       "params": {
         "bookid": "1"
       }
@@ -115,7 +115,7 @@ class FilterMojoodiController extends GetxController{
           }
         }
       }
-      await RequestManager.postReq(url: "tservermethods1/GetMojoodiKalaList", body:{
+      await RequestManager().postReq(url: "tservermethods1/GetMojoodiKalaList", body:{
         "params": {
           "bookid": Utils.bookId,
           "startdate": startDate,

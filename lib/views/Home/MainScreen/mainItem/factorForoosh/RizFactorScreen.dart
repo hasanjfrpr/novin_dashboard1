@@ -52,7 +52,7 @@ class RizFactorScreen extends StatelessWidget {
           _itemRow(AppString.count, controller.rizFactorModel.value.factorForooshRizKalaList![index].fldqty1iogds!),
           _itemRow(AppString.fee, setFormatNumber(controller.rizFactorModel.value.factorForooshRizKalaList![index].fldsprciogds!)),
           _itemRow(AppString.discount, setFormatNumber(controller.rizFactorModel.value.factorForooshRizKalaList![index].fLDPrcDISCIOGDS!)),
-          _itemRow(AppString.feeAfterDiscount, setFormatNumber(controller.rizFactorModel.value.factorForooshRizKalaList![index].priceAfterDiscount!)),
+          _itemRow(AppString.feeAfterDiscount, controller.rizFactorModel.value.factorForooshRizKalaList![index].priceAfterDiscount == null ? "" : setFormatNumber(controller.rizFactorModel.value.factorForooshRizKalaList![index].priceAfterDiscount!)),
           Divider(),
           _itemRow(AppString.price, setFormatNumber(controller.rizFactorModel.value.factorForooshRizKalaList![index].fldtprciogds!)),
         ],

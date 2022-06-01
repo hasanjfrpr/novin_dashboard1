@@ -30,6 +30,8 @@ class TarazMoienScreen extends StatelessWidget {
 
   }
   Widget _portraitView(double wi , double he , TarazController controller , FilterTarazController controllers , TarazMoienController moienController){
+    he  = Get.height;
+    wi = Get.width;
     var listTaraz = controller.tarazMoienList;
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
