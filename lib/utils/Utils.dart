@@ -14,6 +14,7 @@ class Utils {
 static String? bookId;
 static String? userName;
 static String? passWord;
+static bool? isLogin=true;
 
 }
 
@@ -68,8 +69,9 @@ String convertDtoJDate(String gregorianDate){
 }
 
 String setFormatNumber(String number){
+
 var formatter =number.contains(".") ?  NumberFormat("#,##0.0") :  NumberFormat("##,###,000");
-  return number.toLowerCase()=="null" ? "0" : number.toLowerCase()=="0" ? "0" :formatter.format(double.parse(number));
+  return number.toLowerCase()=="null" || number.toLowerCase().toString()=="" ? "0" : number.toLowerCase()=="0" ? "0" :formatter.format(double.parse(number));
 }
 Widget emptyScreen(double wi , double he){
   return Center(child: Container(

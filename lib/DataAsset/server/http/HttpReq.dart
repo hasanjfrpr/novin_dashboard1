@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RequestManager {
 
   //static String? ip =LocalData.getIp();
-   final Base_Url = "http://"+LocalData.getIp()!+":13647/daycomputer/nvn5_android/";
+  final Base_Url = "http://"+LocalData.getIp()!+":13647/daycomputer/nvn5_android/";
   static const Map<String , String > header = {'Content-type': 'application/json'};
 
 
@@ -23,11 +23,15 @@ class RequestManager {
    Future<dynamic> postReq(
       {required String? url,
         required Map<String, dynamic>? body , Map<String , String > header = header}) async {
-    // body!['username']=Utils.userName;
-    // body['password']=Utils.passWord;
+     if(!Utils.isLogin!){
+     body!['username']=Utils.userName.toString();
+     body['password']=Utils.passWord.toString();}
+     header.remove('authorization');
+     print(header);
+     print(body);
     try {
       var res = await http.post(Uri.parse(Base_Url + url!),
-          body: json.encode(body!),
+          body: json.encode(body),
           headers: header);
       if (res.statusCode == 200) {
          var result = json.decode(res.body);

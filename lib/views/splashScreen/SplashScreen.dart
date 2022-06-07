@@ -19,6 +19,7 @@ class SplashScreen extends StatelessWidget {
     double wi = Get.width;
     double he = Get.height;
 
+
     return Scaffold(
       body:  Container(
 
@@ -29,20 +30,24 @@ class SplashScreen extends StatelessWidget {
                 height: Get.height,
                 child: (Image.asset("assets/images/bbb.jpg",fit: BoxFit.cover,)),
               ),
-              Container(
-                width: Get.width,
-                height: Get.height,
-                child: (Lottie.asset("assets/welcome.json" ,
-                controller: controller.lottieController,
-                  onLoaded: (composition){
-                  controller.lottieController
-                      ..duration = composition.duration
-                      ..forward().whenComplete(() {
-                       controller.showLoading.value = true;
-                       controller.goNexScreen();
-                      });
-                  }
-                )),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: Get.width*0.8,
+                  height: Get.height*0.8,
+
+                  child: (Lottie.asset("assets/welcome.json" ,
+                  controller: controller.lottieController,
+                    onLoaded: (composition){
+                    controller.lottieController
+                        ..duration = composition.duration
+                        ..forward().whenComplete(() {
+                         controller.showLoading.value = true;
+                         controller.goNexScreen();
+                        });
+                    }
+                  )),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: he*0.05),

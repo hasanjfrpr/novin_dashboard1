@@ -24,6 +24,7 @@ class LoginController extends GetxController {
 
   void login(String bookId , String username , String password) async {
 
+    print("slamati to mashti : "+username + password );
 
     if (LocalData.getConnectionMethode() == "socket") {
       await SocketManager.request({
@@ -51,21 +52,20 @@ class LoginController extends GetxController {
 
       });
     } else {
-      String basicAuth =
-          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
       await RequestManager().postReq(url: "tservermethods1/Login", body: {
-        "params": {"bookid": '$bookId'}
+        "params": {"bookid": '$bookId'},
+        "username":username,
+        "password":password
       }, header: {
         'Content-type': 'application/json',
-        'authorization': basicAuth
       }).then((value) {
-
 
         if (value['Result']['Success'].toString().toLowerCase() == "true") {
           buttonStateLogin.value = ButtonState.success;
           Utils.userName = username;
           Utils.passWord = password;
-
+          Utils.isLogin = false;
           loginModelObs.value = SignInModel.fromJson(value);
           Future.delayed(Duration(milliseconds: 850), () {
             Get.off(HomeScreen(),duration: Duration(milliseconds: 2000));

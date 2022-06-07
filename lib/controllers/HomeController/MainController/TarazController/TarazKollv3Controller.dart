@@ -36,7 +36,7 @@ class TarazKolLv3Controller extends GetxController{
         Get.to(TarazKolLv4Screen(tif:tif));
       });
     }else{
-      await RequestManager().postReq(url: "tservermethods1/ GetTarazAzmayeshiKol_Moein_Tafsili_TafsiliList", body: {
+      await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKol_Moein_Tafsili_TafsiliList", body: {
         "params": {
           "bookid": Utils.bookId,
           "startdate": startDate,

@@ -93,7 +93,6 @@ class FilterAsnadController extends GetxController{
         Get.to(AsnadListScreen());
       });
     }else{
-
       await RequestManager().postReq(url: "tservermethods1/GetDocumentList", body: {
         "params": {
           "bookid":Utils.bookId,
