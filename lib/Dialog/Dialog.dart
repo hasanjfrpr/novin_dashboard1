@@ -18,10 +18,15 @@ class Dialogs {
   static TextEditingController contollerSocket1 = TextEditingController();
   static TextEditingController contollerSocket2 = TextEditingController();
   static TextEditingController contollerSocket3 = TextEditingController();
+
   static RxInt selected = 0.obs;
   static void showServerSettingDialog(int state ) {
     double wi = Get.width;
     double he = Get.height;
+    controllerIpTF.text = LocalData.getIp().toString() ;
+    contollerSocket1.text = LocalData.getSerial()!.substring(0,3);
+    contollerSocket2.text=LocalData.getSerial()!.substring(3,5);
+    contollerSocket3.text=LocalData.getSerial()!.substring(5,8);
 
     Get.defaultDialog(
         title: "",
@@ -162,13 +167,15 @@ class Dialogs {
                           // ),
                           Expanded(
                             child: TextField(
+
                               autofocus: true,
                               decoration: InputDecoration(
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(wi * 0.03)),
-                                  hintText: "ip",
+                                  hintText: LocalData.getIp() == "" ? "ip" : LocalData.getIp(),
+
                                   hintTextDirection: TextDirection.ltr),
                               keyboardType: TextInputType.number,
                               textDirection: TextDirection.ltr,

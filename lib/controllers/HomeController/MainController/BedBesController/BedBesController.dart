@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,81 +13,79 @@ import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestankar/RizBedBesScreen.dart';
 
-
-class BedBesController extends GetxController{
-
+class BedBesController extends GetxController {
   Rx<RizBedBesModel> rizBedBesModel = RizBedBesModel().obs;
   RxList<PersonList> personLists = [PersonList()].obs;
   List<PersonList> helpListPerson = <PersonList>[];
   RxInt filterRadio = 0.obs;
 
-
-@override
+  @override
   void onInit() {
-   // personLists.value = Get.find<MainController>().personListModel.value.personList!;
-  personLists.value = Get.find<FilterBedBesController>().personFilterList.value;
+    // personLists.value = Get.find<MainController>().personListModel.value.personList!;
+    personLists.value =
+        Get.find<FilterBedBesController>().personFilterList.value;
     helpListPerson.addAll(personLists.value);
     print(helpListPerson.length);
     print(personLists.value.length);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     super.onInit();
   }
 
-
-
-  void getRizBedBes( String lfac , String name) async{
-  if(LocalData.getConnectionMethode() == "socket"){
-    await SocketManager.request({
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": "1990/01/01",
-        "enddate": "2500/4/29",
-        "lfac": "227"
-      },
-      "username": Utils.userName,
-      "password": Utils.passWord,
-      "methodName": "GetPersonAccount",
-      "methodType": "post",
-    }, (value) { var result = RizBedBesModel.fromJson(value);
-    rizBedBesModel.value = result;
-    Get.back();
-    Get.to(RizBedBesScreen(name: name,)); });
-  }else{
-    await RequestManager().postReq(url: "tservermethods1/GetPersonAccount", body: {
-      "params": {
-        "bookid": Utils.bookId,
-        "startdate": "1990/01/01",
-        "enddate": "2050/1/1",
-        "lfac": lfac
-      }
-    },header: {
-      'Content-type': 'application/json',
-      'authorization':auth()
-    }).then((value){
-
-      var result = RizBedBesModel.fromJson(value);
-      rizBedBesModel.value = result;
-      Get.back();
-      Get.to(RizBedBesScreen(name: name,));
-    });
+  void getRizBedBes(String lfac, String name) async {
+    if (LocalData.getConnectionMethode() == "socket") {
+      await SocketManager.request({
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": "1990/01/01",
+          "enddate": "2500/4/29",
+          "lfac": "227"
+        },
+        "username": Utils.userName,
+        "password": Utils.passWord,
+        "methodName": "GetPersonAccount",
+        "methodType": "post",
+      }, (value) {
+        var result = RizBedBesModel.fromJson(value);
+        rizBedBesModel.value = result;
+        Get.back();
+        Get.to(RizBedBesScreen(
+          name: name,
+        ));
+      });
+    } else {
+      await RequestManager()
+          .postReq(url: "tservermethods1/GetPersonAccount", body: {
+        "params": {
+          "bookid": Utils.bookId,
+          "startdate": "1990/01/01",
+          "enddate": "2050/1/1",
+          "lfac": lfac
+        }
+      }, header: {
+        'Content-type': 'application/json',
+        'authorization': auth()
+      }).then((value) {
+        var result = RizBedBesModel.fromJson(value);
+        rizBedBesModel.value = result;
+        Get.back();
+        Get.to(RizBedBesScreen(
+          name: name,
+        ));
+      });
+    }
   }
 
-  }
-
-  void searchPerson(String value){
-
+  void searchPerson(String value) {
     List<PersonList> filterList = <PersonList>[];
 
-    if(value ==""){
+    if (value == "") {
       filterList.clear();
       filterList.addAll(helpListPerson);
-    }else if(value !=""){
+    } else if (value != "") {
       filterList.clear();
       helpListPerson.forEach((element) {
-        if(element.fldTifLfac!.contains(value.toLowerCase())){
+        if (element.fldTifLfac!.contains(value.toLowerCase())) {
           filterList.add(element);
         }
       });
@@ -98,14 +95,13 @@ class BedBesController extends GetxController{
     personLists.value.addAll(filterList);
     personLists.refresh();
     update();
-
   }
 
-  void showSort(double wi  , double he){
+  void showSort(double wi, double he) {
     Get.bottomSheet(Obx(() {
       return Container(
         width: wi,
-        height: he*0.25,
+        height: he * 0.25,
         child: Column(
           children: [
             RadioListTile<int>(
@@ -124,16 +120,27 @@ class BedBesController extends GetxController{
                 }),
             MaterialButton(
               onPressed: () {
-                if(filterRadio.value == 0){personLists.value.sort((a,b)=>int.parse(a.prc!.toLowerCase()=="null" ? "0" : a.prc!).compareTo(int.parse(b.prc!.toLowerCase()=="null" ? "0" : b.prc!))
-                );}else{
-                  personLists.value.sort((a,b)=>int.parse(b.prc!.toLowerCase()=="null" ? "0" : b.prc!).compareTo(int.parse(a.prc!.toLowerCase()=="null" ? "0" : a.prc!))
-                  );
+                personLists.value.forEach((element) { print(element.prc!);});
+                if (filterRadio.value == 0) {
+                  personLists.value.sort((a, b) => int.parse(
+                          a.prc!.toString().toLowerCase() == "null" || a.prc!.toString() ==""
+                              ? "0"
+                              : a.prc!.toString())
+                      .compareTo(int.parse(b.prc!.toString().toLowerCase() == "null" || b.prc!.toString() ==""
+                          ? "0"
+                          : b.prc!.toString())));
+                } else {
+                  personLists.value.sort((a, b) => int.parse(
+                      b.prc!.toString().toLowerCase() == "null" || b.prc!.toString() ==""
+                          ? "0"
+                          : b.prc!.toString())
+                      .compareTo(int.parse(a.prc!.toString().toLowerCase() == "null" || a.prc!.toString() ==""
+                      ? "0"
+                      : a.prc!.toString())));
                 }
-                 personLists.refresh();
-                 //update();
+                personLists.refresh();
+                //update();
                 Get.back();
-
-
               },
               child: Text(
                 "مرتب سازی",
@@ -144,18 +151,14 @@ class BedBesController extends GetxController{
           ],
         ),
         decoration: BoxDecoration(
-          borderRadius:
-          BorderRadius.circular(wi * 0.05),
+          borderRadius: BorderRadius.circular(wi * 0.05),
           color: Colors.white,
         ),
       );
     }),
         shape: RoundedRectangleBorder(
             side: BorderSide(
-                width: wi * 0.008,
-                color: Color(AppColor.primaryColor)),
-            borderRadius: BorderRadius.all(
-                Radius.circular(wi * 0.05))));
+                width: wi * 0.008, color: Color(AppColor.primaryColor)),
+            borderRadius: BorderRadius.all(Radius.circular(wi * 0.05))));
   }
-
 }

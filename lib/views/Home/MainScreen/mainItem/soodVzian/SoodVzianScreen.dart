@@ -50,9 +50,9 @@ class SoodVzianScreen extends StatelessWidget {
             Row(children: [
               Expanded(flex: 2,child: Container(height: he*0.053,alignment: Alignment.center,color: Colors.blue,child: Text("کد",style: TextStyle(fontWeight: FontWeight.bold,color: Color(AppColor.onPrimaryColor)),),)),
               SizedBox(width: 1,),
-              Expanded(flex: 6,child: Container(height: he*0.053,alignment: Alignment.center,color: Colors.blue,child: Text("شرح",style: TextStyle(fontWeight: FontWeight.bold,color: Color(AppColor.onPrimaryColor))),)),
+              Expanded(flex: 5,child: Container(height: he*0.053,alignment: Alignment.center,color: Colors.blue,child: Text("شرح",style: TextStyle(fontWeight: FontWeight.bold,color: Color(AppColor.onPrimaryColor))),)),
               SizedBox(width: 1,),
-              Expanded(flex: 3,child: Container(height: he*0.053,alignment: Alignment.center,color: Colors.blue,child: Text("مبلغ",style: TextStyle(fontWeight: FontWeight.bold,color: Color(AppColor.onPrimaryColor))),)),
+              Expanded(flex: 4,child: Container(height: he*0.053,alignment: Alignment.center,color: Colors.blue,child: Text("مبلغ",style: TextStyle(fontWeight: FontWeight.bold,color: Color(AppColor.onPrimaryColor))),)),
             ],),
             Container(
               padding: EdgeInsets.only(bottom: he*0.08),
@@ -70,11 +70,11 @@ class SoodVzianScreen extends StatelessWidget {
                   child: Container(
                     color: index.isEven ? Colors.white70 : Colors.blue.shade50,
                     child: Row(children: [
-                      Expanded(flex: 2,child: Container(padding: EdgeInsets.all(wi*0.04),height: he*0.08,alignment: Alignment.center,child: Text(soodZianList.soodZianList![index].cfs.toString().toLowerCase()=="null"?"---":soodZianList.soodZianList![index].cfs.toString(),style: TextStyle(fontWeight: FontWeight.bold),),)),
+                      Expanded(flex: 2,child: Container(padding: EdgeInsets.all(wi*0.04),alignment: Alignment.center,child: Text(soodZianList.soodZianList![index].cfs.toString().toLowerCase()=="null"?"---":soodZianList.soodZianList![index].cfs.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),)),
                       SizedBox(width: 1,),
-                      Expanded(flex: 6,child: Container(padding: EdgeInsets.all(wi*0.04),height: he*0.08,alignment: Alignment.center,child: Text(soodZianList.soodZianList![index].hesabFDesc.toString().toLowerCase()=="null"?"----":soodZianList.soodZianList![index].hesabFDesc.toString(),style: TextStyle(fontWeight: FontWeight.bold)),)),
+                      Expanded(flex: 5,child: Container(padding: EdgeInsets.all(wi*0.04),alignment: Alignment.center,child: Text(soodZianList.soodZianList![index].hesabFDesc.toString().toLowerCase()=="null"?"----":soodZianList.soodZianList![index].hesabFDesc.toString(),style: TextStyle(fontSize: 16)),)),
                       SizedBox(width: 1,),
-                      Expanded(flex: 3,child: Container(padding: EdgeInsets.all(wi*0.04),height: he*0.08,alignment: Alignment.center,child: Text(setFormatNumber(soodZianList.soodZianList![index].fldPrcAcc.toString()),style: TextStyle(fontWeight: FontWeight.bold)),)),
+                      Expanded(flex: 4,child: Container(padding: EdgeInsets.all(wi*0.04),alignment: Alignment.center,child: Text(setFormatNumber(soodZianList.soodZianList![index].fldPrcAcc.toString()),style: TextStyle(fontWeight: FontWeight.bold , fontSize: 12)),)),
                     ],),
                   ),
                 );

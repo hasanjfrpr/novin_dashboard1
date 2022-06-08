@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
+import 'package:novin_dashboard1/Dialog/Dialog.dart';
 import 'package:novin_dashboard1/controllers/LoginController/LoginController.dart';
 import 'package:novin_dashboard1/controllers/splashController/SplashController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
@@ -32,7 +34,10 @@ class Login extends StatelessWidget {
       body: Container(
         width: wi,
         height: he,
-        color: Color(AppColor.primaryColor),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage("assets/images/bbb.jpg"),fit: BoxFit.cover)
+        ),
+
         child: Stack(
           children: [
             Align(
@@ -40,6 +45,7 @@ class Login extends StatelessWidget {
                 child: Container(
                   width: wi * .3,
                   height: wi*.3,
+
                   margin: EdgeInsets.only(top: he * .06,bottom: he*0.02),
                   child: Hero(
                       tag: "logoHero",
@@ -88,7 +94,26 @@ class Login extends StatelessWidget {
                         _loginFormKey,
                         loginController);
                   }),
-                ))
+                )),
+            Align(alignment: Alignment.bottomCenter ,child:
+               Column(mainAxisSize: MainAxisSize.min,children: [
+               Text(Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}",style: TextStyle(color: Colors.grey),),
+                 SizedBox(height: he*0.03,),
+                 Container(
+                   margin: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: he*0.015),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Expanded(child: Column(mainAxisSize: MainAxisSize.min,children: [
+                         Row(mainAxisAlignment: MainAxisAlignment.start,children: [Icon(CupertinoIcons.settings_solid , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("تنظیمات سرور",style: TextStyle(fontWeight: FontWeight.bold),)],),
+                       ],)),
+                       Expanded(child:Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.fingerprint , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("ورود بیومتریک",style: TextStyle(fontWeight: FontWeight.bold),)],),
+                       )
+                     ],
+                   ),
+                 )
+               ],)
+            )
           ],
         ),
       ),
