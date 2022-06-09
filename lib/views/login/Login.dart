@@ -31,6 +31,7 @@ class Login extends StatelessWidget {
     double wi = Get.width;
     double he = Get.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         width: wi,
         height: he,
@@ -97,17 +98,20 @@ class Login extends StatelessWidget {
                 )),
             Align(alignment: Alignment.bottomCenter ,child:
                Column(mainAxisSize: MainAxisSize.min,children: [
-               Text(Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}",style: TextStyle(color: Colors.grey),),
-                 SizedBox(height: he*0.03,),
+                 Text("نوع دسترسی " , style: TextStyle(fontSize: 14 , color: Colors.grey),),
+               Text(   Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}",style: TextStyle(color: Colors.grey),),
+                  SizedBox(height: he*0.03,),
                  Container(
-                   margin: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: he*0.015),
+                   margin: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: he*0.025),
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       Expanded(child: Column(mainAxisSize: MainAxisSize.min,children: [
-                         Row(mainAxisAlignment: MainAxisAlignment.start,children: [Icon(CupertinoIcons.settings_solid , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("تنظیمات سرور",style: TextStyle(fontWeight: FontWeight.bold),)],),
-                       ],)),
-                       Expanded(child:Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.fingerprint , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("ورود بیومتریک",style: TextStyle(fontWeight: FontWeight.bold),)],),
+                       Expanded(child:
+                         InkWell(splashColor: Color(AppColor.primaryColor),onTap: (){Dialogs.showServerSettingDialog(1);},child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [Icon(CupertinoIcons.settings_solid , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("تنظیمات سرور",style: TextStyle(fontWeight: FontWeight.bold),)],)),
+                       ),
+                       Expanded(child:InkWell(onTap: (){
+
+                       },child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.fingerprint , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("ورود بیومتریک",style: TextStyle(fontWeight: FontWeight.bold),)],)),
                        )
                      ],
                    ),
