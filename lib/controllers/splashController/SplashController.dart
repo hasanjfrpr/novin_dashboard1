@@ -27,6 +27,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
   late Rx<CompanyBookModel> companyModel = CompanyBookModel().obs;
   static bool isRegister = false;
   bool dataReceived = false;
+  ImageProvider? backgroundImage;
   RxBool showLoading = false.obs;
   late AnimationController lottieController ;
 
@@ -114,10 +115,12 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
     }
   }
 
+
+
+
   @override
   void onInit() {
-
-
+    precacheImage(new AssetImage("assets/images/splash.jpg") , Get.context!);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     lottieController = AnimationController(vsync: this);
     super.onInit();
@@ -129,7 +132,6 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
   }
 
   void goNexScreen() async {
-    print(" serial  in splash controller is  : "+LocalData.getSerial().toString());
     await LocalData.getSharedInstance().then((value) {
       if (LocalData.getIp() == "" && LocalData.getSerial() == "") {
         Dialogs.showServerSettingDialog(0);
@@ -137,7 +139,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
         serverMethodName.value = LocalData.getConnectionMethode().toString();
         // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
         getCompanyBook();
-        Future.delayed(Duration(seconds: 8)).then((value) {
+        Future.delayed(Duration(seconds: 10)).then((value) {
           if (dataReceived == false && LocalData.getConnectionMethode()=="socket") {
             Get.dialog(
                 AlertDialog(

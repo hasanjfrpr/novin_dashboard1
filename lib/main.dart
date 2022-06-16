@@ -7,15 +7,16 @@ import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/views/splashScreen/SplashScreen.dart';
 
 void main() {
-  runApp(Phoenix(child: const MyApp()));
+  runApp(Phoenix(child:  MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+   MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

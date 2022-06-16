@@ -23,10 +23,12 @@ class Dialogs {
   static void showServerSettingDialog(int state ) {
     double wi = Get.width;
     double he = Get.height;
-    controllerIpTF.text = LocalData.getIp().toString() ;
+    if(!LocalData.getIp()!.isEmpty){
+    controllerIpTF.text = LocalData.getIp().toString() ;}
+    if(!LocalData.getSerial()!.isEmpty){
     contollerSocket1.text = LocalData.getSerial()!.substring(0,3);
     contollerSocket2.text=LocalData.getSerial()!.substring(3,5);
-    contollerSocket3.text=LocalData.getSerial()!.substring(5,8);
+    contollerSocket3.text=LocalData.getSerial()!.substring(5,8);}
 
     Get.defaultDialog(
         title: "",

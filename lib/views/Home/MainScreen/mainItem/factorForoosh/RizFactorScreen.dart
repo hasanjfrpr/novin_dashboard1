@@ -45,8 +45,9 @@ class RizFactorScreen extends StatelessWidget {
         boxShadow: [BoxShadow(color: Colors.black12 , spreadRadius: 2,blurRadius: 2)]
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04,vertical: wi*0.02),width: wi , alignment: Alignment.center,child: Expanded(child: Text(controller.rizFactorModel.value.factorForooshRizKalaList![index].fldtiflfac!,overflow: TextOverflow.clip,)),),
+          Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04,vertical: wi*0.02),width: wi , alignment: Alignment.center,child:  Text(controller.rizFactorModel.value.factorForooshRizKalaList![index].fldtiflfac!,overflow: TextOverflow.clip,),),
           Divider(),
           _itemRow(AppString.code, controller.rizFactorModel.value.factorForooshRizKalaList![index].cfs!),
           _itemRow(AppString.count, controller.rizFactorModel.value.factorForooshRizKalaList![index].fldqty1iogds!),

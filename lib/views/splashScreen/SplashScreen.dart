@@ -9,54 +9,55 @@ class SplashScreen extends StatelessWidget {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 
-    Get.lazyPut(() => SplashController());
+   //Get.lazyPut(() => SplashController());
     SplashController controller = Get.put(SplashController(),tag: "SplashController" , permanent: true);
-    //controller.goNexScreen();
+
     double wi = Get.width;
     double he = Get.height;
 
 
     return Scaffold(
+      backgroundColor: Color(AppColor.primaryColor),
       body:  Container(
+        child: Stack(
+          children:[ Center(
+                      child: (Lottie.asset("assets/welcome.json" ,
+                      controller: controller.lottieController,
+                        onLoaded: (composition){
+                        controller.lottieController
+                            ..duration = composition.duration
+                            ..forward().whenComplete(() {
+                             controller.showLoading.value = true;
+                             controller.goNexScreen();
+                            });
+                        }
+                      )),
+                    ),
 
-          child: Stack(
-            children: [
-              Container(
-                width: Get.width,
-                height: Get.height,
-                child: (Image.asset("assets/images/bbb.jpg",fit: BoxFit.cover,)),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: Get.width*0.8,
-                  height: Get.height*0.8,
+            Align(alignment: Alignment.bottomCenter,child: Obx(
+               (){return Container(
+                 margin: EdgeInsets.symmetric(vertical: wi*0.08),
+                 child: Visibility(visible: controller.showLoading.value,child:
+                   CircularProgressIndicator(color: Colors.white,)
+                   ,),
+               );}
+             )),
+          ]
+        ),
+      ),
 
-                  child: (Lottie.asset("assets/welcome.json" ,
-                  controller: controller.lottieController,
-                    onLoaded: (composition){
-                    controller.lottieController
-                        ..duration = composition.duration
-                        ..forward().whenComplete(() {
-                         controller.showLoading.value = true;
-                         controller.goNexScreen();
-                        });
-                    }
-                  )),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: he*0.05),
-                child: Align(alignment: Alignment.bottomCenter,child: Obx(
-                  (){return Visibility(visible: controller.showLoading.value,child:
-                    CircularProgressIndicator(color: Colors.white,)
-                    ,);}
-                )),
-              )
+               // Align(alignment: Alignment.bottomCenter,child: Obx(
+               //    (){return Container(
+               //      margin: EdgeInsets.symmetric(vertical: wi*0.08),
+               //      child: Visibility(visible: controller.showLoading.value,child:
+               //        CircularProgressIndicator(color: Colors.white,)
+               //        ,),
+               //    );}
+               //  )),
+
 
               // Container(
               //   width: wi * .4,
@@ -73,9 +74,7 @@ class SplashScreen extends StatelessWidget {
               // Text(AppString.novinSiteAddress , style: TextStyle(color: Color(AppColor.onPrimaryColor),fontSize: wi*.035,fontWeight: FontWeight.bold),),
               // SizedBox(height: he*0.015,),
               // CircularProgressIndicator(color: Color(AppColor.onPrimaryColor),)
-            ],
-          ),
-        ),
+
     );
   }
 }

@@ -20,6 +20,8 @@ class AsnadNaqesController extends GetxController{
   @override
   void onClose() {
     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
@@ -56,7 +59,8 @@ class SettingScreen extends StatelessWidget {
                             onTap: (){
                               Dialogs.showServerSettingDialog(1);
                             },
-                            trailing: Icon(Icons.arrow_drop_down_outlined));}
+
+                            trailing: Icon(Icons.arrow_forward_ios));}
                       ),
                       Divider(),
                       ListTile(
@@ -70,7 +74,23 @@ class SettingScreen extends StatelessWidget {
                           onTap: (){
                            controller.restart();
                           },
-                          trailing: Icon(Icons.arrow_drop_down_outlined)),
+                          trailing: Icon(CupertinoIcons.restart)),
+                      Divider(),
+                      ListTile(
+                          title: Text(
+                            "خروج از حساب کاربری",
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.w500,
+                              fontSize: wi * 0.035,
+                            ),
+                          ),
+                          onTap: (){
+                          Get.deleteAll(force: true);
+                          Phoenix.rebirth(Get.context!);
+                          Get.reset();
+                          },
+                          trailing: Icon(Icons.transit_enterexit ,color: Colors.redAccent,))
                     ],
                   )),
             ),

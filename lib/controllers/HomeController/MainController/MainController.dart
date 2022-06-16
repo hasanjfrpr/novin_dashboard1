@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/ashKhasList/AshKhasList.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/bedehKarVbestankar/FilterBedBesScreen.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 
 class MainController extends GetxController{
@@ -36,18 +38,62 @@ class MainController extends GetxController{
     MainItemModel(imagePath: "assets/images/income.png", name: AppString.daramad,id: 8),
   ];
 
-
+  GlobalKey factorForooshKey = GlobalKey();
+  GlobalKey taraz = GlobalKey();
+  GlobalKey asnad = GlobalKey();
+  GlobalKey soodVzian = GlobalKey();
+  GlobalKey ashkhas = GlobalKey();
+  GlobalKey bedBes = GlobalKey();
+  GlobalKey anbar = GlobalKey();
+  GlobalKey hazine = GlobalKey();
+  GlobalKey daramad = GlobalKey();
+  var keyList = <GlobalKey>[];
+  var descriptionList = [
+    "رویت فاکتورهای فروش در بازه زمانی مشخص",
+    "تراز آزمایشی در 4 مرحله تراز کل ، معین ، تفصیلی و گردش حساب‌های تفصیلی",
+    "رویت لیست اسناد در بازه زمانی و اسناد امروز به صورت میانبر",
+    "مشاهده صورت‌حساب سود و زیان در بازه زمانی مشخص",
+    "مشخصات اشخاص ثبت شده و اطلاعات تماس",
+    "رویت بدهکاران و بستانکاران به تفکیک شخص یا مانده‌حساب",
+    "گزارش موجودی کالا به تفکیک انبار و بازه زمانی مشخص",
+    "مشاهده هزینه‌ها در بازه زمانی مشخص",
+    "مشاهده درآمد در بازه زمانی مشخص"
+  ];
 
 
   @override
   void onInit() {
+    keyList = <GlobalKey>[factorForooshKey , taraz , asnad , soodVzian , ashkhas , bedBes , anbar , hazine , daramad];
 
     super.onInit();
 
 
   }
+  @override
+  void onReady() {
+    if(LocalData.getShowCaseModeHelp()! =="") {
+      Get.dialog(
+          AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            content: ListTile(title: const Text(
+                'برای دیدن راهنمای هر بخش روی آیتم مربوطه انگشت خود را نگه دارید'),leading: Icon(Icons.error , color: Color(AppColor.primaryColor),size: 35,),),
+            actions: [
+              TextButton(
+                child: const Text("بستن"),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            ],
+          ),
+          barrierDismissible: false
+      );
+      LocalData.setShowCaseModeHelp("false");
+    }
+    super.onReady();
+  }
 
-  void getPersonList(int adad) async{
+  void getPersonList(int adad,{int page=1}) async{
     if(LocalData.getConnectionMethode() == "socket"){
       await SocketManager.request({
         "params": {
@@ -57,6 +103,7 @@ class MainController extends GetxController{
         "password": Utils.passWord,
         "methodName": "GetpersonList",
         "methodType": "post",
+        "page":"$page"
       }, (value) {
         var result = PersonListModel.fromJson(value);
         personListModel.value = result;

@@ -1,16 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/Dialog/Dialog.dart';
 import 'package:novin_dashboard1/controllers/LoginController/LoginController.dart';
 import 'package:novin_dashboard1/controllers/splashController/SplashController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
+import 'package:novin_dashboard1/views/Home/HomeScreen.dart';
 import 'package:novin_dashboard1/views/splashScreen/SplashScreen.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 
 
 
@@ -26,103 +33,191 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = LoginController();
+    LoginController loginController = Get.put(LoginController());
     GlobalKey<FormState> _loginFormKey = GlobalKey();
+
     double wi = Get.width;
     double he = Get.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        width: wi,
-        height: he,
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/bbb.jpg"),fit: BoxFit.cover)
-        ),
-
-        child: Stack(
-          children: [
-            Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: wi * .3,
-                  height: wi*.3,
-
-                  margin: EdgeInsets.only(top: he * .06,bottom: he*0.02),
-                  child: Hero(
-                      tag: "logoHero",
-                      child: Image.asset(
-                        "assets/images/novin.png",
-                        color: Color(AppColor.onPrimaryColor),
-                        fit: BoxFit.contain,
-                      )),
-                )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
+          body:   Container(
                 width: wi,
-                height: he * 0.6,
-                color: Color(AppColor.onPrimaryColor),
-              ),
-            ),
-            Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: wi * 0.85,
-                  height: he * .55,
-                  margin: EdgeInsets.only(top: he * .007),
-                  decoration: BoxDecoration(
-                      color: Color(AppColor.onPrimaryColor),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 2,
-                            offset: Offset(2, 2))
-                      ]),
-                  child: Obx(() {
-                    return _forms(
-                        wi,
-                        he,
-                        Get
-                            .find<SplashController>(tag: "SplashController")
-                            .companyItem
-                            .value,
-                        Get
-                            .find<SplashController>(tag: "SplashController")
-                            .bookItems
-                            .value,
-                        _loginFormKey,
-                        loginController);
-                  }),
-                )),
-            Align(alignment: Alignment.bottomCenter ,child:
-               Column(mainAxisSize: MainAxisSize.min,children: [
-                 Text("نوع دسترسی " , style: TextStyle(fontSize: 14 , color: Colors.grey),),
-               Text(   Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}",style: TextStyle(color: Colors.grey),),
-                  SizedBox(height: he*0.03,),
-                 Container(
-                   margin: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: he*0.025),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       Expanded(child:
-                         InkWell(splashColor: Color(AppColor.primaryColor),onTap: (){Dialogs.showServerSettingDialog(1);},child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [Icon(CupertinoIcons.settings_solid , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("تنظیمات سرور",style: TextStyle(fontWeight: FontWeight.bold),)],)),
-                       ),
-                       Expanded(child:InkWell(onTap: (){
+                height: he,
+                color: Color(AppColor.primaryColor),
+                // decoration: BoxDecoration(
+                //   image: DecorationImage(image: AssetImage("assets/images/bbb.jpg"),fit: BoxFit.cover)
+                // ),
+                child: Stack(
+                  children: [
+                    Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          width: wi * .3,
+                          height: wi*.3,
 
-                       },child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.fingerprint , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("ورود بیومتریک",style: TextStyle(fontWeight: FontWeight.bold),)],)),
-                       )
-                     ],
-                   ),
-                 )
-               ],)
-            )
-          ],
-        ),
-      ),
+                          margin: EdgeInsets.only(top: he * .06,bottom: he*0.02),
+                          child: Hero(
+                              tag: "logoHero",
+                              child: Image.asset(
+                                "assets/images/novin.png",
+                                color: Color(AppColor.onPrimaryColor),
+                                fit: BoxFit.contain,
+                              )),
+                        )),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: wi,
+                        height: he * 0.6,
+                        color: Color(AppColor.onPrimaryColor),
+                      ),
+                    ),
+                    Align(alignment: Alignment.bottomCenter ,child:
+                      Obx(
+                        (){ return loginController.keyboardIsOpen.value ? Text("") : Column(mainAxisSize: MainAxisSize.min,children: [
+                          Text("نوع دسترسی " , style: TextStyle(fontSize: 14 , color: Colors.grey),),
+                          Text(   Get.find<SplashController>(tag: "SplashController").serverMethodName.value.isEmpty ? LocalData.getConnectionMethode().toString() : LocalData.getConnectionMethode()=="socket"?"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getSerial()}":"${Get.find<SplashController>(tag: "SplashController").serverMethodName.value} : ${LocalData.getIp()}",style: TextStyle(color: Colors.grey),),
+                          SizedBox(height: he*0.03,),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: wi*0.04 , vertical: he*0.025),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child:
+                                InkWell(splashColor: Color(AppColor.primaryColor),onTap: (){Dialogs.showServerSettingDialog(1);},child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [Icon(CupertinoIcons.settings_solid , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("تنظیمات سرور",style: TextStyle(fontWeight: FontWeight.bold),)],)),
+                                ),
+                                Expanded(child:InkWell(onTap: (){
+                                  authenticateWithBiometrics().then((value) {
+                                    if(value){
+                                      if(LocalData.getUsername()=="" || LocalData.getPassword() =="" || LocalData.getBookId() == ""){
+                                        Get.snackbar(" خطا ورود",
+                                            "برای استفاده از ورود بیومتریک باید حداقل یکبار وارد برنامه شده باشید.",
+                                            borderRadius: 15,
+                                            backgroundColor: Colors.redAccent,
+                                            borderWidth: 1.5,
+                                            borderColor: Colors.white,
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            margin: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+                                            colorText: Colors.white);
+                                      }else{
+                                        print(LocalData.getBookId().toString()+ LocalData.getUsername().toString()+LocalData.getPassword().toString());
+                                        loginController.login(LocalData.getBookId().toString(), LocalData.getUsername().toString(), LocalData.getPassword().toString());
+                                      }
+                                    }else{
+                                      // Get.snackbar(" خطا شناسایی اثر انگشت",
+                                      //     "لطفا ابتدا اثر انگشت خود را در تظیمات دستگاه خود ثبت کنید.",
+                                      //     borderRadius: 15,
+                                      //     backgroundColor: Colors.redAccent,
+                                      //     borderWidth: 1.5,
+                                      //     borderColor: Colors.white,
+                                      //     snackPosition: SnackPosition.BOTTOM,
+                                      //     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+                                      //     colorText: Colors.white);
+                                    }
+                                  });
+                                },child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [Icon(Icons.fingerprint , color: Color(AppColor.primaryColor),),SizedBox(width: wi*0.015,) , Text("ورود بیومتریک",style: TextStyle(fontWeight: FontWeight.bold),)],)),
+                                )
+                              ],
+                            ),
+                          )
+                        ],);}
+                      )
+                      ) ,
+                    Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: wi * 0.85,
+                          height: he * .55,
+                          margin: EdgeInsets.only(top: he * .007),
+                          decoration: BoxDecoration(
+                              color: Color(AppColor.onPrimaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    spreadRadius: 4,
+                                    blurRadius: 2,
+                                    offset: Offset(2, 2))
+                              ]),
+                          child: Obx(() {
+                            return _forms(
+                                wi,
+                                he,
+                                Get
+                                    .find<SplashController>(tag: "SplashController")
+                                    .companyItem
+                                    .value,
+                                Get
+                                    .find<SplashController>(tag: "SplashController")
+                                    .bookItems
+                                    .value,
+                                _loginFormKey,
+                                loginController);
+                          }),
+                        )),
+
+                  ],
+                ),
+              ),
+
     );
   }
+    Future<bool> authenticateWithBiometrics() async {
+    LocalAuthentication localAuthentication = LocalAuthentication();
+   bool isBiometricSupported = await localAuthentication.isDeviceSupported();
+   bool canCheckBiometrics = await localAuthentication.canCheckBiometrics;
+
+
+   bool isAuthenticated = false;
+try{
+      if (isBiometricSupported && canCheckBiometrics) {
+        isAuthenticated = await localAuthentication.authenticate(
+           authMessages:  const <AuthMessages>[
+              AndroidAuthMessages(
+                signInTitle: 'درخواست ورود با اثر انگشت',
+                cancelButton: 'نه, متشکرم',
+                  biometricHint: ""
+              ),
+              IOSAuthMessages(
+                cancelButton: 'نه متشکرم ',
+              ),
+            ],
+            localizedReason: 'ورود توسط اثر انگشت با آخرین اطلاعات ثبت شده',
+            options: const AuthenticationOptions(
+                useErrorDialogs: false, biometricOnly: true, stickyAuth: true)
+        );
+      }
+    } on PlatformException catch (e) {
+  print(e.code);
+  if (e.code == auth_error.notEnrolled) {
+    // Add handling of no hardware here.
+    Get.snackbar(" خطا شناسایی اثر انگشت",
+        "لطفا ابتدا اثر انگشت خود را در تظیمات دستگاه خود ثبت کنید.",
+        borderRadius: 15,
+        backgroundColor: Colors.redAccent,
+        borderWidth: 1.5,
+        borderColor: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+        colorText: Colors.white);
+  } else if (e.code == auth_error.lockedOut ||
+      e.code == auth_error.permanentlyLockedOut) {
+    Get.snackbar(" خطا شناسایی اثر انگشت",
+        "اثرانگشت نامعتبری به تعداد بالا وارد شده است لطفا مدت زمانی صبر کنید و مجدد تلاش کنید",
+        borderRadius: 15,
+        backgroundColor: Colors.redAccent,
+        borderWidth: 1.5,
+        borderColor: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+        colorText: Colors.white);
+  }
+
+      }
+
+   return isAuthenticated;
+   }
+
+
 }
 
 Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<FormState> formkey,
@@ -135,6 +230,7 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
          Container(
             margin: EdgeInsets.symmetric(horizontal: wi * .03),
             child: TextFormField(
+              onTap: (){controller.keyboardIsOpen.value = true;},
               controller: controller.userNameControllerTF,
               textDirection: TextDirection.ltr,
               decoration: InputDecoration(
@@ -164,6 +260,7 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
         Container(
           margin: EdgeInsets.symmetric(horizontal: wi * .03),
           child: TextFormField(
+            onTap: (){controller.keyboardIsOpen.value = true;},
             obscureText: true,
             controller: controller.passwordControllerTF,
             textDirection: TextDirection.ltr,
@@ -230,7 +327,7 @@ Widget _forms(double wi, double he, var companyName, var bookName,GlobalKey<Form
                 },
                     onPressed: () {
                   FocusManager.instance.primaryFocus!.unfocus();
-
+                  controller.keyboardIsOpen.value = false;
                   if(formkey.currentState!.validate()) {
                     print(controller.userNameControllerTF.text +"   "+ controller.passwordControllerTF.text);
                     controller.buttonStateLogin.value = ButtonState.loading;

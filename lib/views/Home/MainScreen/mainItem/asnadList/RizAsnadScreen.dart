@@ -44,8 +44,9 @@ class RizAsnadScreen extends StatelessWidget {
           border:Border(right: BorderSide(color: Color(AppColor.primaryColor) , width: wi*0.02))
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04,vertical: wi*0.02),width: wi , alignment: Alignment.center,child: Expanded(child: Text(fController.rizAsnad.value.documentDetailsList![index].fldTifLfac.toString(),overflow: TextOverflow.clip,)),),
+          Container(padding: EdgeInsets.symmetric(horizontal: wi*0.04,vertical: wi*0.02),width: wi , alignment: Alignment.center,child:  Text(fController.rizAsnad.value.documentDetailsList![index].fldTifLfac.toString(),overflow: TextOverflow.clip,),),
           Divider(),
           _itemRow(AppString.code, fController.rizAsnad.value.documentDetailsList![index].cfs.toString()),
           SizedBox(height: he*0.006,),

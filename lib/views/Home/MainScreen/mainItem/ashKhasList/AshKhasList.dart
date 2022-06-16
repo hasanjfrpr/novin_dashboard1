@@ -36,6 +36,7 @@ class AshKhasListScreen extends StatelessWidget {
                 child: Container(
                   child: Obx(() {
                     return ListView.builder(
+                      controller: personController.scrollController,
                         shrinkWrap: true,
                         itemCount: personController.personListAhskhas.value.length,
                         itemBuilder: (context, int index) {
@@ -45,6 +46,12 @@ class AshKhasListScreen extends StatelessWidget {
                   }
                   ),
                 )),
+            Obx(
+                (){
+                  return personController.showLoading.value==true ?Container(margin: EdgeInsets.only(bottom: 16),width: 40,height: 40,child: CircularProgressIndicator(color: Color(AppColor.primaryColor,),)) : Text("data");
+                }
+            )
+
           ],
         )
       ),

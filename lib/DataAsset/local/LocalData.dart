@@ -28,6 +28,23 @@ static Future setConnectMethode(String connectionMethodeName) async{
 
 static String? getConnectionMethode()=> _sharedPreferences?.getString("connectionMethode") ?? "ip";
 
+static Future setBookId(String bookId) async{
+ await _sharedPreferences?.setString("bookId",bookId );
+}
+static String? getBookId()=> _sharedPreferences?.getString("bookId") ?? "";
 
+static Future setUsername(String userName) async{
+  await _sharedPreferences?.setString("userName", userName);
+}
+static String? getUsername()=> _sharedPreferences?.getString("userName") ?? "";
 
+static Future setPassword(String password) async{
+  await _sharedPreferences?.setString("password", password);
+}
+static String? getPassword()=> _sharedPreferences?.getString("password") ?? "";
+
+static Future setShowCaseModeHelp(String status) async{
+  await _sharedPreferences?.setString("showCase", status);
+}
+static String? getShowCaseModeHelp()=> _sharedPreferences?.getString("showCase") ?? "";
 }

@@ -16,8 +16,8 @@ class HazineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double wi = Get.width;
     double he = Get.height;
-    var hazineList = Get.find<FilterHazineControler>().tarazMoeinModel.value;
-    var hazineController = Get.find<FilterHazineControler>();
+    TarazMoeinModel hazineList = Get.find<FilterHazineControler>().tarazMoeinModel.value;
+    FilterHazineControler hazineController = Get.find<FilterHazineControler>();
     Get.put(HazineController());
     return Scaffold(
       appBar: AppBar(
@@ -28,12 +28,12 @@ class HazineScreen extends StatelessWidget {
       ),
       body: OrientationBuilder(
         builder: (context , orientation){
-          return orientation==Orientation.portrait ? _portraitScreen(hazineList):_landScreen(hazineList);
+          return orientation==Orientation.portrait ? _portraitScreen(hazineList , wi ,he):_landScreen(hazineList , wi , he);
         },
       ),
     );
   }
-  Widget _landScreen(var hazine){
+  Widget _landScreen(TarazMoeinModel hazine , double wi , double he){
     return  Container(
       width: Get.width,
       child: DataTable(
@@ -50,13 +50,16 @@ class HazineScreen extends StatelessWidget {
     );
   }
 
-  Widget _portraitScreen(var hazine){
+  Widget _portraitScreen(TarazMoeinModel hazine , double wi , double he){
     return SingleChildScrollView(
       scrollDirection:Axis.vertical ,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          headingRowColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+          headingRowColor:
+          MaterialStateColor.resolveWith((states) => Colors.blue),
+          border: TableBorder(verticalInside: BorderSide(color: Colors.black26)),
+          headingRowHeight: he*0.05,
          columns: const [
            DataColumn(label: Text("حساب")),
            DataColumn(label: Text("بدهکار(گردش)")),
@@ -72,14 +75,13 @@ class HazineScreen extends StatelessWidget {
 
   List<DataRow> _portRatRowItem(TarazMoeinModel hazine){
     List<DataRow> ls =[];
-
     for(var i =0 ; i<hazine.tarazAzmayeshiKolMoeinList!.length ; i++){
       ls.add(DataRow( color: MaterialStateColor.resolveWith((states) => i.isEven ? Colors.black12 : Colors.white),cells:[
-        DataCell(Expanded(child: Text(hazine.tarazAzmayeshiKolMoeinList![i].cfs.toString(), overflow: TextOverflow.clip,),)),
-        DataCell(Expanded(child: Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].sbed.toString()) , overflow: TextOverflow.clip,),)),
-        DataCell(Expanded(child: Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].sbes.toString()) , overflow: TextOverflow.clip,),)),
-        DataCell(Expanded(child: Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].bed.toString()) , overflow: TextOverflow.clip,),)),
-        DataCell(Expanded(child: Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].bes.toString()) , overflow: TextOverflow.clip,),)),
+        DataCell( Text(hazine.tarazAzmayeshiKolMoeinList![i].tif.toString(), overflow: TextOverflow.clip,),),
+        DataCell( Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].sbed.toString()) , overflow: TextOverflow.clip,),),
+        DataCell( Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].sbes.toString()) , overflow: TextOverflow.clip,),),
+        DataCell( Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].bed.toString()) , overflow: TextOverflow.clip,),),
+        DataCell( Text(setFormatNumber(hazine.tarazAzmayeshiKolMoeinList![i].bes.toString()) , overflow: TextOverflow.clip,),),
       ] ));
     }
 
