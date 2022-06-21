@@ -38,13 +38,13 @@ class SocketManager {
         socket.emit("message" , json);
         socket.once("message" , (data){
           if(data['id']==generateId.toString()){
-            if(data['Result']['Success'].toString().toLowerCase()=="false" && data['Result']['LogStr'].toString()=="TooLargeData" ){
-              Get.back();
-              _showDialogTooMuchData();
-            }else{
-              s(data);
-            }
-
+            // if(data['Result']['Success'].toString().toLowerCase()=="false" && data['Result']['LogStr'].toString()=="TooLargeData" ){
+            //   Get.back();
+            //   _showDialogTooMuchData();
+            // }else{
+            //
+            // }
+            s(data);
 
           }
 

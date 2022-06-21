@@ -17,6 +17,7 @@ class AsnadListScreen extends StatelessWidget {
     double wi  = Get.width;
     double he  = Get.height;
     FilterAsnadController fController = Get.find<FilterAsnadController>();
+    AsnadController asnadController = Get.put(AsnadController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -35,6 +36,7 @@ class AsnadListScreen extends StatelessWidget {
                   child: Container(
                       child: Obx(
                         (){return ListView.builder(
+                          controller: fController.scrollController,
                           itemCount: fController.documentList.value.length,
                           itemBuilder: (context, index) {
                             return _itemSanad(wi, he, index, fController);
@@ -42,6 +44,17 @@ class AsnadListScreen extends StatelessWidget {
                         );}
                       )
                   )),
+            Obx(() {
+              return fController.showLoading.value == true
+                  ? Padding(
+                  padding: EdgeInsets.only(top: 8 , bottom: 8),
+                  child: CircularProgressIndicator(
+                    color: Color(
+                      AppColor.primaryColor,
+                    ),
+                  ))
+                  : Container();
+            })
           ],
         ),
 

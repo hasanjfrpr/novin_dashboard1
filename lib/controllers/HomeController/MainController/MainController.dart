@@ -25,6 +25,7 @@ class MainController extends GetxController{
   late RxList<SliderModel> imgList =<SliderModel>[].obs;
   Rx<PersonListModel>  personListModel = PersonListModel().obs;
   RxList<DropdownMenuItem> personList = [DropdownMenuItem<String>(child: Text("خالی") , value: "خالی",)].obs;
+  int totalPage = 100;
 
   List<MainItemModel> mainItemList =[
     MainItemModel(imagePath: "assets/images/order.png", name: AppString.factorFrosh,id: 0),
@@ -107,6 +108,7 @@ class MainController extends GetxController{
       }, (value) {
         var result = PersonListModel.fromJson(value);
         personListModel.value = result;
+        totalPage= int.parse( value['totalpage']);
         print(result);
         if(result.personList!.length > 1 && adad==1){
           for(var i=0 ;i<result.personList!.length ; i++){

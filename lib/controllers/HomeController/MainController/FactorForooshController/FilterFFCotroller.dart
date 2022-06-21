@@ -36,7 +36,62 @@ VisitorListFModel _visitorModel = VisitorListFModel();
  RxList<DropdownMenuItem> personsList = [DropdownMenuItem(child: Text("") , value:"")].obs;
 RxList<DropdownMenuItem> visitorList = [DropdownMenuItem(child: Text("") , value:"")].obs;
 
+late ScrollController scrollController;
+RxBool loadMore = false.obs;
+int totalpage = 1;
+int page = 2;
+String fVisitor = "null";
+String fPerson = "null";
 
+@override
+  void onInit() {
+    scrollController=ScrollController();
+    scrollController.addListener(() async{
+      if(scrollController.offset == scrollController.position.maxScrollExtent && !loadMore.value ){
+
+        if(LocalData.getConnectionMethode()=="socket"){
+          print("total page is : $totalpage and page is : $page");
+          if(page <= totalpage) {
+            loadMore.value=true;
+            await SocketManager.request({
+              "params": {
+                "bookid": Utils.bookId,
+                "startdate": convertJtoGDate(year.value,
+                    month.value, day.value),
+                "enddate": convertJtoGDate(
+                    endYear.value,
+                    endMonth.value,
+                    endDay.value),
+                "visitorid": fVisitor,
+                "personid": fPerson
+              },
+              "username": Utils.userName,
+              "password": Utils.passWord,
+              "methodName": "GetFactorForooshList",
+              "methodType": "post",
+              "page":"$page"
+
+            }, (value) {
+              var result = FactorForooshModel.fromJson(value);
+              factorForooshModel.value = result;
+              totalpage = int.parse(value['totalpage']);
+              suggestFactorForooshModel.value = factorForooshModel.value;
+              sslldd!.value.addAll(
+              suggestFactorForooshModel.value.factorForooshList!);
+              sslldd!.refresh();
+              update();
+              factorFcontainerList.addAll(result.factorForooshList!);
+              loadMore.value=false;
+              page++;
+            });
+          }
+
+        }
+
+      }
+    });
+    super.onInit();
+  }
 
 void getPersonList() async{
 
@@ -155,10 +210,12 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
      "password": Utils.passWord,
      "methodName": "GetFactorForooshList",
      "methodType": "post",
+     "page":"1"
 
    }, (value) {
      var result = FactorForooshModel.fromJson(value);
      factorForooshModel.value = result;
+     totalpage = int.parse(value['totalpage']);
      suggestFactorForooshModel.value = factorForooshModel.value;
      sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
      factorFcontainerList.addAll(result.factorForooshList!);
@@ -204,6 +261,7 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
    }).then((value){
      var result = FactorForooshModel.fromJson(value);
      factorForooshModel.value = result;
+
      suggestFactorForooshModel.value = factorForooshModel.value;
      sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
      factorFcontainerList.addAll(result.factorForooshList!);

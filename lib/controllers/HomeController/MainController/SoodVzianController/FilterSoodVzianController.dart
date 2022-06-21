@@ -22,6 +22,7 @@ class FilterSoodVzianControler extends GetxController{
   RxInt endYear = Get.find<HomeController>().jalili.value.year.obs;
 
 Rx<SoodVzianModel> soodVzianModel = SoodVzianModel().obs;
+RxBool checkBox = true.obs;
 
   void getSoodVzian(String startDate , String endDate ) async{
 
@@ -30,7 +31,8 @@ Rx<SoodVzianModel> soodVzianModel = SoodVzianModel().obs;
         "params": {
           "bookid": Utils.bookId,
           "startdate":startDate,
-          "enddate": endDate
+          "enddate": endDate,
+          "FlagCalc":checkBox.value ? "TRUE" : "FALSE"
         },
         "username": Utils.userName,
         "password": Utils.passWord,

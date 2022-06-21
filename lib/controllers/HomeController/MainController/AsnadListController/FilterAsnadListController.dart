@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
@@ -26,6 +27,58 @@ class FilterAsnadController extends GetxController{
   RxList<DocumentList> documentList  = [DocumentList()].obs;
   List<DocumentList> helpDocumentList  =<DocumentList>[];
   RxBool showCircle = true.obs;
+  int page = 2;
+  late ScrollController scrollController ;
+  RxBool showLoading=false.obs;
+  int totalPage = 1000;
+
+
+  @override
+  void onInit() {
+
+    scrollController = ScrollController();
+    scrollController.addListener(() async{
+
+      if(scrollController.offset == scrollController.position.maxScrollExtent && !showLoading.value){
+        if(LocalData.getConnectionMethode()=="socket") {
+          print("total page is : $totalPage and page is : $page");
+          if (page <= totalPage){
+            showLoading.value = true;
+          await SocketManager.request({
+            "params": {
+              "bookid": Utils.bookId,
+              "startdate": convertJtoGDate(year.value,
+                  month.value, day.value),
+              "enddate": convertJtoGDate(
+                  endYear.value,
+                  endMonth.value,
+                  endDay.value)
+            },
+            "username": Utils.userName,
+            "password": Utils.passWord,
+            "methodName": "GetDocumentList",
+            "methodType": "post",
+            "page": "$page"
+          }, (value) {
+            var result = AsnadModel.fromJson(value);
+            if (result.documentList!.isNotEmpty) {
+              asnadModel.value = result;
+              documentList.value.addAll(result.documentList!);
+              update();
+              documentList.refresh();
+              helpDocumentList.addAll(result.documentList!);
+              page++;
+            }
+            showLoading.value = false;
+          });
+        }
+        }
+      }
+
+    });
+    super.onInit();
+  }
+
 
   void getAsnadEmroz(String startDate , String endDate) async{
     if(LocalData.getConnectionMethode()=="socket"){
@@ -74,6 +127,7 @@ class FilterAsnadController extends GetxController{
 
 
     if(LocalData.getConnectionMethode()=="socket"){
+
       await SocketManager.request({
         "params": {
           "bookid": Utils.bookId,
@@ -84,13 +138,18 @@ class FilterAsnadController extends GetxController{
         "password": Utils.passWord,
         "methodName": "GetDocumentList",
         "methodType": "post",
+        "page":"1"
       }, (value) {
         var result = AsnadModel.fromJson(value);
         asnadModel.value = result;
         documentList.value=result.documentList!;
+        documentList.refresh();
+        update();
         helpDocumentList.addAll(result.documentList!);
+        totalPage= int.parse( value['totalpage']);
         Get.back();
         Get.to(AsnadListScreen());
+
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/GetDocumentList", body: {
@@ -117,6 +176,7 @@ class FilterAsnadController extends GetxController{
 
 
   }
+
   void searchAsnad(String value){
     List<DocumentList> fakeList = <DocumentList>[];
 
@@ -137,6 +197,13 @@ class FilterAsnadController extends GetxController{
     documentList.refresh();
     update();
 
+  }
+  @override
+  void onClose() {
+
+    scrollController.dispose();
+
+    super.onClose();
   }
 
 }

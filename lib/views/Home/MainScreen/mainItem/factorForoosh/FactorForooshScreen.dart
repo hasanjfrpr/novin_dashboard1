@@ -37,6 +37,7 @@ class FactorForooshScreen extends StatelessWidget {
                 child: Container(
                   child: Obx(() {
                     return ListView.builder(
+                      controller:Get.find<FilterFactorForooshController>(tag: "FilterFFController").scrollController ,
                       shrinkWrap: true,
                         itemCount: Get.find<FilterFactorForooshController>(tag: "FilterFFController").sslldd!.value.length,
                         itemBuilder: (context, int index) {
@@ -48,6 +49,17 @@ class FactorForooshScreen extends StatelessWidget {
                   }
                   ),
                 )),
+            Obx(() {
+              return Get.find<FilterFactorForooshController>(tag: "FilterFFController").loadMore.value == true
+                  ? Padding(
+                  padding: EdgeInsets.only(top: 8 , bottom: 8),
+                  child: CircularProgressIndicator(
+                    color: Color(
+                      AppColor.primaryColor,
+                    ),
+                  ))
+                  : Container();
+            }),
             Expanded(
               child: Container(
                 alignment: Alignment.center,

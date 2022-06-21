@@ -17,9 +17,15 @@ class AshkhasCotrolller extends GetxController{
   RxList<PersonList> helpListPerson = [PersonList()].obs;
   late ScrollController scrollController ;
   RxBool showLoading=false.obs;
-  int page = 1;
+   int page = 1;
 
 
+
+@override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 
 
   @override
@@ -27,7 +33,7 @@ class AshkhasCotrolller extends GetxController{
     scrollController = ScrollController();
     scrollController.addListener(() async{
 
-      if(scrollController.offset == scrollController.position.maxScrollExtent){
+      if(scrollController.offset == scrollController.position.maxScrollExtent && !showLoading.value ){
 showLoading.value = true;
         print("resid be tahesh azizam");
         if(LocalData.getConnectionMethode() == "socket"){
@@ -41,12 +47,13 @@ showLoading.value = true;
             "methodType": "post",
             "page":"${page+1}"
           }, (value) {
+            print(page);
             PersonListModel result = PersonListModel.fromJson(value);
             personListAhskhas.value.addAll(result.personList!);
             personListAhskhas.refresh();
             update();
             showLoading.value = false;
-            print(personListAhskhas.length);
+            page++;
             // if(result.personList!.length > 1 && adad==1){
             //   for(var i=0 ;i<result.personList!.length ; i++){
             //     personList.value.add( new DropdownMenuItem<String>(child: Text(result.personList![i].fldTifLfac.toString()) , value:result.personList![i].fldTifLfac.toString() ,));
