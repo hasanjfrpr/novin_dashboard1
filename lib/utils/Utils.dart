@@ -12,6 +12,7 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class Utils {
 static String? bookId;
+static String? headSoozVzianDetail;
 static String? userName;
 static String? passWord;
 static bool? isLogin=true;

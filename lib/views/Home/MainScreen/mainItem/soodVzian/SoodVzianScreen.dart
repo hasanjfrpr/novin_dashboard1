@@ -65,6 +65,7 @@ class SoodVzianScreen extends StatelessWidget {
                     soodVzianController.getSoodVzianDetail(convertJtoGDate(filterController.year.value,filterController.month.value, filterController.day.value),
                         convertJtoGDate(filterController.endYear.value,filterController.endMonth.value, filterController.endDay.value) , soodZianList.soodZianList![index].hesabFDesc.toString(),soodZianList.soodZianList![index].fldcod.toString(),
                         soodZianList.soodZianList![index].fldScrHead.toString() , soodZianList.soodZianList![index].sort.toString() );
+                    Utils.headSoozVzianDetail = soodZianList.soodZianList![index].fldScrHead.toString();
                     showLoading(wi, he);
                   },
                   child: Container(

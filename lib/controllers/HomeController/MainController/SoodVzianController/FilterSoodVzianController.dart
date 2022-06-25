@@ -32,7 +32,7 @@ RxBool checkBox = true.obs;
           "bookid": Utils.bookId,
           "startdate":startDate,
           "enddate": endDate,
-          "FlagCalc":checkBox.value ? "TRUE" : "FALSE"
+          "FlagCalc":checkBox.value ? "0" : "1"
         },
         "username": Utils.userName,
         "password": Utils.passWord,
