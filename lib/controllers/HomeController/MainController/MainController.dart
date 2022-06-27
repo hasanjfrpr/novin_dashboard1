@@ -77,7 +77,7 @@ class MainController extends GetxController{
           AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             content: ListTile(title: const Text(
-                'برای دیدن راهنمای هر بخش روی آیتم مربوطه انگشت خود را نگه دارید'),leading: Icon(Icons.error , color: Color(AppColor.primaryColor),size: 35,),),
+                'برای دیدن راهنمای هر بخش روی آیتم مربوطه انگشت خود را نگهدارید'),leading: Icon(Icons.error , color: Color(AppColor.primaryColor),size: 35,),),
             actions: [
               TextButton(
                 child: const Text("بستن"),

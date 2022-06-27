@@ -69,7 +69,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
           ));
         }
 
-        Get.off(Login());
+        Get.off(const Login(),duration:const Duration(milliseconds: 725));
       });
     } else {
       await RequestManager()
@@ -120,7 +120,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
 
   @override
   void onInit() {
-    precacheImage(new AssetImage("assets/images/splash.jpg") , Get.context!);
+    // precacheImage(new AssetImage("assets/images/splash.jpg") , Get.context!);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     lottieController = AnimationController(vsync: this);
     super.onInit();
@@ -139,7 +139,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
         serverMethodName.value = LocalData.getConnectionMethode().toString();
         // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
         getCompanyBook();
-        Future.delayed(Duration(seconds: 10)).then((value) {
+        Future.delayed(Duration(seconds: 13)).then((value) {
           if (dataReceived == false && LocalData.getConnectionMethode()=="socket") {
             Get.dialog(
                 AlertDialog(

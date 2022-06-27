@@ -129,6 +129,7 @@ class AsnadListScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _itemRow(String rowName , String value){
     if(value.toLowerCase() == "null") value="----";
     return Container(
