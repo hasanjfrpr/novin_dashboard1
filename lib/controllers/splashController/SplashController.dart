@@ -69,7 +69,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
           ));
         }
 
-        Get.off(const Login(),duration:const Duration(milliseconds: 725));
+        Get.off(()=>const Login(),duration:const Duration(milliseconds: 725));
       });
     } else {
       await RequestManager()
@@ -87,7 +87,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
             value: "${result.companyList![i].fldnmfcomp}",
           ));
         }
-      }).then((value) => Get.off(Login()));
+      }).then((value) => Get.off(()=>Login()));
     }
   }
 
@@ -137,7 +137,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
         Dialogs.showServerSettingDialog(0);
       } else {
         serverMethodName.value = LocalData.getConnectionMethode().toString();
-        // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off( const Login() ));
+        // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off(()=> const Login() ));
         getCompanyBook();
         Future.delayed(Duration(seconds: 13)).then((value) {
           if (dataReceived == false && LocalData.getConnectionMethode()=="socket") {

@@ -33,7 +33,7 @@ class TarazKolLv3Controller extends GetxController{
         tarazKolLv4Model.value = TarazKolLv4Model.fromJson(value);
         print(tarazKolLv4Model.value.tarazAzmayeshiKolMoeinTafsiliTafsiliList!.length);
         Get.back();
-        Get.to(TarazKolLv4Screen(tif:tif));
+        Get.to(()=>TarazKolLv4Screen(tif:tif));
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/GetTarazAzmayeshiKol_Moein_Tafsili_TafsiliList", body: {
@@ -52,7 +52,7 @@ class TarazKolLv3Controller extends GetxController{
         tarazKolLv4Model.value = TarazKolLv4Model.fromJson(value);
         print(tarazKolLv4Model.value.tarazAzmayeshiKolMoeinTafsiliTafsiliList!.length);
         Get.back();
-        Get.to(TarazKolLv4Screen(tif:tif));
+        Get.to(()=>TarazKolLv4Screen(tif:tif));
       });
     }
 

@@ -220,7 +220,7 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
      sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
      factorFcontainerList.addAll(result.factorForooshList!);
      Get.back();
-     Get.to(FactorForooshScreen());
+     Get.to(()=>FactorForooshScreen());
    });
 
  }else{
@@ -266,7 +266,7 @@ void getFactorForooshList(String startDate , String endDate , String bookId , St
      sslldd!.value=suggestFactorForooshModel.value.factorForooshList!;
      factorFcontainerList.addAll(result.factorForooshList!);
      Get.back();
-     Get.to(FactorForooshScreen());
+     Get.to(()=>FactorForooshScreen());
    });
  }
 

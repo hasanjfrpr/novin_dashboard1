@@ -103,7 +103,7 @@ bool clickShod = false;
         tarazKolLv3List.value = result.tarazAzmayeshiKolMoeinTafsiliList!;
         _addtotalBedBes(tarazKolLv3.value);
         Get.back();
-        Get.to(TarazKolLv3Screen(tif:tif));
+        Get.to(()=>TarazKolLv3Screen(tif:tif));
       });
 
     }else{
@@ -127,7 +127,7 @@ bool clickShod = false;
         tarazKolLv3List.value = result.tarazAzmayeshiKolMoeinTafsiliList!;
         _addtotalBedBes(tarazKolLv3.value);
         Get.back();
-        Get.to(TarazKolLv3Screen(tif:tif));
+        Get.to(()=>TarazKolLv3Screen(tif:tif));
       } );
 
     }

@@ -49,7 +49,7 @@ class BedBesController extends GetxController {
         var result = RizBedBesModel.fromJson(value);
         rizBedBesModel.value = result;
         Get.back();
-        Get.to(RizBedBesScreen(
+        Get.to(()=>RizBedBesScreen(
           name: name,
         ));
       });
@@ -69,7 +69,7 @@ class BedBesController extends GetxController {
         var result = RizBedBesModel.fromJson(value);
         rizBedBesModel.value = result;
         Get.back();
-        Get.to(RizBedBesScreen(
+        Get.to(()=>RizBedBesScreen(
           name: name,
         ));
       });

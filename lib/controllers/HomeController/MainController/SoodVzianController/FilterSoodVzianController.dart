@@ -42,7 +42,7 @@ RxBool checkBox = true.obs;
         var result = SoodVzianModel.fromJson(value);
         soodVzianModel.value = result;
         Get.back();
-        Get.to(SoodVzianScreen());
+        Get.to(()=>SoodVzianScreen());
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/GetSoodZian", body:{
@@ -61,7 +61,7 @@ RxBool checkBox = true.obs;
         soodVzianModel.value = result;
         print(soodVzianModel.value.soodZianListO);
         Get.back();
-        Get.to(SoodVzianScreen());
+        Get.to(()=>SoodVzianScreen());
       });
     }
 

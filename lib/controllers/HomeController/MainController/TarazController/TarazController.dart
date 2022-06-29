@@ -54,7 +54,7 @@ bool clickShod = false;
         tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
         _addtotalBedBes(result);
         Get.back();
-        Get.to(TarazMoienScreen(tif: tif,));
+        Get.to(()=>TarazMoienScreen(tif: tif,));
       });
 
     }else{
@@ -80,7 +80,7 @@ bool clickShod = false;
         tarazMoienList.value=result.tarazAzmayeshiKolMoeinList!;
         _addtotalBedBes(result);
         Get.back();
-        Get.to(TarazMoienScreen(tif: tif,));
+        Get.to(()=>TarazMoienScreen(tif: tif,));
       });
     }
 

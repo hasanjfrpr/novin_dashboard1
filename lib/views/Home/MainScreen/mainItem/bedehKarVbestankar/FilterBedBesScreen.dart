@@ -100,7 +100,7 @@ class FilterBedBesScreen extends StatelessWidget {
                 }
                  controller.personFilterList.value.clear();
                  controller.personFilterList.value.addAll(personList!);
-                Get.to(BedehkarVbestanKarScreen()  );
+                Get.to(()=>BedehkarVbestanKarScreen()  );
 
               },
               height: he * 0.05,

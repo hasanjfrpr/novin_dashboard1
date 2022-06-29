@@ -125,7 +125,7 @@ class FilterTarazController extends GetxController{
           print(listTaraz.value.length);
           _addtotalBedBes(tarazKolModel.value);
           Get.back();
-          Get.to(TarazScreen());
+          Get.to(()=>TarazScreen());
 
         }else{
 
@@ -151,7 +151,7 @@ class FilterTarazController extends GetxController{
           print(listTaraz.value.length);
           _addtotalBedBes(tarazKolModel.value);
           Get.back();
-          Get.to(TarazScreen());
+          Get.to(()=>TarazScreen());
 
         }
       });
@@ -180,7 +180,7 @@ class FilterTarazController extends GetxController{
           print(listTaraz.value.length);
           _addtotalBedBes(tarazKolModel.value);
           Get.back();
-          Get.to(TarazScreen());
+          Get.to(()=>TarazScreen());
 
         }else{
 
@@ -206,7 +206,7 @@ class FilterTarazController extends GetxController{
           print(listTaraz.value.length);
           _addtotalBedBes(tarazKolModel.value);
           Get.back();
-          Get.to(TarazScreen());
+          Get.to(()=>TarazScreen());
 
         }
 

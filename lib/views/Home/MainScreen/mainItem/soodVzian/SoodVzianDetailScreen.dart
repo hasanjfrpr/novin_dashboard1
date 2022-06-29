@@ -158,7 +158,7 @@ class SoodVzianDetailScreen extends StatelessWidget {
               child:RadioListTile<int>(title: Text(s_c.title_s_d[index].toString()),value: index,onChanged: (value){selectorR.value= value!;
               s_c.getupdateList(s_c.title_s_d[index].toString()).then((value) {
                 Get.back();
-                Get.to(SoodVzianDetailScreen());
+                Get.to(()=>SoodVzianDetailScreen());
               });
                 },groupValue: selectorR.value,)
             );}

@@ -106,7 +106,7 @@ class FilterDaramadControler extends GetxController{
       tarazMoeinModel.value = result;
       _addtotalBedBes(result);
       Get.back();
-      Get.to(DaramadScreen()); });
+      Get.to(()=>DaramadScreen()); });
 
     }else{
 
@@ -127,7 +127,7 @@ class FilterDaramadControler extends GetxController{
         tarazMoeinModel.value = result;
         _addtotalBedBes(result);
         Get.back();
-        Get.to(DaramadScreen());
+        Get.to(()=>DaramadScreen());
       });
 
 

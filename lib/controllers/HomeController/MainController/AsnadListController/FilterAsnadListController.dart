@@ -148,7 +148,7 @@ class FilterAsnadController extends GetxController{
         helpDocumentList.addAll(result.documentList!);
         totalPage= int.parse( value['totalpage']);
         Get.back();
-        Get.to(AsnadListScreen());
+        Get.to(()=>AsnadListScreen());
 
       });
     }else{
@@ -167,7 +167,7 @@ class FilterAsnadController extends GetxController{
         documentList.value=result.documentList!;
         helpDocumentList.addAll(result.documentList!);
         Get.back();
-        Get.to(AsnadListScreen());
+        Get.to(()=>AsnadListScreen());
       });
     }
 

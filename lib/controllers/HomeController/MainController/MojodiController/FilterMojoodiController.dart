@@ -103,7 +103,7 @@ class FilterMojoodiController extends GetxController{
         helpMojoodiList.addAll(result.mojoodiKalaList!);
         print(result);
         Get.back();
-        Get.to(MojoodikalaScreen());
+        Get.to(()=>MojoodikalaScreen());
       });
       
     }else{
@@ -132,7 +132,7 @@ class FilterMojoodiController extends GetxController{
         helpMojoodiList.addAll(result.mojoodiKalaList!);
         print(result);
         Get.back();
-        Get.to(MojoodikalaScreen());
+        Get.to(()=>MojoodikalaScreen());
       });
     }
     

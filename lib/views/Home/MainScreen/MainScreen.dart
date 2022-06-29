@@ -200,16 +200,16 @@ class MainScreen extends StatelessWidget {
   void _ontabClickItem(int index) {
     switch(index){
       case 0:
-        Get.to(FilterFactorForooshScreen());
+        Get.to(()=>FilterFactorForooshScreen());
         break;
       case 1:
-        Get.to(FilterTarazScreen());
+        Get.to(()=>FilterTarazScreen());
         break;
       case 2 :
-        Get.to(FilterAsnadScreen());
+        Get.to(()=>FilterAsnadScreen());
         break;
       case 3:
-        Get.to(FilterSoodVzianScreen());
+        Get.to(()=>FilterSoodVzianScreen());
         break;
       case 4:
        controller.getPersonList(0);
@@ -220,13 +220,13 @@ class MainScreen extends StatelessWidget {
         showLoading(Get.width, Get.height ,title: "درحال دریافت لیست اشخاص");
         break;
       case 6:
-        Get.to(FilterMojoodiScreen());
+        Get.to(()=>FilterMojoodiScreen());
         break;
       case 7:
-        Get.to(FilterHazineScreen());
+        Get.to(()=>FilterHazineScreen());
         break;
       case 8:
-        Get.to(FilterDaramadScreen());
+        Get.to(()=>FilterDaramadScreen());
         break;
 
     }

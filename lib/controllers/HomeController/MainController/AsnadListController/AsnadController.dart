@@ -83,7 +83,7 @@ class AsnadController extends GetxController{
         print(result);
         rizAsnad.value=result;
         Get.back();
-        Get.to(RizAsnadScreen());
+        Get.to(()=>RizAsnadScreen());
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/getDocumentDetailsList", body: {
@@ -99,7 +99,7 @@ class AsnadController extends GetxController{
         print(result);
         rizAsnad.value=result;
         Get.back();
-        Get.to(RizAsnadScreen());
+        Get.to(()=>RizAsnadScreen());
       });
     }
 

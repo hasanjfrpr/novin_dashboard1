@@ -36,7 +36,7 @@ class FactorForooshController extends GetxController{
         var result = RizFactorModel.fromJson(value);
         rizFactorModel.value = result;
         Get.back();
-        Get.to(RizFactorScreen());
+        Get.to(()=>RizFactorScreen());
       });
 
 
@@ -54,7 +54,7 @@ class FactorForooshController extends GetxController{
         var result = RizFactorModel.fromJson(value);
         rizFactorModel.value = result;
         Get.back();
-        Get.to(RizFactorScreen());
+        Get.to(()=>RizFactorScreen());
       });
 
     }

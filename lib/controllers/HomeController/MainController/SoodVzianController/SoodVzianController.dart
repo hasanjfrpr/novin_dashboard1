@@ -42,7 +42,7 @@ class SoodVzianController extends GetxController{
         soodVzianDetailModel_fake.value.addAll(result.soodZianDetailsList!);
         getfilterSoozZianListDetail(soodVzianDetailModel_fake.value);
         Get.back();
-        Get.to(SoodVzianDetailScreen(title: title,));
+        Get.to(()=>SoodVzianDetailScreen(title: title,));
       });
 
     }else{
@@ -65,7 +65,7 @@ class SoodVzianController extends GetxController{
         soodVzianDetailModel_fake.value.addAll(result.soodZianDetailsList!);
         getfilterSoozZianListDetail(soodVzianDetailModel_fake.value);
         Get.back();
-        Get.to(SoodVzianDetailScreen(title: title,));
+        Get.to(()=>SoodVzianDetailScreen(title: title,));
       });
     }
 

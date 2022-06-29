@@ -116,7 +116,7 @@ class MainController extends GetxController{
           }
         }
         Get.back();
-        adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
+        adad==1 ? Get.to(()=>FilterBedBesScreen())  : Get.to(()=>AshKhasListScreen());
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/GetpersonList", body: { "params": {"bookid": '${Utils.bookId}'}} , header: {
@@ -132,7 +132,7 @@ class MainController extends GetxController{
           }
         }
         Get.back();
-        adad==1 ? Get.to(FilterBedBesScreen())  : Get.to(AshKhasListScreen());
+        adad==1 ? Get.to(()=>FilterBedBesScreen())  : Get.to(()=>AshKhasListScreen());
       });
     }
 
