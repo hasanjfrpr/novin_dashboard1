@@ -22,6 +22,7 @@ static bool? isLogin=true;
 String auth(){
   return 'Basic ' + base64Encode(utf8.encode('${Utils.userName}:${Utils.passWord}'));
 }
+
   String faToEnConvert(String a) {
   return a
       .replaceAll("۱", "1")
@@ -58,6 +59,10 @@ void restartApp(BuildContext context) {
 
 
 String convertDtoJDate(String gregorianDate){
+
+
+
+
 
   List<String> ss = gregorianDate.split("/");
   String year  = ss[0];

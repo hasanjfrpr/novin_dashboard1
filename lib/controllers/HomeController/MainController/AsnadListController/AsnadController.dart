@@ -66,7 +66,7 @@ class AsnadController extends GetxController{
 
 
 
-  void getRizAsnad(String sanadCode) async{
+  void getRizAsnad(String sanadCode ) async{
 
     if(LocalData.getConnectionMethode() == "socket"){
       await SocketManager.request({
@@ -83,7 +83,7 @@ class AsnadController extends GetxController{
         print(result);
         rizAsnad.value=result;
         Get.back();
-        Get.to(()=>RizAsnadScreen());
+        Get.to(()=>RizAsnadScreen(),arguments: sanadCode);
       });
     }else{
       await RequestManager().postReq(url: "tservermethods1/getDocumentDetailsList", body: {

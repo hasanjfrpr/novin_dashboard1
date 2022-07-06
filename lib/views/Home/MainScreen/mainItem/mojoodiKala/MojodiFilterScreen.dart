@@ -11,7 +11,8 @@ import 'package:search_choices/search_choices.dart';
 
 class FilterMojoodiScreen extends StatelessWidget {
    FilterMojoodiScreen({Key? key}) : super(key: key);
-   static String anbar = "";
+    String anbar = "";
+    String moeen = "";
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class FilterMojoodiScreen extends StatelessWidget {
     double he = Get.height;
     FilterMojoodiController controller = Get.put(FilterMojoodiController());
     RxInt AnbarSelector = 1.obs;
+    RxInt moeenSelector = 3.obs;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
@@ -32,9 +34,11 @@ class FilterMojoodiScreen extends StatelessWidget {
           children: [
             MaterialButton(
               onPressed: () {
-                if(AnbarSelector.value==1) anbar=="";
+
+                if(AnbarSelector.value==1) anbar="";
+                if(moeenSelector.value==3) moeen="";
                 controller.getMojoodikala(convertJtoGDate(controller.year.value, controller.month.value, controller.day.value),
-                    convertJtoGDate(controller.endYear.value , controller.endMonth.value,controller.endDay.value), anbar);
+                    convertJtoGDate(controller.endYear.value , controller.endMonth.value,controller.endDay.value), anbar,moeen);
                 showLoading(wi, he);
               },
               height: he * 0.05,
@@ -52,6 +56,7 @@ class FilterMojoodiScreen extends StatelessWidget {
             MaterialButton(
               onPressed: () {
                 AnbarSelector.value = 1;
+                moeenSelector.value = 3;
                 controller.day.value  = Get.find<HomeController>().jalili.value.day;
                 controller.month.value = Get.find<HomeController>().jalili.value.month;
                 controller.year.value= Get.find<HomeController>().jalili.value.year;
@@ -232,6 +237,62 @@ class FilterMojoodiScreen extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(height: he*0.02,),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: wi * 0.045, vertical: he * 0.01),
+                width: wi,
+                height: he * 0.05,
+                child: Text(
+                  "معین",
+                  style:
+                  TextStyle(fontSize: wi * 0.04, fontWeight: FontWeight.bold),
+                  textDirection: TextDirection.rtl,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: wi * 0.045, vertical: he * 0.01),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Color(AppColor.primaryColor)),
+                    borderRadius: BorderRadius.circular(wi * 0.02)),
+                child: Obx(
+                      () {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Obx(() {
+                              return Radio<int>(
+                                  value: 3,
+                                  groupValue: moeenSelector.value,
+                                  onChanged: (value) {
+                                    moeenSelector.value = value!;
+                                  });
+                            }),
+                            Text("همه"),
+                            SizedBox(
+                              width: wi * 0.05,
+                            ),
+                            Obx(() {
+                              return Radio<int>(
+                                  value: 4,
+                                  groupValue: moeenSelector.value,
+                                  onChanged: (value) {
+                                    moeenSelector.value = value!;
+                                  });
+                            }),
+                            Text("معین خاص"),
+                          ],
+                        ),
+                        if(moeenSelector==4)
+                          moeenWidget(controller, wi)
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -277,5 +338,25 @@ class FilterMojoodiScreen extends StatelessWidget {
       ),
     );
   }
+   Widget moeenWidget(FilterMojoodiController controller , double wi ){
+
+     controller.getMoeen();
+     return  controller.showLoadingV==false ? Container(padding: EdgeInsets.all(wi*0.05),child: CircularProgressIndicator()) :Container(
+       margin:
+       EdgeInsets.symmetric(horizontal: wi * 0.04),
+       child: SearchChoices.single(
+         items: controller.moeenModelDropDown,
+         value:moeen,
+         hint: "انتخاب معین",
+         rightToLeft: true,
+         searchHint: "جستجو",
+         onChanged: (value) {moeen = value;},
+         dialogBox: false,
+         isExpanded: true,
+         menuConstraints:
+         BoxConstraints.tight(Size.fromHeight(300)),
+       ),
+     );
+   }
 
 }

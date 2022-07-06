@@ -14,8 +14,9 @@ class SocketManager {
   static late Io.Socket socket =
   Io.io("http://141.11.42.55:3000", <String, dynamic>{
     'transports': ['websocket'],
-    'autoConnect': false,
+    'autoConnect': true,
   });
+
   static bool isRegister = false;
   //
   // {
@@ -28,6 +29,7 @@ class SocketManager {
   // }
   // }
   static Future<dynamic>  request(Map<String,dynamic> json ,ValueChanged<dynamic> s) async{
+
 
 
     if(socket.connected){
@@ -76,6 +78,11 @@ class SocketManager {
             return {"register" :  "unAccess"};
           }
         });
+      });
+
+      socket.onDisconnect((data){
+        print("socket is disconnected 1111111111111111111");
+        socket.connect();
       });
 
 

@@ -49,7 +49,7 @@ class LoginController extends GetxController {
           Utils.bookId = bookId;
           loginModelObs.value = SignInModel.fromJson(value);
           Future.delayed(Duration(milliseconds: 850), () {
-            Get.off(()=>HomeScreen() ,duration: Duration(milliseconds: 2000));
+            Get.off(()=>HomeScreen() ,duration: Duration(milliseconds: 2000), );
           });
         } else {
           buttonStateLogin.value = ButtonState.fail;
@@ -83,7 +83,7 @@ class LoginController extends GetxController {
           buttonStateLogin.value = ButtonState.fail;
         }
       }).catchError(() {
-
+        print("sssssssssjsjsjsjsjsjsjsjsjsjsjsjsjsjsjs");
       });
     }
   }

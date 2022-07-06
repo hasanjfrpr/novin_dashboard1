@@ -42,7 +42,6 @@ class MojoodikalaScreen extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: wi*0.04),
                 height: he,
                 child: Column(
-
                   children: [
                     Expanded(
                       child: Row(children: [
@@ -50,8 +49,6 @@ class MojoodikalaScreen extends StatelessWidget {
                         Container(width: wi*0.3 ,height: he*0.065,child: Text("موجودی" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
                         Container(width: wi*0.3 ,height: he*0.065,child: Text("معدل فی موجودی" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
                         Container(width: wi*0.3 ,height: he*0.065,child: Text("مبلغ" , style: TextStyle(color:Colors.white),),alignment: Alignment.center,decoration: BoxDecoration(color: Colors.blue,border: Border(left: BorderSide(color: Colors.white70))),),
-
-
                       ],),
                     ),
                     Expanded(
@@ -59,7 +56,7 @@ class MojoodikalaScreen extends StatelessWidget {
                       child: Container(
                         width: 5*0.3*wi,
                         height: he,
-                        margin: EdgeInsets.only(bottom: wi*0.04),
+                        //margin: EdgeInsets.only(bottom: wi*0.04),
                         color: Colors.grey,
                         child: Obx((){
                           return ListView.builder(itemBuilder: (context , index){

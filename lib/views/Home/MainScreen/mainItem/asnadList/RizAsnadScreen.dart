@@ -1,21 +1,43 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/AsnadListController/AsnadController.dart';
+import 'package:novin_dashboard1/controllers/HomeController/MainController/AsnadListController/RizAsnadController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 
 class RizAsnadScreen extends StatelessWidget {
-  const RizAsnadScreen({Key? key}) : super(key: key);
+   RizAsnadScreen({Key? key}) : super(key: key);
+
+  String codDoc = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     double wi = Get.width;
     double he = Get.height;
     AsnadController asnadController = Get.find<AsnadController>();
+    RizAsnadController rizAsnadController = Get.put(RizAsnadController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
         title: Text(AppString.rizSanad),
+        actions: [
+
+          InkWell(
+            onTap: (){
+              rizAsnadController.getLogInfo(codDoc , context);
+              showLoading(wi, he,title:"درحال دریافت ردپای کاربر");
+
+            },
+            child: Container(child: Row(
+              children: [
+                Center(child: Text("ردپای کاربر"  , textAlign: TextAlign.center,)),
+                SizedBox(width: wi*0.02,),
+                Icon((Icons.file_copy ) ,color: Color(AppColor.onPrimaryColor),),
+                SizedBox(width: wi*0.04,),
+              ],
+            ),),
+          )
+        ],
       ),
       body: Container(
         width: wi,
