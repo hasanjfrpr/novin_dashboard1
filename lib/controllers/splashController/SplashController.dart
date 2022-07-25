@@ -191,7 +191,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
                     ),
                   ),
                 ),
-                barrierDismissible: false);
+                barrierDismissible: true);
           }
         });
       }

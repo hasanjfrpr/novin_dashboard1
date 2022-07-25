@@ -9,6 +9,7 @@ import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart'
 import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/MainScreen.dart';
 import 'package:novin_dashboard1/views/Home/SettingScreen/SettinScreen.dart';
+import 'package:novin_dashboard1/views/dashboard/Dashboard.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 
@@ -87,12 +88,15 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar:CurvedNavigationBar(items: [
               Icon(CupertinoIcons.home , color: Color(AppColor.onPrimaryColor),size: wi*0.08,),
+           Icon(Icons.dashboard_outlined , color: Color(AppColor.onPrimaryColor),size: wi*0.08,),
               Icon(CupertinoIcons.settings, color: Color(AppColor.onPrimaryColor) , size: wi*0.08,)
             ],
               backgroundColor: Color(AppColor.onPrimaryColor),
             color: Color(AppColor.primaryColor),
             animationDuration: Duration(milliseconds: 250),
             height: he*.08,
+            index: 1,
+            //index: 0,
             onTap: (index){
             controller.currentActiveScreen.value = index;
             },
@@ -101,7 +105,8 @@ class HomeScreen extends StatelessWidget {
 
 
           body: Obx((){
-            return controller.currentActiveScreen==0 ? MainScreen() : SettingScreen();
+            return controller.currentActiveScreen.value==1 ?  DashBoardScreen(): controller.currentActiveScreen.value==0 ? MainScreen() : SettingScreen();
+           // return controller.currentActiveScreen == 0 ? MainScreen() : SettingScreen();
           }
           ),
       ),

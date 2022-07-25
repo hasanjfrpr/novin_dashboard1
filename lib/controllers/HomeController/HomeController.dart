@@ -7,7 +7,7 @@ import 'package:shamsi_date/shamsi_date.dart';
 
 class HomeController extends GetxController{
   var jalili = Jalali.now().obs;
-  RxInt currentActiveScreen = 0.obs;
+  RxInt currentActiveScreen = 1.obs;
 
 
 
