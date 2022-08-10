@@ -16,6 +16,7 @@ static String? headSoozVzianDetail;
 static String? userName;
 static String? passWord;
 static bool? isLogin=true;
+static bool dashBoardReq = true;
 
 }
 

@@ -27,8 +27,7 @@ class RequestManager {
      body!['username']=Utils.userName.toString();
      body['password']=Utils.passWord.toString();}
      header.remove('authorization');
-     print(header);
-     print(body);
+
     try {
       var res = await http.post(Uri.parse(Base_Url + url!),
           body: json.encode(body),
