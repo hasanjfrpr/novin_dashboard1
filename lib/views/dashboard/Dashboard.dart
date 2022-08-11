@@ -120,13 +120,7 @@ class DashBoardScreen extends StatelessWidget {
                                   blurRadius: 2,
                                   offset: Offset(1, 1))
                             ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("نمایش"),
-                            Icon(Icons.arrow_drop_down_outlined)
-                          ],
-                        ),
+                        child:Text("نمایش"),
                       ),
                     )
                   ],
