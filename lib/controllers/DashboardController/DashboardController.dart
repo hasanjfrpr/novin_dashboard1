@@ -31,11 +31,15 @@ class DashBoardController extends GetxController{
   RxString hesab_sandoq = "".obs;
   RxString hesab_bank_d = "".obs;
   RxString asnad_pardakhti = "".obs;
+  RxString asnad_vosooli_nazdBank = "".obs;
   RxString mabla_check = "".obs;
   RxString hesab_bank_p = "".obs;
   RxString foroosh_khadamat = "".obs;
   RxString hazine = "".obs;
   RxString sayer_daramad = "".obs;
+  RxString mojoodi_sandoq = "".obs;
+  RxString mojoodi_bank= "".obs;
+  RxString mojoodi_kala = "".obs;
 
 
 
@@ -79,6 +83,13 @@ class DashBoardController extends GetxController{
                 hesab_bank_d.value = dashBoardModel.value.dashboardllist![i].sBED.toString();
               }
               break;
+            case "3":
+              if(dashBoardModel.value.dashboardllist![i].sBED.toString()==""||dashBoardModel.value.dashboardllist![i].sBED.toString()=="0"){
+                asnad_vosooli_nazdBank.value = dashBoardModel.value.dashboardllist![i].sBES.toString();
+              }else{
+                asnad_vosooli_nazdBank.value = dashBoardModel.value.dashboardllist![i].sBED.toString();
+              }
+              break;
             case "4":
               if(dashBoardModel.value.dashboardllist![i].sBED.toString()==""||dashBoardModel.value.dashboardllist![i].sBED.toString()=="0"){
                 asnad_pardakhti.value = dashBoardModel.value.dashboardllist![i].sBES.toString();
@@ -119,6 +130,13 @@ class DashBoardController extends GetxController{
                 sayer_daramad.value = dashBoardModel.value.dashboardllist![i].sBES.toString();
               }else{
                 sayer_daramad.value = dashBoardModel.value.dashboardllist![i].sBED.toString();
+              }
+              break;
+            case "44":
+              if(dashBoardModel.value.dashboardllist![i].sBED.toString()==""||dashBoardModel.value.dashboardllist![i].sBED.toString()=="0"){
+                mojoodi_kala.value = dashBoardModel.value.dashboardllist![i].sBES.toString();
+              }else{
+                mojoodi_kala.value = dashBoardModel.value.dashboardllist![i].sBED.toString();
               }
               break;
           }

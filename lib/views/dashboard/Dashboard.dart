@@ -19,7 +19,7 @@ class DashBoardScreen extends StatelessWidget {
     double wi = Get.width;
     double he = Get.height;
     DashBoardController controller = Get.put(DashBoardController());
-    if(Utils.dashBoardReq) {
+    if (Utils.dashBoardReq) {
       controller.getDashboard(
           convertJtoGDate(controller.year.value, controller.month.value,
               controller.day.value),
@@ -120,7 +120,7 @@ class DashBoardScreen extends StatelessWidget {
                                   blurRadius: 2,
                                   offset: Offset(1, 1))
                             ]),
-                        child:Text("نمایش"),
+                        child: Text("نمایش"),
                       ),
                     )
                   ],
@@ -143,7 +143,7 @@ class DashBoardScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: wi,
-                              height: he * 0.3,
+                              height: he * 0.33,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
@@ -152,7 +152,8 @@ class DashBoardScreen extends StatelessWidget {
                                     boxReturnForoosh(controller),
                                     boxDaryafti(controller),
                                     boxPardakhti(controller),
-                                    boxHazinehVdaramad(controller)
+                                    boxHazinehVdaramad(controller),
+                                    boxMojoodi(controller)
                                   ],
                                 ),
                               ),
@@ -304,7 +305,6 @@ class DashBoardScreen extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(wi * 0.04),
                               width: wi,
-
                               child: Column(
                                 children: [
                                   controller.activeBackGround.value == 1
@@ -314,7 +314,8 @@ class DashBoardScreen extends StatelessWidget {
                                           : controller.activeBackGround.value ==
                                                   3
                                               ? foroosh_haftegi(controller)
-                                              : returnForoosh_haftegi(controller)
+                                              : returnForoosh_haftegi(
+                                                  controller)
                                 ],
                               ),
                             )
@@ -330,7 +331,8 @@ class DashBoardScreen extends StatelessWidget {
   }
 }
 
-void showCalender(BuildContext context, DashBoardController controller, int num) async {
+void showCalender(
+    BuildContext context, DashBoardController controller, int num) async {
   /////////////////////////Example 1////////////////////////////
   Jalali? picked = await showPersianDatePicker(
     context: context,
@@ -352,7 +354,7 @@ void showCalender(BuildContext context, DashBoardController controller, int num)
 Widget boxForoosh(DashBoardController controller) {
   return Container(
     width: Get.width * 0.35,
-    height: Get.height * 0.3,
+    height: Get.height * 0.33,
     clipBehavior: Clip.hardEdge,
     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
     decoration: BoxDecoration(
@@ -374,74 +376,109 @@ Widget boxForoosh(DashBoardController controller) {
               ),
             )),
         Expanded(
-            flex: 8,
+            flex: 9,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text("مبلغ فروش",
-                            style: TextStyle(
-                                fontSize: Get.width * 0.032,
-                                color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.totalOfSales.toString()),
-                            style: TextStyle(
-                                fontSize: Get.width * 0.03,
-                                color: Color(AppColor.primaryColor))),
-                        Divider(
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ],
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text("مبلغ فروش",
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.032,
+                                  color: Colors.black)),
+                          Text(
+                              setFormatNumber(controller.dashBoardModel.value
+                                  .foroshAndReturnList!.totalOfSales
+                                  .toString()),
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.03,
+                                  color: Color(AppColor.primaryColor))),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text("زیان",
-                            style: TextStyle(
-                                fontSize: Get.width * 0.032,
-                                color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.soodZian.toString()),
-                            style: TextStyle(
-                                fontSize: Get.width * 0.03,
-                                color: Color(AppColor.primaryColor))),
-                        Divider(
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ],
+
+                   Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text("تعداد فاکتورهای فروش",
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.032,
+                                  color: Colors.black)),
+                          Text(
+                              setFormatNumber(controller.dashBoardModel.value
+                                  .foroshAndReturnList!.soodZian
+                                  .toString()),
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.03,
+                                  color: Color(AppColor.primaryColor))),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text("تعداد",
-                            style: TextStyle(
-                                fontSize: Get.width * 0.032,
-                                color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.qSaleDoc.toString()),
-                            style: TextStyle(
-                                fontSize: Get.width * 0.03,
-                                color: Color(AppColor.primaryColor))),
-                      ],
+
+                   Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text("سودوزیان",
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.032,
+                                  color: Colors.black)),
+                          Text(
+                              setFormatNumber(controller.dashBoardModel.value
+                                  .foroshAndReturnList!.qSaleDoc
+                                  .toString()),
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.03,
+                                  color: Color(AppColor.primaryColor))),
+                        ],
+                      ),
                     ),
-                  ),
+
+
+                  // Expanded(
+                  //   child: Container(
+                  //     child: Column(
+                  //       children: [
+                  //         SizedBox(
+                  //           height: 2,
+                  //         ),
+                  //         Text("زیان فاکتورهای فروش",
+                  //             style: TextStyle(
+                  //                 fontSize: Get.width * 0.032,
+                  //                 color: Colors.black)),
+                  //         Text(
+                  //             setFormatNumber(controller.dashBoardModel.value
+                  //                 .foroshAndReturnList!.qSaleDoc
+                  //                 .toString()),
+                  //             style: TextStyle(
+                  //                 fontSize: Get.width * 0.03,
+                  //                 color: Color(AppColor.primaryColor))),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ))
@@ -453,7 +490,7 @@ Widget boxForoosh(DashBoardController controller) {
 Widget boxReturnForoosh(DashBoardController controller) {
   return Container(
     width: Get.width * 0.35,
-    height: Get.height * 0.3,
+    height: Get.height * 0.33,
     clipBehavior: Clip.hardEdge,
     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
     decoration: BoxDecoration(
@@ -475,7 +512,7 @@ Widget boxReturnForoosh(DashBoardController controller) {
               ),
             )),
         Expanded(
-            flex: 8,
+            flex: 9,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -490,7 +527,10 @@ Widget boxReturnForoosh(DashBoardController controller) {
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.retFactorTotalPrice.toString()),
+                        Text(
+                            setFormatNumber(controller.dashBoardModel.value
+                                .foroshAndReturnList!.retFactorTotalPrice
+                                .toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -509,11 +549,14 @@ Widget boxReturnForoosh(DashBoardController controller) {
                         SizedBox(
                           height: 2,
                         ),
-                        Text("تعداد",
+                        Text("تعداد فاکتور برگشتی",
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.countgoods.toString()),
+                        Text(
+                            setFormatNumber(controller.dashBoardModel.value
+                                .foroshAndReturnList!.countgoods
+                                .toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -532,11 +575,14 @@ Widget boxReturnForoosh(DashBoardController controller) {
                         SizedBox(
                           height: 2,
                         ),
-                        Text("مقدار",
+                        Text("تعداد اقلام برگشتی",
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.dashBoardModel.value.foroshAndReturnList!.countReturndocs.toString()),
+                        Text(
+                            setFormatNumber(controller.dashBoardModel.value
+                                .foroshAndReturnList!.countReturndocs
+                                .toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -554,7 +600,7 @@ Widget boxReturnForoosh(DashBoardController controller) {
 Widget boxDaryafti(DashBoardController controller) {
   return Container(
     width: Get.width * 0.35,
-    height: Get.height * 0.3,
+    height: Get.height * 0.33,
     clipBehavior: Clip.hardEdge,
     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
     decoration: BoxDecoration(
@@ -576,7 +622,7 @@ Widget boxDaryafti(DashBoardController controller) {
               ),
             )),
         Expanded(
-            flex: 8,
+            flex: 9,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -610,11 +656,12 @@ Widget boxDaryafti(DashBoardController controller) {
                         SizedBox(
                           height: 2,
                         ),
-                        Text("حساب صندوق",
+                        Text("اسناد وصولی نزد بانک",
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.hesab_sandoq.toString()),
+                        Text(
+                            setFormatNumber(controller.asnad_vosooli_nazdBank.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -633,11 +680,12 @@ Widget boxDaryafti(DashBoardController controller) {
                         SizedBox(
                           height: 2,
                         ),
-                        Text("سود فروش",
+                        Text("تعداد چک های دریافتی",
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.hesab_bank_d.toString()),
+                        Text(
+                            setFormatNumber(""),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -655,7 +703,7 @@ Widget boxDaryafti(DashBoardController controller) {
 Widget boxPardakhti(DashBoardController controller) {
   return Container(
     width: Get.width * 0.35,
-    height: Get.height * 0.3,
+    height: Get.height * 0.33,
     clipBehavior: Clip.hardEdge,
     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
     decoration: BoxDecoration(
@@ -677,35 +725,14 @@ Widget boxPardakhti(DashBoardController controller) {
               ),
             )),
         Expanded(
-            flex: 8,
+            flex: 9,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+
                   Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text("اسناد پرداختی",
-                            style: TextStyle(
-                                fontSize: Get.width * 0.032,
-                                color: Colors.black)),
-                        Text(setFormatNumber(controller.asnad_pardakhti.toString()),
-                            style: TextStyle(
-                                fontSize: Get.width * 0.03,
-                                color: Color(AppColor.primaryColor))),
-                        Divider(
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
+
                     child: Column(
                       children: [
                         SizedBox(
@@ -715,36 +742,39 @@ Widget boxPardakhti(DashBoardController controller) {
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber("0"),
+                        Text(setFormatNumber(controller.asnad_pardakhti.value),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
-                        Divider(
-                          color: Colors.black,
-                        ),
+
                         SizedBox(
                           height: 2,
                         ),
                       ],
                     ),
                   ),
+          Divider(
+            color: Colors.black,
+          ),
                   Container(
                     child: Column(
                       children: [
                         SizedBox(
                           height: 2,
                         ),
-                        Text("حساب بانک ها",
+                        Text("تعداد چک های پرداختی",
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.hesab_bank_p.toString()),
+                        Text(
+                            setFormatNumber(controller.hesab_bank_p.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Color(AppColor.primaryColor))),
                       ],
                     ),
                   ),
+
                 ],
               ),
             ))
@@ -756,7 +786,7 @@ Widget boxPardakhti(DashBoardController controller) {
 Widget boxHazinehVdaramad(DashBoardController controller) {
   return Container(
     width: Get.width * 0.35,
-    height: Get.height * 0.3,
+    height: Get.height * 0.33,
     clipBehavior: Clip.hardEdge,
     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
     decoration: BoxDecoration(
@@ -778,7 +808,7 @@ Widget boxHazinehVdaramad(DashBoardController controller) {
               ),
             )),
         Expanded(
-            flex: 8,
+            flex: 9,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -793,7 +823,9 @@ Widget boxHazinehVdaramad(DashBoardController controller) {
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.foroosh_khadamat.toString()),
+                        Text(
+                            setFormatNumber(
+                                controller.foroosh_khadamat.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -835,11 +867,13 @@ Widget boxHazinehVdaramad(DashBoardController controller) {
                         SizedBox(
                           height: 2,
                         ),
-                        Text("سایر درآمد",
+                        Text("سایر درآمدها",
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
-                        Text(setFormatNumber(controller.sayer_daramad.toString()),
+                        Text(
+                            setFormatNumber(
+                                controller.sayer_daramad.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -854,70 +888,167 @@ Widget boxHazinehVdaramad(DashBoardController controller) {
   );
 }
 
-Widget forooshKol_tedad_chart(DashBoardController controller){
-
-  return Center(
-      child:SfCircularChart(
-         // title: ChartTitle(text: 'Sales by sales person'),
-          legend: Legend(isVisible: true),
-          series: <PieSeries<ForoshMojodiKala, String>>[
-            PieSeries<ForoshMojodiKala, String>(
-                explode: true,
-                explodeIndex: 0,
-                dataSource: controller.dashBoardModel.value.foroshMojodiKala,
-                xValueMapper: (ForoshMojodiKala data, _) => data.fLDTIFLFAC,
-                yValueMapper: (ForoshMojodiKala data, _) => int.parse(data.sumQty!),
-               // dataLabelMapper: (_PieData data, _) => data.text,
-                dataLabelSettings: DataLabelSettings(isVisible: true)),
-          ]
-      )
+Widget boxMojoodi(DashBoardController controller) {
+  return Container(
+    width: Get.width * 0.35,
+    height: Get.height * 0.33,
+    clipBehavior: Clip.hardEdge,
+    margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
+    decoration: BoxDecoration(
+        border: Border.all(color: Color(AppColor.primaryColor), width: 1),
+        borderRadius: BorderRadius.all(Radius.circular(15))),
+    child: Column(
+      children: [
+        Expanded(
+            flex: 1,
+            child: Container(
+              width: Get.width,
+              alignment: Alignment.center,
+              color: Color(AppColor.primaryColor),
+              child: Text(
+                "موجودی",
+                style: TextStyle(
+                    fontSize: Get.width * 0.035,
+                    color: Color(AppColor.onPrimaryColor)),
+              ),
+            )),
+        Expanded(
+            flex: 9,
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text("موجودی صندوق",
+                            style: TextStyle(
+                                fontSize: Get.width * 0.032,
+                                color: Colors.black)),
+                        Text(
+                            setFormatNumber(
+                                controller.hesab_sandoq.toString()),
+                            style: TextStyle(
+                                fontSize: Get.width * 0.03,
+                                color: Color(AppColor.primaryColor))),
+                        Divider(
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text("موجودی بانک ها",
+                            style: TextStyle(
+                                fontSize: Get.width * 0.032,
+                                color: Colors.black)),
+                        Text(setFormatNumber(controller.hesab_bank_d.toString()),
+                            style: TextStyle(
+                                fontSize: Get.width * 0.03,
+                                color: Color(AppColor.primaryColor))),
+                        Divider(
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text("موجودی کالا",
+                            style: TextStyle(
+                                fontSize: Get.width * 0.032,
+                                color: Colors.black)),
+                        Text(
+                            setFormatNumber(
+                                controller.mojoodi_kala.toString()),
+                            style: TextStyle(
+                                fontSize: Get.width * 0.03,
+                                color: Color(AppColor.primaryColor))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ))
+      ],
+    ),
   );
 }
-Widget forooshKol_rial_chart(DashBoardController controller){
 
+Widget forooshKol_tedad_chart(DashBoardController controller) {
   return Center(
-      child:SfCircularChart(
-        //  title: ChartTitle(text: 'Sales by sales person'),
+      child: SfCircularChart(
+          // title: ChartTitle(text: 'Sales by sales person'),
           legend: Legend(isVisible: true),
           series: <PieSeries<ForoshMojodiKala, String>>[
-            PieSeries<ForoshMojodiKala, String>(
-                explode: true,
-                explodeIndex: 0,
-                dataSource: controller.dashBoardModel.value.foroshMojodiKala,
-                xValueMapper: (ForoshMojodiKala data, _) => data.fLDTIFLFAC,
-                yValueMapper: (ForoshMojodiKala data, _) => int.parse(data.total!),
-                // dataLabelMapper: (_PieData data, _) => data.text,
-                dataLabelSettings: DataLabelSettings(isVisible: true)),
-          ]
-      )
-  );
+        PieSeries<ForoshMojodiKala, String>(
+            explode: true,
+            explodeIndex: 0,
+            dataSource: controller.dashBoardModel.value.foroshMojodiKala,
+            xValueMapper: (ForoshMojodiKala data, _) => data.fLDTIFLFAC,
+            yValueMapper: (ForoshMojodiKala data, _) =>double.parse(data.sumQty!) ,
+            // dataLabelMapper: (_PieData data, _) => data.text,
+            dataLabelSettings: DataLabelSettings(isVisible: true)),
+      ]));
 }
-Widget foroosh_haftegi(DashBoardController controller){
 
-  return  SfCartesianChart(
+Widget forooshKol_rial_chart(DashBoardController controller) {
+  return Center(
+      child: SfCircularChart(
+          //  title: ChartTitle(text: 'Sales by sales person'),
+          legend: Legend(isVisible: true),
+          series: <PieSeries<ForoshMojodiKala, String>>[
+        PieSeries<ForoshMojodiKala, String>(
+            explode: true,
+            explodeIndex: 0,
+            dataSource: controller.dashBoardModel.value.foroshMojodiKala,
+            xValueMapper: (ForoshMojodiKala data, _) => data.fLDTIFLFAC,
+            yValueMapper: (ForoshMojodiKala data, _) => double.parse(data.total!),
+            // dataLabelMapper: (_PieData data, _) => data.text,
+            dataLabelSettings: DataLabelSettings(isVisible: true)),
+      ]));
+}
+
+Widget foroosh_haftegi(DashBoardController controller) {
+  return SfCartesianChart(
       primaryXAxis: CategoryAxis(),
       // Chart title
-     // title: ChartTitle(text: 'Half yearly sales analysis'),
+      // title: ChartTitle(text: 'Half yearly sales analysis'),
       // Enable legend
-     // legend: Legend(isVisible: true),
+      // legend: Legend(isVisible: true),
       // Enable tooltip
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <ChartSeries<ChartModel, String>>[
-      LineSeries<ChartModel, String>(
-      dataSource: controller.forooshWeek.value,
-      xValueMapper: (ChartModel sales, _) => sales.lable,
-      yValueMapper: (ChartModel sales, _) => sales.value,
-      name: 'فروش هفتگی',
-      // Enable data label
-      dataLabelSettings: DataLabelSettings(isVisible: true))
-  ]);
-
+        LineSeries<ChartModel, String>(
+            dataSource: controller.forooshWeek.value,
+            xValueMapper: (ChartModel sales, _) => sales.lable,
+            yValueMapper: (ChartModel sales, _) => sales.value,
+            name: 'فروش هفتگی',
+            // Enable data label
+            dataLabelSettings: DataLabelSettings(isVisible: true))
+      ]);
 }
-Widget returnForoosh_haftegi(DashBoardController controller){
 
-
-
-  return  SfCartesianChart(
+Widget returnForoosh_haftegi(DashBoardController controller) {
+  return SfCartesianChart(
       primaryXAxis: CategoryAxis(),
       // Chart title
       //title: ChartTitle(text: 'Half yearly sales analysis'),
@@ -926,14 +1057,12 @@ Widget returnForoosh_haftegi(DashBoardController controller){
       // Enable tooltip
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <ChartSeries<ChartModel, String>>[
-      LineSeries<ChartModel, String>(
-      dataSource: controller.returnForooshWeek.value,
-      xValueMapper: (ChartModel sales, _) => sales.lable,
-      yValueMapper: (ChartModel sales, _) => sales.value,
-      name: 'برگشت فروش',
-      // Enable data label
-      dataLabelSettings: DataLabelSettings(isVisible: true))
-  ]);
-
+        LineSeries<ChartModel, String>(
+            dataSource: controller.returnForooshWeek.value,
+            xValueMapper: (ChartModel sales, _) => sales.lable,
+            yValueMapper: (ChartModel sales, _) => sales.value,
+            name: 'برگشت فروش',
+            // Enable data label
+            dataLabelSettings: DataLabelSettings(isVisible: true))
+      ]);
 }
-
