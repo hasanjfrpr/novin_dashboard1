@@ -11,8 +11,8 @@ import 'package:search_choices/search_choices.dart';
 
 class FilterMojoodiScreen extends StatelessWidget {
    FilterMojoodiScreen({Key? key}) : super(key: key);
-    String anbar = "";
-    String moeen = "";
+   static String anbar = "";
+   static  String moeen = "";
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +319,7 @@ class FilterMojoodiScreen extends StatelessWidget {
     }
   }
   Widget visitorWidget(FilterMojoodiController controller , double wi ){
-    var anbarname;
+
     controller.getanbar();
     return  controller.showLoadingV==false ? Container(padding: EdgeInsets.all(wi*0.05),child: CircularProgressIndicator()) :Container(
       margin:

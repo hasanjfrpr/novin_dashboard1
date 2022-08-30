@@ -59,7 +59,11 @@ class MojoodikalaScreen extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: wi*0.35),
                         color: Colors.grey,
                         child: Obx((){
-                          return ListView.builder(itemBuilder: (context , index){
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context , index){
                             return Container(
                               color: index.isEven ? Colors.blueGrey.shade100 : Colors.white70,
                               child: Row(children: [

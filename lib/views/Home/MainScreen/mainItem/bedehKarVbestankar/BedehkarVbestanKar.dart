@@ -184,8 +184,8 @@ class BedehkarVbestanKarScreen extends StatelessWidget {
           ),
           _itemRow(AppString.mondehesab,
               setFormatNumber(personLis[index].prc.toString())),
-          _itemRow(AppString.personName,
-              setFormatNumber(personLis[index].fldNmmfPer.toString())),
+          _itemRow("نام مدیر",
+              personLis[index].fldNmmfPer.toString()),
           Divider(
             color: Colors.grey,
           ),

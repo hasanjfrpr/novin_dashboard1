@@ -20,6 +20,7 @@ class DashBoardScreen extends StatelessWidget {
     double he = Get.height;
     DashBoardController controller = Get.put(DashBoardController());
     if (Utils.dashBoardReq) {
+
       controller.getDashboard(
           convertJtoGDate(controller.year.value, controller.month.value,
               controller.day.value),
@@ -685,7 +686,7 @@ Widget boxDaryafti(DashBoardController controller) {
                                 fontSize: Get.width * 0.032,
                                 color: Colors.black)),
                         Text(
-                            setFormatNumber(""),
+                            setFormatNumber(controller.dashBoardModel.value.check!.countRecCheck.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.03,
                                 color: Color(AppColor.primaryColor))),
@@ -767,7 +768,7 @@ Widget boxPardakhti(DashBoardController controller) {
                                 fontSize: Get.width * 0.03,
                                 color: Colors.black)),
                         Text(
-                            setFormatNumber(controller.hesab_bank_p.toString()),
+                            setFormatNumber(controller.dashBoardModel.value.check!.countpayCheck.toString()),
                             style: TextStyle(
                                 fontSize: Get.width * 0.032,
                                 color: Color(AppColor.primaryColor))),

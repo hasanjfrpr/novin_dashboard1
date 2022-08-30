@@ -30,10 +30,7 @@ class FilterAsnadScreen extends StatelessWidget {
         height: he,
         child: Column(
           children: [
-            Expanded(
-                flex: 5,
-                child: Column(
-                  children: [
+
                     Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: wi * 0.045, vertical: he * 0.01),
@@ -151,24 +148,25 @@ class FilterAsnadScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: he * 0.017),
                       ),
                     ),
-                  ],
-                )),
-            Obx((){return
+
             Expanded(
-              flex: 8,
-              child: controller.showCircle.value ? Center(child: CircularProgressIndicator(color: Color(AppColor.primaryColor),),) : Container(
-                width: wi,
-                child: controller.asnadModelEmroz.value.documentList!=[]
-                    ? emptyScreen(wi, he)
-                    : ListView.builder(
-                  itemCount:
-                  controller.asnadModelEmroz.value.documentList?.length,
-                  itemBuilder: (context , index){
-                    return Container();
-                  },
+              child: Obx((){return
+              Expanded(
+                flex: 8,
+                child: controller.showCircle.value ? Center(child: CircularProgressIndicator(color: Color(AppColor.primaryColor),),) : Container(
+                  width: wi,
+                  child: controller.asnadModelEmroz.value.documentList!=[]
+                      ? emptyScreen(wi, he)
+                      : ListView.builder(
+                    itemCount:
+                    controller.asnadModelEmroz.value.documentList?.length,
+                    itemBuilder: (context , index){
+                      return Container();
+                    },
+                  ),
                 ),
-              ),
-            );}),
+              );}),
+            ),
             Expanded(
               flex: 2,
               child: Container(

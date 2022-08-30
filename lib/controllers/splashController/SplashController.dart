@@ -139,7 +139,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
         serverMethodName.value = LocalData.getConnectionMethode().toString();
         // Future.delayed(const Duration(seconds: 6)).then((value) => Get.off(()=> const Login() ));
         getCompanyBook();
-        Future.delayed(Duration(seconds: 13)).then((value) {
+        Future.delayed(Duration(seconds: 15)).then((value) {
           if (dataReceived == false && LocalData.getConnectionMethode()=="socket") {
             Get.dialog(
                 AlertDialog(
@@ -151,7 +151,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
                       children: [
                         Container(
                           child: Text(
-                              "اتصال به سرور برقرار نشد لطفا بعد از اطمینان از اتصال به اینترنت یکی از دو گزینه زیر را برای اتصال مجدد انتخاب کنید."),
+                              "اتصال به سرور برقرار نشد لطفا بعد از اطمینان از اتصال به اینترنت برای ادامه یکی از دوگزینه زیر را انتخاب کنید."),
                         ),
                         SizedBox(
                           height: 12,
@@ -159,20 +159,23 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
                         Divider(),
                         Container(
                           child: ListTile(
-                            onTap: (){
-                              restart();
-                            },
+                              onTap: ()async {
+                                restart();
+                              },
                               title: Text(
-                                "شروع مجدد سرور",
+                                "شروع مجدد برنامه ",
                                 style: TextStyle(
                                     color: Color(AppColor.primaryColor)),
                               ),
                               leading: Icon(
-                                CupertinoIcons.restart,
-                                color: Color(AppColor.primaryColor),
-                              )),
+                                  CupertinoIcons.arrowshape_turn_up_left_2_fill,
+                                  color: Color(AppColor.primaryColor))),
+                        ),
+                        SizedBox(
+                          height: 12,
                         ),
                         Divider(),
+
                         Container(
                           child: ListTile(
                             onTap: (){
@@ -197,11 +200,11 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
       }
     });
   }
-  void restart(){
-Get.back();
+  void restart() async{
+    Get.back();
     if(SocketManager.socket.connected){
       if(isRegister){
-        SocketManager.socket.emit("message" , "restart");
+
         _restarting();
 
       }else{
@@ -234,17 +237,18 @@ Get.back();
 
   }
   void _restarting() {
+
     Future.delayed(Duration(seconds:10) , (){
-     Get.deleteAll(force: true);
-     Phoenix.rebirth(Get.context!);
-     Get.reset();
+      Get.deleteAll(force: true);
+      Phoenix.rebirth(Get.context!);
+      Get.reset();
     },);
     Get.dialog(AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))),
       content: Container(
         child:Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(children:[ Expanded(flex:3,child: Container(child: Text("عملیات شروع مجدد سرور درحال انجام است لطفا شکیبا باشید..."),)), Expanded(child: CircularProgressIndicator(color: Color(AppColor.primaryColor),))]),
+            Row(children:[ Expanded(flex:3,child: Container(child: Text("درحال شروع مجدد برنامه لطفا شکیبا باشید."),)), Expanded(child: Container(width: 50,height: 50,child: CircularProgressIndicator(color: Color(AppColor.primaryColor),)))]),
           ],
         ),
       ),),barrierDismissible: false,);

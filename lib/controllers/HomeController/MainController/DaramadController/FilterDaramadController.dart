@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/DataAsset/server/http/HttpReq.dart';
@@ -7,6 +8,7 @@ import 'package:novin_dashboard1/DataAsset/server/socket/SocketReq.dart';
 import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazKolModel.dart';
 import 'package:novin_dashboard1/model/MainModel/mainItemModel/HazineModel/TarazMoeinModel.dart';
+import 'package:novin_dashboard1/resource/Resource.dart';
 import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/Daramad/DaramadScreen.dart';
 import 'package:novin_dashboard1/views/Home/MainScreen/mainItem/Hazine/HazineScreen.dart';
@@ -26,6 +28,7 @@ class FilterDaramadControler extends GetxController{
   RxDouble s_bes = 0.0.obs;
   RxDouble bed = 0.0.obs;
   RxDouble bes = 0.0.obs;
+  bool founded = false;
 
 
 
@@ -51,10 +54,17 @@ class FilterDaramadControler extends GetxController{
       }, (value) {
         var tarazKol = TarazKolModel.fromJson(value);
         for(var ps in tarazKol.tarazAzmayeshiKolList!){
-          if(ps.cfs=="0050"){
+          if(ps.fldscrhead=="18"){
+            founded = true;
             _getDaramads(ps.fldcodtac!, ps.fldscrhead! , startDate , endDate);
+
           }
         }
+        if(!founded) {
+          Get.back();
+          Get.snackbar(" یافت نشد", "در لیست ترازآزمایشی آیتمی بنام درآمدها یافت نشده است.",snackPosition: SnackPosition.BOTTOM , backgroundColor: Color(AppColor.primaryColor) ,colorText: Color(AppColor.onPrimaryColor));
+        }
+
       });
 
     }else{

@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:novin_dashboard1/controllers/HomeController/HomeController.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/DaramadController/FilterDaramadController.dart';
 import 'package:novin_dashboard1/controllers/HomeController/MainController/HazineController/FilterHazineController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
@@ -51,36 +52,13 @@ class FilterDaramadScreen extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
-                // controller.day.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .day;
-                // controller.month.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .month;
-                // controller.year.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .year;
-                // controller.endDay.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .day;
-                // controller.endMonth.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .month;
-                // controller.endYear.value = Get
-                //     .find<HomeController>()
-                //     .jalili
-                //     .value
-                //     .year;
+                controller.day.value  = Get.find<HomeController>().jalili.value.day;
+                controller.month.value = Get.find<HomeController>().jalili.value.month;
+                controller.year.value= Get.find<HomeController>().jalili.value.year;
+                controller.endDay.value = Get.find<HomeController>().jalili.value.day;
+                controller.endMonth.value  = Get.find<HomeController>().jalili.value.month;
+                controller.endYear.value  = Get.find<HomeController>().jalili.value.year;
+
               },
               height: he * 0.05,
               minWidth: wi * 0.4,

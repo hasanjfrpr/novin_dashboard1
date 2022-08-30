@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/Dialog/Dialog.dart';
 import 'package:novin_dashboard1/controllers/setting/SettingController.dart';
 import 'package:novin_dashboard1/controllers/splashController/SplashController.dart';
 import 'package:novin_dashboard1/resource/Resource.dart';
+import 'package:novin_dashboard1/utils/Utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -57,25 +59,27 @@ class SettingScreen extends StatelessWidget {
                               ),
                             ),
                             onTap: (){
+                            Utils.dashBoardReq = true;
                               Dialogs.showServerSettingDialog(1);
                             },
 
                             trailing: Icon(Icons.arrow_forward_ios));}
                       ),
                       Divider(),
-                      ListTile(
-                          title: Text(
-                            AppString.restartServer,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: wi * 0.035,
-                            ),
-                          ),
-                          onTap: (){
-                           controller.restart();
-                          },
-                          trailing: Icon(CupertinoIcons.restart)),
-                      Divider(),
+                      // ListTile(
+                      //     title: Text(
+                      //       AppString.restartServer,
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: wi * 0.035,
+                      //       ),
+                      //     ),
+                      //     onTap: (){
+                      //       Utils.dashBoardReq = true;
+                      //      controller.restart();
+                      //     },
+                      //     trailing: Icon(CupertinoIcons.restart)),
+                      // Divider(),
                       ListTile(
                           title: Text(
                             "خروج از حساب کاربری",
@@ -88,6 +92,7 @@ class SettingScreen extends StatelessWidget {
                           onTap: (){
                           Get.deleteAll(force: true);
                           Phoenix.rebirth(Get.context!);
+                          Utils.dashBoardReq=true;
                           Get.reset();
                           },
                           trailing: Icon(Icons.transit_enterexit ,color: Colors.redAccent,))
@@ -178,16 +183,6 @@ class SettingScreen extends StatelessWidget {
   }
 
    _launchMaps() async {
-     String googleUrl =
-         'https://www.google.com/maps/place/Tiger+Co./@${35.72607090475112 },${51.41474759176855},16.75z/data=!4m9!1m2!2m1!1z2LTYsdqp2Kog2KrYp9uM2q_YsQ!3m5!1s0x3f8e01460c599e89:0x46dbc83226ec8b5d!8m2!3d35.7260082!4d51.4147417!15sChPYtNix2qnYqiDYqtin24zar9ixWhUiE9i02LHaqdiqINiq2KfbjNqv2LGSARlvZmZpY2VfZXF1aXBtZW50X3N1cHBsaWVy';
-     String appleUrl =
-         'https://maps.apple.com/?sll=${35.72607090475112 },${51.41474759176855}';
-     if (await canLaunch(googleUrl)) {
-       await launch(googleUrl);
-     } else if (await canLaunch(appleUrl)) {
-       await launch(appleUrl);
-     } else {
-       throw 'Could not launch url';
-     }
+     MapsLauncher.launchCoordinates(35.72588616835514, 51.415108823972);
    }
 }

@@ -12,6 +12,7 @@ class LogInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double wi = Get.width;
     double he = Get.height;
+
     RizAsnadController rizAsnadController = Get.find<RizAsnadController>();
     return Scaffold(
       appBar: AppBar(

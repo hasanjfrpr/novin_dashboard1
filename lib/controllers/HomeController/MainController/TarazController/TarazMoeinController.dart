@@ -94,7 +94,7 @@ bool clickShod = false;
           "scrhead": head
         },
         "username": Utils.userName,
-        "password": Utils.userName,
+        "password": Utils.passWord,
         "methodName": "GetTarazAzmayeshiKol_Moein_TafsiliList",
         "methodType": "post",
       }, (value) {

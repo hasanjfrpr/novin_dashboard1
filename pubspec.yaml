@@ -59,6 +59,7 @@ dependencies:
   showcaseview: ^1.1.5
   flutter_keyboard_visibility: ^5.2.0
   syncfusion_flutter_charts: ^20.2.38
+  maps_launcher: ^2.0.1
 
   
 

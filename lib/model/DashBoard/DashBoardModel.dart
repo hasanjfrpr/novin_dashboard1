@@ -1,5 +1,6 @@
 class DashBoardModel {
   ForoshAndReturnList? foroshAndReturnList;
+  Check? check;
   DayWeek7? dayWeek7;
   List<ForoshMojodiKala>? foroshMojodiKala;
   Result? result;
@@ -11,6 +12,7 @@ class DashBoardModel {
 
   DashBoardModel(
       {this.foroshAndReturnList,
+        this.check,
         this.dayWeek7,
         this.foroshMojodiKala,
         this.result,
@@ -24,6 +26,7 @@ class DashBoardModel {
     foroshAndReturnList = json['ForoshAndReturnList'] != null
         ? new ForoshAndReturnList.fromJson(json['ForoshAndReturnList'])
         : null;
+    check = json['Check'] != null ? new Check.fromJson(json['Check']) : null;
     dayWeek7 = json['DayWeek7'] != null
         ? new DayWeek7.fromJson(json['DayWeek7'])
         : null;
@@ -51,6 +54,9 @@ class DashBoardModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.foroshAndReturnList != null) {
       data['ForoshAndReturnList'] = this.foroshAndReturnList!.toJson();
+    }
+    if (this.check != null) {
+      data['Check'] = this.check!.toJson();
     }
     if (this.dayWeek7 != null) {
       data['DayWeek7'] = this.dayWeek7!.toJson();
@@ -107,6 +113,25 @@ class ForoshAndReturnList {
     data['RetFactorTotal_price'] = this.retFactorTotalPrice;
     data['countgoods'] = this.countgoods;
     data['countReturndocs'] = this.countReturndocs;
+    return data;
+  }
+}
+
+class Check {
+  String? countRecCheck;
+  String? countpayCheck;
+
+  Check({this.countRecCheck, this.countpayCheck});
+
+  Check.fromJson(Map<String, dynamic> json) {
+    countRecCheck = json['CountRecCheck'];
+    countpayCheck = json['CountpayCheck'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['CountRecCheck'] = this.countRecCheck;
+    data['CountpayCheck'] = this.countpayCheck;
     return data;
   }
 }

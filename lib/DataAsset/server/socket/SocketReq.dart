@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:novin_dashboard1/DataAsset/local/LocalData.dart';
 import 'package:novin_dashboard1/Dialog/Dialog.dart';
+import 'package:novin_dashboard1/utils/ConstValue.dart';
 import 'package:socket_io_client/socket_io_client.dart' as Io;
 
 class SocketManager {
@@ -15,7 +16,9 @@ class SocketManager {
   Io.io("http://141.11.42.55:3000", <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': true,
+
   });
+
 
   static bool isRegister = false;
   //
@@ -29,6 +32,7 @@ class SocketManager {
   // }
   // }
   static Future<dynamic>  request(Map<String,dynamic> json ,ValueChanged<dynamic> s) async{
+
 
 
 
@@ -46,7 +50,9 @@ class SocketManager {
             // }else{
             //
             // }
-            s(data);
+
+              s(data);
+
 
           }
 
@@ -67,13 +73,22 @@ class SocketManager {
 
 
     }else{
+
       socket.connect();
       socket.onConnect((data){
+
+        print("socket is connected 1111111111111111111");
         socket.emit("register" ,LocalData.getSerial());
         socket.once("register", (data){
           if(data["status"]){
             isRegister = true;
-            request(json,s);
+           if(ConstValue.connectForRequestSocket ) {
+             request(json, s);
+
+           }else{
+             ConstValue.connectForRequestSocket=true;
+           }
+
           }else{
             return {"register" :  "unAccess"};
           }
@@ -82,7 +97,7 @@ class SocketManager {
 
       socket.onDisconnect((data){
         print("socket is disconnected 1111111111111111111");
-        socket.connect();
+        ConstValue.connectForRequestSocket=false;
       });
 
 
