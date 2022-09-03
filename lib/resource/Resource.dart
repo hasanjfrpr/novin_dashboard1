@@ -46,10 +46,11 @@ class AppString {
   static String bookName = "انتخاب دفتر";
   static String daramad = "درآمدها";
   static String hazineh = "هزینه ها";
+  static String ff = "فیلتر";
   static String date = "تاریخ";
   static String visitor = "ویزیتور";
   static String persons = "اشخاص";
-  static String filter = "فیلتر";
+  static String filter = "تایید";
   static String cleanFilter = "پاک کردن فیلتر";
   static String selectPerson = "انتخاب شخص";
   static String selectVisitor = "انتخاب ویزیتور";
@@ -84,7 +85,6 @@ class AppString {
   static String mondehesab = "مانده حساب";
   static String moshakhasat = "مشخصات";
   static String rizhesab = "ریزحساب";
-
 
 
 

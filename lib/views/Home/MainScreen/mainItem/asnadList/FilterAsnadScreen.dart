@@ -22,7 +22,7 @@ class FilterAsnadScreen extends StatelessWidget {
     double he = Get.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppString.filter + " " + AppString.AsnadList),
+        title: Text(AppString.ff + " " + AppString.AsnadList),
         backgroundColor: Color(AppColor.primaryColor),
       ),
       body: Container(

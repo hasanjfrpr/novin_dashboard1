@@ -30,7 +30,7 @@ class FilterBedBesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
-        title: Text(AppString.filter+" "+AppString.bedehkarVbestankar),
+        title: Text(AppString.ff+" "+AppString.bedehkarVbestankar),
       ),
       bottomNavigationBar:  Container(
         margin: EdgeInsets.symmetric(vertical: he * 0.05),

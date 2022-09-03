@@ -24,7 +24,7 @@ class FilterFactorForooshScreen extends StatelessWidget {
       backgroundColor: Color(AppColor.onPrimaryColor),
       appBar: AppBar(
         backgroundColor: Color(AppColor.primaryColor),
-        title: Text(AppString.filter+" "+AppString.factorFrosh),
+        title: Text(AppString.ff+" "+AppString.factorFrosh),
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.symmetric(vertical: he * 0.05),
